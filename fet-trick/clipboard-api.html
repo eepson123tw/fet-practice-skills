@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>clipboard-api</title>
+	<style>
+		.editor{
+			width: 300px;
+			height: 300px;
+			outline: 1px solid red;
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+	<p id="banCopy"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit id hic consequatur commodi quas? Placeat beatae neque, repellendus esse inventore deserunt reprehenderit atque excepturi officia laborum, officiis delectus nostrum explicabo?</p>
+	<input type="text" class="text">
+	<button>copy</button>
+	<p class="result"></p>
+	<div class="editor" contenteditable="true"></div>
+	<script>
+		let banCopy = document.querySelector('#banCopy')
+		const btn = document.querySelector('button')
+		const input = document.querySelector('input')
+		const result = document.querySelector('.result')
+		const editor = document.querySelector('.editor')
+		banCopy.addEventListener('copy',async(e)=>{
+			// url must under localhost or https:// 
+			// clz navigator will be null
+			e.preventDefault()
+			await navigator.clipboard.writeText('此功能不開放')
+		})
+		btn.onclick = ()=>{
+			navigator.clipboard.writeText(input.value +'此功能不開放')
+		}
+		// will be the promise ,bz browser will notify user 
+		navigator.clipboard.readText().then((txt)=>{
+			result.innerText = txt
+		})
+
+		window.addEventListener('loaded',()=>{
+		editor.addEventListener('paste',(e)=>{
+			if(e.clipboardData.files.length>0){
+				e.preventDefault()
+				const file = e.clipboardData.files[0]
+				const reader = new FileReader()
+				reader.readAsDataURL(file)
+				reader.onload(event=>{
+					const rawLog = reader.result;
+					const img = document.createElement('img')
+					img.src = event.target.result
+					editor.appendChild(img)
+				})
+			}
+		})
+		})
+
+
+
+	</script>
+</body>
+</html>
