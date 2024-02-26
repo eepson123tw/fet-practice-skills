@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>EyeDropper</title>
+</head>
+<body>
+	<button>take color</button>
+	<span id="result"></span>
+	<script>
+		const btn = document.querySelector('button')
+		const box = document.querySelector('.box')
+		const label = document.querySelector('label')
+		const resultElement = document.getElementById("result");
+
+		
+
+		btn.onclick = async()=>{
+		const eyeDropper = new EyeDropper();
+		const abortController = new AbortController();
+		eyeDropper
+			.open({ signal: abortController.signal })
+			.then((result) => {
+			resultElement.textContent = result.sRGBHex;
+			resultElement.style.backgroundColor = result.sRGBHex;
+			})
+			.catch((e) => {
+			resultElement.textContent = e;
+			});
+
+		setTimeout(() => {
+			abortController.abort();
+		}, 2000);
+	}
+	</script>
+</body>
+</html>
