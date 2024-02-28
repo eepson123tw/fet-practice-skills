@@ -99,3 +99,13 @@ console.log(
   "%c 中斷請求是一個重要的知識點 可以使用 fetch XHR https://axios-http.com/docs/cancellation",
   consoleStyle
 );
+
+console.log(
+  "%c localeCompare,比較中文字順序可以使用  https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare",
+  consoleStyle
+);
+
+type BandType<T, K> = T extends K ? never : T;
+function abc<T>(value: BandType<T, string>) {
+  console.log(value);
+}
