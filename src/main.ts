@@ -1,3 +1,5 @@
+const consoleStyle = "background-color: #13AA13; color: white; padding: 5px;";
+
 // 考慮問題邊界
 const isOdd = (n: number) => {
   return n % 2 === 1 || n % 2 === -1;
@@ -39,3 +41,61 @@ function vortex(n: number, m: number) {
   return num;
 }
 console.log(vortex(4, 5));
+
+// get parameter
+
+const parseQuery = (url: String) => {
+  const q: { [key: string]: string } = {};
+  url.replace(/([^?&=]+)=([^&]+)/g, (_, k, v) => (q[k] = v));
+  return q;
+};
+
+console.log("%c parseQuery", consoleStyle, parseQuery("a=1&b=2"));
+
+// pick obj by key
+const pick = (obj: Object, ...props) => {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([k]) => {
+      return props.includes(k);
+    })
+  );
+};
+console.log(
+  "%c pick",
+  consoleStyle,
+  pick({ a: 123, b: 456, c: 789 }, "a", "b")
+);
+
+// random color
+
+const randomColor = () =>
+  "#" +
+  Math.floor(Math.random() * 0xffffff)
+    .toString(16)
+    .padEnd(6, "0");
+
+console.log("%c randomColor", consoleStyle, randomColor());
+
+const randomString = () => Math.random().toString(36).slice(2);
+
+console.log("%c randomString", consoleStyle, randomString());
+
+// reject prev promise with fetch
+
+let controller: AbortController;
+const input = document.createElement("input");
+input.oninput = async () => {
+  if (controller) {
+    controller.abort();
+  }
+  controller = new AbortController();
+  const list = await fetch("asdasdasdadsd" + input.value, {
+    signal: controller.signal,
+  }).then((res) => res.json());
+  console.log(list);
+};
+
+console.log(
+  "%c 中斷請求是一個重要的知識點 可以使用 fetch XHR https://axios-http.com/docs/cancellation",
+  consoleStyle
+);
