@@ -109,3 +109,58 @@ type BandType<T, K> = T extends K ? never : T;
 function abc<T>(value: BandType<T, string>) {
   console.log(value);
 }
+
+// # generate random number
+const random = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+// parallel promise
+
+function timeout(delay: number) {
+  return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+const SuperTask = () => {
+  const tasks: { resolve: any; reject: any; task: any }[] = [];
+  let parallelCount = 2;
+  let runningCount = 0;
+  const add = (task: Function) => {
+    return new Promise((resolve, reject) => {
+      tasks.push({ resolve, reject, task });
+      run();
+    });
+  };
+  const run = () => {
+    while (runningCount < parallelCount && tasks.length > 0) {
+      const taskItem = tasks.shift();
+      if (taskItem) {
+        const { resolve, reject, task } = taskItem;
+        runningCount++;
+        task()
+          .then(resolve)
+          .catch(reject)
+          .finally(() => {
+            runningCount--;
+            run();
+          });
+      }
+    }
+  };
+  return { add };
+};
+
+const superTask = SuperTask();
+
+function addTask(time: number, name: string) {
+  superTask
+    .add(() => timeout(time))
+    .then(() => {
+      console.log("%c randomString", consoleStyle, name + "任務完成");
+    });
+}
+
+addTask(10000, "1");
+addTask(1000, "2");
+addTask(1000, "3");
+addTask(1000, "4");
+addTask(1000, "5");
