@@ -164,3 +164,55 @@ addTask(1000, "2");
 addTask(1000, "3");
 addTask(1000, "4");
 addTask(1000, "5");
+
+// add some thing into mirco task
+function runMicroTask(func: Function) {
+  if (typeof Promise !== "undefined") {
+    Promise.resolve().then(() => {
+      func();
+      console.log("%c runMicroTask", consoleStyle, "runMicroTask");
+    });
+  }
+  if (typeof MutationObserver !== "undefined") {
+    const observer = new MutationObserver(() => {
+      func();
+      console.log("%c runMicroTask", consoleStyle, "runMicroTask");
+    });
+    observer.observe(document.body, {
+      attributes: true,
+    });
+    document.body.setAttribute("id", "id");
+  }
+  if (process && process.nextTick) {
+    process.nextTick(func);
+    return;
+  }
+  setTimeout(func, 0);
+}
+
+runMicroTask(() => console.log(123));
+
+// add at timeout into fetch
+
+function createRequestWithTimeout(timeout = 3000) {
+  return function (url: string, option: RequestInit = {}) {
+    return new Promise((resolve, reject) => {
+      // so this is a promise status control, if promise is resolved,
+      // it will not be rejected, otherwise it will be rejected
+      const controller = new AbortController();
+      if (option.signal) {
+        const signal = option.signal;
+        signal.addEventListener("abort", () => {
+          controller.abort();
+        });
+      }
+      option.signal = controller.signal;
+      fetch(url, option).then(resolve, reject);
+      setTimeout(() => {
+        reject(new Error("timeout"));
+        // so it will be rejected,and the error message is timeout
+        controller.abort();
+      }, timeout);
+    });
+  };
+}
