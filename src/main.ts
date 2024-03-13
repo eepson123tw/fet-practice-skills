@@ -192,7 +192,9 @@ function runMicroTask(func: Function) {
   setTimeout(func, 0);
 }
 
-runMicroTask(() => console.log(123));
+runMicroTask(() =>
+  console.log("%c runMicroTask", consoleStyle, "insert runMicroTask")
+);
 
 // add at timeout into fetch
 

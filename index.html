@@ -7,11 +7,23 @@
     <title>Vite + TS</title>
   </head>
   <body>
-    <div id="app"></div>
-    <a href="./fet-trick/canvas-music.html">canvas-music</a>
-    <a href="./fet-trick/clipboard-api.html">clipboard-api</a>
-    <a href="./fet-trick/canvas-img.html">canvas-img</a>
-    <a href="./fet-trick/eye-dropper.html">eye dropper</a>
+    <div id="app">
+      <div id="timer">
+        <div class="second card-container">
+          <div class="card card-before-top">1</div>
+          <div class="card card-before-bottom">1</div>
+          <div class="card card-after-top">2</div>
+          <div class="card card-after-bottom">2</div>
+        </div>
+      </div>
+      <div class="link">
+          <a href="./fet-trick/canvas-music.html">canvas-music</a>
+          <a href="./fet-trick/clipboard-api.html">clipboard-api</a>
+          <a href="./fet-trick/canvas-img.html">canvas-img</a>
+          <a href="./fet-trick/eye-dropper.html">eye dropper</a>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/timer.ts"></script>
   </body>
 </html>
