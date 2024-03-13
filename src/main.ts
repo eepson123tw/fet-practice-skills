@@ -1,3 +1,5 @@
+import { createOverloadFunction } from "../utils/fn-overload";
+
 const consoleStyle = "background-color: #13AA13; color: white; padding: 5px;";
 
 // 考慮問題邊界
@@ -183,10 +185,10 @@ function runMicroTask(func: Function) {
     });
     document.body.setAttribute("id", "id");
   }
-  if (process && process.nextTick) {
-    process.nextTick(func);
-    return;
-  }
+  // if (process && process.nextTick) {
+  //   process.nextTick(func);
+  //   return;
+  // }
   setTimeout(func, 0);
 }
 
@@ -216,3 +218,36 @@ function createRequestWithTimeout(timeout = 3000) {
     });
   };
 }
+
+// defer with animation frame
+
+function useDefer(maxCount = 100) {
+  let count = 0;
+  const run = () => {
+    requestAnimationFrame(() => {
+      count++;
+      if (count >= maxCount) {
+        return;
+      }
+      run();
+    });
+  };
+  run();
+  return (n: number) => {
+    return count >= n;
+  };
+}
+
+const overloadFn = createOverloadFunction();
+overloadFn.addImplementation(
+  "String",
+  "String",
+  (a: string, b: string) => a + b
+);
+overloadFn.addImplementation(
+  "Number",
+  "Number",
+  (a: number, b: number) => a * b
+);
+console.log(overloadFn(2, 3));
+console.log(overloadFn("2", "3"));
