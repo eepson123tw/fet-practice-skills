@@ -10,6 +10,7 @@ console.log("%cFrontend tricks", helloStyle);
 const isOdd = (n: number) => {
   return n % 2 === 1 || n % 2 === -1;
 };
+
 // 創建二維螺旋陣列
 function vortex(n: number, m: number) {
   const num = new Array(n).fill(0).map(() => new Array(m).fill(0));
