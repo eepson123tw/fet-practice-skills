@@ -1,4 +1,5 @@
-// todo : implement timer
+// todo : implement timer also can let performance more better
+// maybe can use fragment to do it
 import "../assets/style.css";
 const timer = document.querySelector("#timer");
 const second = document.querySelector(".second");

@@ -1,6 +1,10 @@
 import { createOverloadFunction } from "../utils/fn-overload";
+import singleton from "../utils/singleton-proxy";
 
 const consoleStyle = "background-color: #13AA13; color: white; padding: 5px;";
+const helloStyle = "background-color: red; color: white; padding: 5px;";
+
+console.log("%cFrontend tricks", helloStyle);
 
 // 考慮問題邊界
 const isOdd = (n: number) => {
@@ -52,10 +56,10 @@ const parseQuery = (url: String) => {
   return q;
 };
 
-console.log("%c parseQuery", consoleStyle, parseQuery("a=1&b=2"));
+console.log("%cparse query => Obj", consoleStyle, parseQuery("a=1&b=2"));
 
 // pick obj by key
-const pick = (obj: Object, ...props) => {
+const pick = (obj: Object, ...props: string[]) => {
   return Object.fromEntries(
     Object.entries(obj).filter(([k]) => {
       return props.includes(k);
@@ -63,7 +67,7 @@ const pick = (obj: Object, ...props) => {
   );
 };
 console.log(
-  "%c pick",
+  "%cpick key in a obj",
   consoleStyle,
   pick({ a: 123, b: 456, c: 789 }, "a", "b")
 );
@@ -76,11 +80,11 @@ const randomColor = () =>
     .toString(16)
     .padEnd(6, "0");
 
-console.log("%c randomColor", consoleStyle, randomColor());
+console.log("%crandomColor", consoleStyle, randomColor());
 
 const randomString = () => Math.random().toString(36).slice(2);
 
-console.log("%c randomString", consoleStyle, randomString());
+console.log("%crandomString", consoleStyle, randomString());
 
 // reject prev promise with fetch
 
@@ -98,12 +102,12 @@ input.oninput = async () => {
 };
 
 console.log(
-  "%c 中斷請求是一個重要的知識點 可以使用 fetch XHR https://axios-http.com/docs/cancellation",
+  "%c中斷請求是一個重要的知識點 可以使用 fetch XHR https://axios-http.com/docs/cancellation",
   consoleStyle
 );
 
 console.log(
-  "%c localeCompare,比較中文字順序可以使用  https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare",
+  "%clocaleCompare,比較中文字順序可以使用  https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare",
   consoleStyle
 );
 
@@ -157,7 +161,7 @@ function addTask(time: number, name: string) {
   superTask
     .add(() => timeout(time))
     .then(() => {
-      console.log("%c randomString", consoleStyle, name + "任務完成");
+      console.log("%cParallel Promise Task", consoleStyle, name + "任務完成");
     });
 }
 
@@ -172,13 +176,13 @@ function runMicroTask(func: Function) {
   if (typeof Promise !== "undefined") {
     Promise.resolve().then(() => {
       func();
-      console.log("%c runMicroTask", consoleStyle, "runMicroTask");
+      console.log("%crunMicroTask", consoleStyle, "runMicroTask");
     });
   }
   if (typeof MutationObserver !== "undefined") {
     const observer = new MutationObserver(() => {
       func();
-      console.log("%c runMicroTask", consoleStyle, "runMicroTask");
+      console.log("%crunMicroTask", consoleStyle, "runMicroTask");
     });
     observer.observe(document.body, {
       attributes: true,
@@ -193,7 +197,7 @@ function runMicroTask(func: Function) {
 }
 
 runMicroTask(() =>
-  console.log("%c runMicroTask", consoleStyle, "insert runMicroTask")
+  console.log("%crunMicroTask", consoleStyle, "insert runMicroTask")
 );
 
 // add at timeout into fetch
@@ -252,4 +256,14 @@ overloadFn.addImplementation(
   (a: number, b: number) => a * b
 );
 console.log(overloadFn(2, 3));
-console.log(overloadFn("2", "3"));
+
+class MyClass {
+  constructor() {}
+}
+
+const sClass = singleton(MyClass);
+
+const v1 = new sClass();
+const v2 = new sClass();
+
+console.log(v1 instanceof sClass, v2 instanceof sClass, v1 === v2);
