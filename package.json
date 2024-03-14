@@ -2,6 +2,7 @@
   "name": ".",
   "version": "0.0.0",
   "type": "module",
+  "module": "./src/main.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
