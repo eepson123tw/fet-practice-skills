@@ -26,7 +26,6 @@ export default defineConfig({
               path.join(contentDir, file),
               "utf-8"
             );
-            console.log(path.join(targetDir, file));
             await fs.promises.writeFile(
               path.join(targetDir, file),
               content,
