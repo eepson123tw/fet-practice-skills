@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1></h1>
+	<script>
+		// Media Query document write all the media query and query data
+		document.write("<p>Media Query: max-width: 600px => " + window.matchMedia("(max-width: 600px)").matches + "</p>");
+		document.write("<p>Query Data: " + window.matchMedia("(max-width: 600px)").media + "</p>");
+		document.write("<p>Media Query: min-width: 768px => " + window.matchMedia("(min-width: 768px)").matches + "</p>");
+		document.write("<p>Query Data: " + window.matchMedia("(min-width: 768px)").media + "</p>");
+		document.write("<p>Media Query: " + window.matchMedia("(orientation: landscape)").matches + "</p>");
+		document.write("<p>Query Data: " + window.matchMedia("(orientation: landscape)").media + "</p>");
+		document.write("<p>Query Data: prefers-color-scheme dark => " + window.matchMedia("(prefers-color-scheme: dark)").matches + "</p>");
+	</script>
+</body>
+</html>

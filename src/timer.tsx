@@ -79,12 +79,6 @@ export default function Timer() {
           <div className="card card-after-bottom">2</div>
         </div>
       </div>
-      <div className="link">
-        <a href="./fet-trick/canvas-music.html">canvas-music</a>
-        <a href="./fet-trick/clipboard-api.html">clipboard-api</a>
-        <a href="./fet-trick/canvas-img.html">canvas-img</a>
-        <a href="./fet-trick/eye-dropper.html">eye dropper</a>
-      </div>
     </>
   );
 }
