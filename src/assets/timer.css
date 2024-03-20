@@ -21,6 +21,12 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  padding: 20px;
+}
+a {
+  text-decoration: none;
+  color: black;
+  margin: 10px;
 }
 
 #timer {
