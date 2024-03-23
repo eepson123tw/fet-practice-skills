@@ -12,7 +12,7 @@
 export function createOverloadFunction() {
   const map = new Map();
 
-  function overloadFunction(...args: any[]) {
+  function overloadFunction(...args: unknown[]) {
     const key = args
       .map((arg) => (arg === null ? "null" : typeof arg))
       .join(", ");
@@ -22,7 +22,7 @@ export function createOverloadFunction() {
     }
     return fn(...args);
   }
-  overloadFunction.addImplementation = function (...args: any[]) {
+  overloadFunction.addImplementation = function (...args: unknown[]) {
     const fn = args.pop();
     if (typeof fn !== "function") {
       throw new Error("Last argument should be a function");

@@ -1,5 +1,5 @@
 import { createOverloadFunction } from "../utils/fn-overload";
-import singleton from "../utils/singleton-proxy";
+// import singleton from "../utils/singleton-proxy";
 // import "../utils/groupby";
 
 const consoleStyle = "background-color: #13AA13; color: white; padding: 5px;";
@@ -8,6 +8,7 @@ const helloStyle = "background-color: red; color: white; padding: 5px;";
 console.log("%cFrontend tricks", helloStyle);
 
 // 考慮問題邊界
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isOdd = (n: number) => {
   return n % 2 === 1 || n % 2 === -1;
 };
@@ -23,7 +24,8 @@ function vortex(n: number, m: number) {
   function hasBlock() {
     return !num[i] || num[i][j] !== 0;
   }
-  while (1) {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
     num[i][j] = count++;
     // 改變 ij
     i += stepI;
@@ -52,7 +54,7 @@ console.log(vortex(4, 5));
 
 // get parameter
 
-const parseQuery = (url: String) => {
+const parseQuery = (url: string) => {
   const q: { [key: string]: string } = {};
   url.replace(/([^?&=]+)=([^&]+)/g, (_, k, v) => (q[k] = v));
   return q;
@@ -61,7 +63,7 @@ const parseQuery = (url: String) => {
 console.log("%cparse query => Obj", consoleStyle, parseQuery("a=1&b=2"));
 
 // pick obj by key
-const pick = (obj: Object, ...props: string[]) => {
+const pick = (obj: NonNullable<unknown>, ...props: string[]) => {
   return Object.fromEntries(
     Object.entries(obj).filter(([k]) => {
       return props.includes(k);
@@ -114,6 +116,7 @@ console.log(
 );
 
 type BandType<T, K> = T extends K ? never : T;
+
 function abc<T>(value: BandType<T, string>) {
   console.log(value);
 }
@@ -129,10 +132,14 @@ function timeout(delay: number) {
 }
 
 const SuperTask = () => {
-  const tasks: { resolve: any; reject: any; task: any }[] = [];
-  let parallelCount = 2;
+  const tasks: {
+    resolve: (value: unknown) => void;
+    reject: (value: unknown) => void;
+    task: () => Promise<unknown>;
+  }[] = [];
+  const parallelCount = 2;
   let runningCount = 0;
-  const add = (task: Function) => {
+  const add = (task: () => Promise<unknown>) => {
     return new Promise((resolve, reject) => {
       tasks.push({ resolve, reject, task });
       run();
@@ -174,7 +181,7 @@ addTask(1000, "4");
 addTask(1000, "5");
 
 // add some thing into mirco task
-function runMicroTask(func: Function) {
+function runMicroTask(func: () => void) {
   if (typeof Promise !== "undefined") {
     Promise.resolve().then(() => {
       func();
@@ -259,13 +266,27 @@ overloadFn.addImplementation(
 );
 console.log(overloadFn(2, 3));
 
-class MyClass {
-  constructor() {}
-}
+// class MyClass {
+//   constructor() {}
+// }
 
-const sClass = singleton(MyClass);
+// const sClass: typeof ObjectConstructor = singleton(MyClass);
 
-const v1 = new sClass();
-const v2 = new sClass();
+// const v1 = new sClass();
+// const v2 = new sClass();
 
-console.log(v1 instanceof sClass, v2 instanceof sClass, v1 === v2);
+// console.log(v1 instanceof sClass, v2 instanceof sClass, v1 === v2);
+
+type Watcher<T> = {
+  on<K extends keyof T>(
+    eventName: `${K & string}Changed`,
+    callback: (oldValue: T[K], newValue: T[K]) => void
+  ): void;
+};
+
+declare function watch<T>(obj: T): Watcher<T>;
+
+const obj = watch({ name: "123", age: 123 });
+obj.on("ageChanged", (oldValue: number, newValue: number) => {
+  console.log(oldValue, newValue);
+});

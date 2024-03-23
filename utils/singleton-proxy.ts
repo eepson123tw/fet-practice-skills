@@ -6,8 +6,8 @@
  * 5. create a static method to delete the instance
  */
 
-const singletonProxy = (target: any) => {
-  let ins: any;
+const singletonProxy = (target: typeof Object) => {
+  let ins: NonNullable<unknown>;
   const proxy = new Proxy(target, {
     construct: (target, args) => {
       if (!ins) {

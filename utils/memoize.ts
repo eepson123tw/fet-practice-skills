@@ -1,34 +1,35 @@
 class MemoizedMap {
-  _weakmap: WeakMap<WeakKey, any>;
-  _map: Map<any, any>;
+  _weakmap: WeakMap<WeakKey, unknown>;
+  _map: Map<unknown, unknown>;
   constructor() {
     this._map = new Map();
     this._weakmap = new WeakMap();
   }
-  _isObject(key: any) {
+  _isObject(key: unknown) {
     return typeof key === "object" && key !== null;
   }
-  get(key: any) {
+  get(key: unknown) {
     if (this._isObject(key)) {
-      return this._weakmap.get(key);
+      return this._weakmap.get(key as WeakKey);
     }
     return this._map.get(key);
   }
-  set(key: any, value: any) {
+  set(key: unknown, value: unknown) {
     if (this._isObject(key)) {
-      this._weakmap.set(key, value);
+      this._weakmap.set(key as WeakKey, value);
     } else {
       this._map.set(key, value);
     }
   }
-  has(key: any) {
+  has(key: unknown) {
     if (this._isObject(key)) {
-      return this._weakmap.has(key);
+      return this._weakmap.has(key as WeakKey);
     }
     return this._map.has(key);
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function memoize(func, resolver) {
   function memoized(...args) {
     const cache = memoized.cache;

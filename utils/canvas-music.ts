@@ -1,7 +1,7 @@
-const cvs = document.querySelector("canvas");
-const ctx = cvs.getContext("2d", {
+const cvs = document.querySelector("canvas") as HTMLCanvasElement;
+const ctx = cvs?.getContext("2d", {
   willReadFrequently: true,
-});
+}) as CanvasRenderingContext2D;
 function init() {
   const img = new Image();
   img.onload = () => {
@@ -30,12 +30,12 @@ cvs.addEventListener("click", (e) => {
 });
 
 function changeColor(x, y, imageInfo, targetColor, clickColor) {
-  let stack = [];
+  const stack: { x: number; y: number }[] = [];
   stack.push({ x: x, y: y });
 
   while (stack.length > 0) {
     // 取出栈顶元素
-    let point = stack.pop();
+    const point = stack.pop()!;
     x = point.x;
     y = point.y;
 

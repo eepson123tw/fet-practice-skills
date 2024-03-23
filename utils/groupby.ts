@@ -15,14 +15,6 @@ const friends: Friend[] = [
   { name: "grace", value: 7, age: 26, sex: "女" },
 ];
 
-interface Friend {
-  name: string;
-  value: number;
-  age: number;
-  sex: string;
-  [key: string]: any; // Add index signature
-}
-
 /**
  * Group by a callback function
  * @param array
@@ -35,7 +27,7 @@ const groupBy = (
   cb: (u: Friend) => string
 ): { [key: string]: number } => {
   const result: { [key: string]: number } = {};
-  for (let u of array) {
+  for (const u of array) {
     const key = cb(u);
     if (!result[key]) {
       result[key] = 1;
