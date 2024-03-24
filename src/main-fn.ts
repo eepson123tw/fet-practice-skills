@@ -276,17 +276,3 @@ console.log(overloadFn(2, 3));
 // const v2 = new sClass();
 
 // console.log(v1 instanceof sClass, v2 instanceof sClass, v1 === v2);
-
-type Watcher<T> = {
-  on<K extends keyof T>(
-    eventName: `${K & string}Changed`,
-    callback: (oldValue: T[K], newValue: T[K]) => void
-  ): void;
-};
-
-declare function watch<T>(obj: T): Watcher<T>;
-
-const obj = watch({ name: "123", age: 123 });
-obj.on("ageChanged", (oldValue: number, newValue: number) => {
-  console.log(oldValue, newValue);
-});
