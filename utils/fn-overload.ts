@@ -31,3 +31,16 @@ export function createOverloadFunction() {
   };
   return overloadFunction;
 }
+
+const overloadFn = createOverloadFunction();
+overloadFn.addImplementation(
+  "String",
+  "String",
+  (a: string, b: string) => a + b
+);
+overloadFn.addImplementation(
+  "Number",
+  "Number",
+  (a: number, b: number) => a * b
+);
+console.log(overloadFn(2, 3));

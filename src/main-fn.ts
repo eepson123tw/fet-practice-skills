@@ -1,11 +1,9 @@
-import { createOverloadFunction } from "../utils/fn-overload";
+import { consoleStyle } from "../utils/console";
+import "../utils/fn-overload";
+import "../utils/promise-task";
+
 // import singleton from "../utils/singleton-proxy";
 // import "../utils/groupby";
-
-const consoleStyle = "background-color: #13AA13; color: white; padding: 5px;";
-const helloStyle = "background-color: red; color: white; padding: 5px;";
-
-console.log("%cFrontend tricks", helloStyle);
 
 // 考慮問題邊界
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -52,7 +50,7 @@ function vortex(n: number, m: number) {
 }
 console.log(vortex(4, 5));
 
-// get parameter
+// get uri parameter
 
 const parseQuery = (url: string) => {
   const q: { [key: string]: string } = {};
@@ -125,115 +123,6 @@ function abc<T>(value: BandType<T, string>) {
 const random = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-// parallel promise
-
-function timeout(delay: number) {
-  return new Promise((resolve) => setTimeout(resolve, delay));
-}
-
-const SuperTask = () => {
-  const tasks: {
-    resolve: (value: unknown) => void;
-    reject: (value: unknown) => void;
-    task: () => Promise<unknown>;
-  }[] = [];
-  const parallelCount = 2;
-  let runningCount = 0;
-  const add = (task: () => Promise<unknown>) => {
-    return new Promise((resolve, reject) => {
-      tasks.push({ resolve, reject, task });
-      run();
-    });
-  };
-  const run = () => {
-    while (runningCount < parallelCount && tasks.length > 0) {
-      const taskItem = tasks.shift();
-      if (taskItem) {
-        const { resolve, reject, task } = taskItem;
-        runningCount++;
-        task()
-          .then(resolve)
-          .catch(reject)
-          .finally(() => {
-            runningCount--;
-            run();
-          });
-      }
-    }
-  };
-  return { add };
-};
-
-const superTask = SuperTask();
-
-function addTask(time: number, name: string) {
-  superTask
-    .add(() => timeout(time))
-    .then(() => {
-      console.log("%cParallel Promise Task", consoleStyle, name + "任務完成");
-    });
-}
-
-addTask(10000, "1");
-addTask(1000, "2");
-addTask(1000, "3");
-addTask(1000, "4");
-addTask(1000, "5");
-
-// add some thing into mirco task
-function runMicroTask(func: () => void) {
-  if (typeof Promise !== "undefined") {
-    Promise.resolve().then(() => {
-      func();
-      console.log("%crunMicroTask", consoleStyle, "runMicroTask");
-    });
-  }
-  if (typeof MutationObserver !== "undefined") {
-    const observer = new MutationObserver(() => {
-      func();
-      console.log("%crunMicroTask", consoleStyle, "runMicroTask");
-    });
-    observer.observe(document.body, {
-      attributes: true,
-    });
-    document.body.setAttribute("id", "id");
-  }
-  // if (process && process.nextTick) {
-  //   process.nextTick(func);
-  //   return;
-  // }
-  setTimeout(func, 0);
-}
-
-runMicroTask(() =>
-  console.log("%crunMicroTask", consoleStyle, "insert runMicroTask")
-);
-
-// add at timeout into fetch
-
-function createRequestWithTimeout(timeout = 3000) {
-  return function (url: string, option: RequestInit = {}) {
-    return new Promise((resolve, reject) => {
-      // so this is a promise status control, if promise is resolved,
-      // it will not be rejected, otherwise it will be rejected
-      const controller = new AbortController();
-      if (option.signal) {
-        const signal = option.signal;
-        signal.addEventListener("abort", () => {
-          controller.abort();
-        });
-      }
-      option.signal = controller.signal;
-      fetch(url, option).then(resolve, reject);
-      setTimeout(() => {
-        reject(new Error("timeout"));
-        // so it will be rejected,and the error message is timeout
-        controller.abort();
-      }, timeout);
-    });
-  };
-}
-
 // defer with animation frame
 
 function useDefer(maxCount = 100) {
@@ -252,19 +141,6 @@ function useDefer(maxCount = 100) {
     return count >= n;
   };
 }
-
-const overloadFn = createOverloadFunction();
-overloadFn.addImplementation(
-  "String",
-  "String",
-  (a: string, b: string) => a + b
-);
-overloadFn.addImplementation(
-  "Number",
-  "Number",
-  (a: number, b: number) => a * b
-);
-console.log(overloadFn(2, 3));
 
 // class MyClass {
 //   constructor() {}
