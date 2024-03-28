@@ -1,3 +1,5 @@
+import { S } from "vite/dist/node/types.d-aGj9QkWt";
+
 /**
  * Represents a watcher that listens for changes on specific properties of an object.
  * @template T - The type of the object being watched.
@@ -52,3 +54,33 @@ const a: typeof key = {
 };
 
 console.log(a);
+
+type UnionType =
+  | {
+      name: string;
+      age: number;
+    }
+  | {
+      location: string;
+    };
+
+const data1: UnionType = {
+  name: "123",
+  age: 123,
+};
+
+type IntersectionType = {
+  name: string;
+  age: number;
+} & {
+  location: string;
+};
+
+const data2 = {
+  name: "123",
+  age: 123,
+  location: "123",
+};
+
+type UnionTypeA = ("a" | "n" | number) & string;
+let b: UnionTypeA = "a";
