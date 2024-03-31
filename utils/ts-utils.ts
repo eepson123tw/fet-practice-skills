@@ -1,5 +1,4 @@
-import { S } from "vite/dist/node/types.d-aGj9QkWt";
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Represents a watcher that listens for changes on specific properties of an object.
  * @template T - The type of the object being watched.
@@ -83,4 +82,3 @@ const data2 = {
 };
 
 type UnionTypeA = ("a" | "n" | number) & string;
-let b: UnionTypeA = "a";
