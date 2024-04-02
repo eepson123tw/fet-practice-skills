@@ -217,3 +217,21 @@ const A: twoParams = class Test extends User {
     super();
   }
 };
+
+const map = {
+  name: "Allen",
+  age: 123,
+  location: false,
+};
+
+const isEnumValue =
+  <T extends object>(map: T) =>
+  (value: unknown): value is T[keyof T] =>
+    Object.values(map).includes(value);
+const isEnumKey =
+  <T extends { [p: string]: T[keyof T] }>(map: T) =>
+  (key: string): key is Extract<keyof T, string> =>
+    Object.keys(map).includes(key);
+
+const value = isEnumValue(map);
+const keyEnum = isEnumKey(map);
