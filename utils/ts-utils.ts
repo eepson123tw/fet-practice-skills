@@ -235,3 +235,77 @@ const isEnumKey =
 
 const value = isEnumValue(map);
 const keyEnum = isEnumKey(map);
+
+type callback<T> = (n: T, i: number) => boolean;
+
+function filter<T>(arr: T[], callback: callback<T>) {
+  return arr.filter(callback);
+}
+
+const arr = [1, 2, 3, 4, 5];
+const result = filter(arr, (n) => n % 2 === 0);
+
+console.log(result); // [2, 4]
+
+export class ArrayHelper<T> {
+  private arr: T[];
+
+  constructor(arr: T[]) {
+    this.arr = arr;
+  }
+
+  filter(callback: callback<T>) {
+    return this.arr.filter(callback);
+  }
+
+  shuffle(arr: T[]) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = this.getRandom(0, i);
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  private getRandom(min: number, max: number) {
+    const desc = max - min;
+    return Math.floor(Math.random() * desc + min);
+  }
+}
+
+const arrayHelper = new ArrayHelper([1, 2, 3, 4, 5]);
+const result2 = arrayHelper.filter((n) => n % 2 === 0);
+console.log(result2); // [2, 4]
+const stringHelper = new ArrayHelper(["1", "2", "3", "4", "5"]);
+const shuffled = stringHelper.shuffle(["1", "2", "3", "4", "5"]);
+console.log(shuffled); // [ '3', '1', '5', '2', '4' ]
+
+const o = {
+  name: "123",
+  age: 123,
+  gender: "male one",
+};
+
+function nameToUpperCase<T extends typeof o>(obj: T): T {
+  obj.name = obj.name
+    .split(" ")
+    .map((c) => c[0].toUpperCase() + c.substring(1))
+    .join(" ");
+  return obj;
+}
+
+const newO = nameToUpperCase(o);
+console.log(newO.name); // Male One
+
+// ---------
+
+function mixAry<T, U>(a: T[], b: U[]): (T | U)[] {
+  if (a.length !== b.length) {
+    throw new Error("Arrays must have the same length");
+  }
+  const result: (T | U)[] = [];
+  for (let i = 0; i < a.length; i++) {
+    result.push(a[i], b[i]);
+  }
+  return result;
+}
+mixAry([1, 2, 3], ["a", "b", "c"]); // [1, 'a', 2, 'b', 3, 'c']
