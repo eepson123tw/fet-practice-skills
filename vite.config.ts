@@ -22,9 +22,20 @@ export default defineConfig({
         const htmlFiles = files.filter((file) => file.endsWith(".html"));
         await Promise.all(
           htmlFiles.map(async (file) => {
-            const content = await fs.promises.readFile(
+            let content = await fs.promises.readFile(
               path.join(contentDir, file),
               "utf-8"
+            );
+            // Update source paths in <source> tags
+            content = content.replace(
+              /<source src="\.\.\/public\/([^"]+)" type="audio\/ogg">/g,
+              '<source src="./$1" type="audio/ogg">'
+            );
+
+            // Update script paths
+            content = content.replace(
+              /<script src="\.\.\/utils\/[^"]+\.(t|j)s"><\/script>/g,
+              '<script type="module" crossorigin src="/assets/index.js"></script>'
             );
             await fs.promises.writeFile(
               path.join(targetDir, file),
@@ -36,4 +47,13 @@ export default defineConfig({
       },
     },
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].js`,
+        chunkFileNames: `assets/[name].js`,
+        assetFileNames: `assets/[name].[ext]`,
+      },
+    },
+  },
 });
