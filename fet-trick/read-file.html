@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ReadFile</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		html,body{
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			width: 100%;
+			height: 100%;
+		}
+		.container{
+			width: 100%;
+			height: 100%;
+			display: flex;
+		}
+		.drawer {
+			width: 250px;
+			height: 100%;
+			overflow-y: auto;
+			background-color: #333;
+			color: #fff;
+			padding: 20px;
+			box-shadow: 3px 0 5px rgba(0,0,0,0.2);
+		}
+
+		.drawer button {
+			padding: 10px 15px;
+			margin-bottom: 20px;
+			cursor: pointer;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			transition: background-color 0.3s ease;
+		}
+
+		.drawer button:hover {
+			background-color: #0056b3;
+		}
+
+		.fileList {
+			list-style: none;
+		}
+
+		.fileList li {
+			padding: 10px;
+			border-bottom: 1px solid #555;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		.fileList li:hover {
+			background-color: #555;
+		}
+
+		.showPage {
+			background-color: black;
+			color: #333;
+			padding: 20px;
+			overflow: auto;
+			flex: 1;
+		}
+		div.code {
+			white-space: pre;
+		}
+		.directory-closed > .fileList {
+			display: none;
+		}
+		.directory-open > .fileList {
+				display: block;
+		}
+		.directory-entry {
+			cursor: pointer;
+			user-select: none;
+		}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="drawer">
+		<button>Open Directory</button>
+			<ul class="fileList"></ul>
+		</div>
+		<div class='code showPage'>
+		</div>
+
+	</div>
+
+	<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+	const btn = document.querySelector('button');
+	const showPage = document.querySelector('.showPage');
+	const fileListElement = document.querySelector('.fileList');
+
+	btn.onclick = async () => {
+		fileListElement.innerHTML = ''; // 清空之前的內容
+		try {
+		const handle = await showDirectoryPicker();
+		await processHandle(handle, fileListElement);
+		} catch (err) {
+		alert('An error occurred: ' + err.message);
+		console.error(err);
+		}
+	};
+
+	async function processHandle(handle, parentElement) {
+		const listItem = document.createElement('li');
+		listItem.textContent = handle?.name;
+		listItem.classList.add('directory-entry');
+
+		if (handle?.kind === 'directory') {
+			listItem.classList.add('directory-closed');
+			const childList = document.createElement('ul');
+			childList.classList.add('fileList');
+			listItem.appendChild(childList);
+			
+			listItem.onclick = (event) => {
+				listItem.classList.toggle('directory-open');
+				listItem.classList.toggle('directory-closed');
+				event.stopPropagation();
+			};
+
+			for await (const entry of handle.values()) {
+				// need to check if the entry is a directory or a file
+				// if is a file, we can add the onclick event to read the file
+				// if is a directory, we need to create a new list item and call processHandle recursively
+				if(entry[1]===undefined){
+					processHandle(entry, childList)
+				}else{
+					processHandle(entry[1], childList)
+				}
+				
+			}
+		} else if (handle?.kind === 'file') {
+			listItem.onclick = async (event) => {
+				try {
+				const file = await handle.getFile();
+				const text = await file.text();
+				showPage.textContent = text;
+				} catch (err) {
+				alert('An error occurred: ' + err.message);
+				console.error(err);
+				}
+				event.stopPropagation();
+			};
+		}
+		parentElement.appendChild(listItem);
+	}
+
+	// Highlight.js integration, if needed.
+	document.querySelectorAll('div.code').forEach((el) => {
+		hljs.highlightElement(el);
+	});
+	});
+
+
+	</script>
+</body>
+</html>

@@ -8,11 +8,13 @@ function Link() {
   return (
     <>
       <div className="link">
+        <h2>Web Api</h2>
         <a href={urlhead + "/canvas-music.html"}>canvas-music</a>
         <a href={urlhead + "/clipboard-api.html"}>clipboard-api</a>
         <a href={urlhead + "/canvas-img.html"}>canvas-img</a>
         <a href={urlhead + "/eye-dropper.html"}>eye dropper</a>
         <a href={urlhead + "/media-query"}>media-query</a>
+        <a href={urlhead + "/read-file"}>read-file</a>
       </div>
     </>
   );
