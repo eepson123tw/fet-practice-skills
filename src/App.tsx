@@ -2,19 +2,37 @@ import { useEffect } from "react";
 import "./main-fn";
 import Timer from "./timer.tsx";
 
+interface Link {
+  url: string;
+  routeName: string;
+}
+
+const links: Link[] = [
+  { routeName: "canvas-music", url: "/canvas-music.html" },
+  { routeName: "clipboard-api", url: "/clipboard-api.html" },
+  { routeName: "canvas-img", url: "/canvas-img.html" },
+  { routeName: "eye-dropper", url: "/eye-dropper.html" },
+  { routeName: "media-query", url: "/media-query" },
+  { routeName: "read-file", url: "/read-file" },
+  { routeName: "traffic-light", url: "/traffic-light" },
+];
+
 function Link() {
   // if is build change the link to under '/'
-  const urlhead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
+  const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
   return (
     <>
       <div className="link">
         <h2>Web Api</h2>
-        <a href={urlhead + "/canvas-music.html"}>canvas-music</a>
-        <a href={urlhead + "/clipboard-api.html"}>clipboard-api</a>
-        <a href={urlhead + "/canvas-img.html"}>canvas-img</a>
-        <a href={urlhead + "/eye-dropper.html"}>eye dropper</a>
-        <a href={urlhead + "/media-query"}>media-query</a>
-        <a href={urlhead + "/read-file"}>read-file</a>
+        <ul>
+          {links.map((link) => {
+            return (
+              <li key={link.routeName}>
+                <a href={`${urlHead}${link.url}`}>{link.routeName}</a>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </>
   );

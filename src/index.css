@@ -8,13 +8,26 @@ body {
 .link {
   margin-top: 10px;
 }
-a {
+
+.link ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.link li {
   color: #fff;
   text-decoration: none;
   font-size: 1.25rem;
   font-weight: 700;
   font-family: "Roboto", sans-serif;
 }
+a {
+  display: block;
+}
+
+li:hover,
 a:hover {
   color: #f00;
 }
