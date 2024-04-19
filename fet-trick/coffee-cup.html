@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CoffeeCup</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body{
+			background: #cebca6;
+			height: 100vh;
+			width: 100vw;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.container{
+			width: 350px;
+			height: 350px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			border: 1px solid black;
+			background: linear-gradient(45deg, rgba(0, 247, 247,  1), rgba(247, 247, 247,  0.25));
+			position: relative;
+		}
+		.cup{
+			width: 160px;
+			height: 162px;
+			margin: 3em auto;
+			position: relative;
+		}
+		.cup::after{
+			left: 0;
+			top: -10px;
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 20px;
+			background: rgba(247, 247, 247,  0.5);
+			border-radius: 50%;
+		}
+		.cup-body{
+			display: flex;
+			flex-direction: column-reverse;
+			height: 100%;
+			background: rgba(247, 247, 247,  0.9);
+			clip-path: path('m 0 0 q 4.59 145.8 34.425 155.52 c 29.835 8.1 68.85 8.1 96.39 0 q 29.835 -9.72 29.835 -155.52 c 143 11 16 13 0 0 Z');
+		}
+
+		.layer{
+			width: 100%;
+			height: 40px;
+			border-radius: 80px/10px;
+			position: relative;
+		}
+		.layer::after{
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 20px;
+			background: inherit;
+			top: 0;
+			left: 0	;
+			border-radius: 50%;
+		}
+		.layer:nth-child(2){
+			margin-bottom: -20px;
+		}
+		.expresso{
+			background: rgba(75, 49, 31, 0.8);
+		}
+
+		.whiskey{
+			background: rgba(207, 129, 39, 0.8);
+		}
+
+.options {
+    position: relative;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background: rgba(0,0,0, 0.04);
+    padding: 12px;
+	z-index: 2;
+}
+.options > span {
+    transition: all 0.1s ease-in-out;
+}
+.options > span:hover {
+    background: rgba(255,255,255, 1);
+    cursor: pointer;
+    font-size: 22px;
+    box-shadow: 
+    0 0 2px 0px rgba(0,0,0,0.2),
+    0 0 3px 2px rgba(255, 255, 255, 0.1),
+    0 0 3px 0 rgba(0,0,0, 0.1);
+    color: #462814be;
+}
+.options:hover > * {
+    animation-play-state: paused;
+}
+
+.options {
+    background: transparent;
+    height: fit-content;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0%;
+    margin: auto;
+    translate: 25px 210px;
+    /* transform-origin: -157px 107%; */
+    rotate: -100deg;
+	
+}
+@keyframes rotateC {
+    0% {rotate: 0deg;}
+    100% {rotate: 360deg;}
+}
+.options > span {
+    --_speed: 4;
+    color: #4628148e;
+    position: absolute;
+    border-radius: 4px;
+    background-color: rgba(255,255,255, 0.2);
+    transform-origin: 300px 50%;
+    padding: 4px 12px 1px 22px;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    animation: rotateC calc(var(--_speed) * 36s) linear infinite;
+}
+
+.options > span:nth-child(1) {  animation-delay:  calc(var(--_speed) * -1s); }
+.options > span:nth-child(2) {  animation-delay: calc(var(--_speed) *  -2s); }
+.options > span:nth-child(3) {  animation-delay: calc(var(--_speed) *  -3s); }
+.options > span:nth-child(4) {  animation-delay: calc(var(--_speed) *  -4s); }
+.options > span:nth-child(5) {  animation-delay: calc(var(--_speed) *  -5s); }
+.options > span:nth-child(6) {  animation-delay: calc(var(--_speed) *  -6s); }
+.options > span:nth-child(7) {  animation-delay: calc(var(--_speed) *  -7s); }
+.options > span:nth-child(8) {  animation-delay: calc(var(--_speed) *  -8s); }
+.options > span:nth-child(9) {  animation-delay: calc(var(--_speed) *  -9s); }
+.options > span:nth-child(10) { animation-delay: calc(var(--_speed) * -10s); }
+.options > span:nth-child(11) { animation-delay: calc(var(--_speed) * -11s); }
+.options > span:nth-child(12) { animation-delay: calc(var(--_speed) * -12s); }
+.options > span:nth-child(13) { animation-delay: calc(var(--_speed) * -13s); }
+.options > span:nth-child(14) { animation-delay: calc(var(--_speed) * -14s); }
+.options > span:nth-child(15) { animation-delay: calc(var(--_speed) * -15s); }
+.options > span:nth-child(16) { animation-delay: calc(var(--_speed) * -16s); }
+.options > span:nth-child(17) { animation-delay: calc(var(--_speed) * -17s); }
+.options > span:nth-child(18) { animation-delay: calc(var(--_speed) * -18s); }
+.options > span:nth-child(19) { animation-delay: calc(var(--_speed) * -19s); }
+.options > span:nth-child(20) { animation-delay: calc(var(--_speed) * -20s); }
+.options > span:nth-child(21) { animation-delay: calc(var(--_speed) * -21s); }
+.options > span:nth-child(22) { animation-delay: calc(var(--_speed) * -22s); }
+.options > span:nth-child(23) { animation-delay: calc(var(--_speed) * -23s); }
+.options > span:nth-child(24) { animation-delay: calc(var(--_speed) * -24s); }
+.options > span:nth-child(25) { animation-delay: calc(var(--_speed) * -25s); }
+.options > span:nth-child(26) { animation-delay: calc(var(--_speed) * -26s); }
+.options > span:nth-child(27) { animation-delay: calc(var(--_speed) * -27s); }
+.options > span:nth-child(28) { animation-delay: calc(var(--_speed) * -28s); }
+.options > span:nth-child(29) { animation-delay: calc(var(--_speed) * -29s); }
+.options > span:nth-child(30) { animation-delay: calc(var(--_speed) * -30s); }
+.options > span:nth-child(31) { animation-delay: calc(var(--_speed) * -31s); }
+.options > span:nth-child(32) { animation-delay: calc(var(--_speed) * -32s); }
+.options > span:nth-child(33) { animation-delay: calc(var(--_speed) * -33s); }
+.options > span:nth-child(34) { animation-delay: calc(var(--_speed) * -34s); }
+.options > span:nth-child(35) { animation-delay: calc(var(--_speed) * -35s); }
+	</style>
+</head>
+<body>
+	<div class="options">
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">expresso</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">whiskey</span>
+		<span class="tag">whiskey</span>
+	</div>
+	<div class="container"> 
+		<div class="cup">
+			<div class="cup-body">
+				<div class="layer expresso"></div>
+				<div class="layer whiskey"></div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,11 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
 body {
+  width: 100%;
+  height: 100%;
   background: rgba(0, 1, 1, 0.25);
 }
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+
 #app {
+  width: clamp(320px, 100%, 1200px);
+  border-radius: 20px;
+  padding: 20px;
   z-index: 10;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+  margin: 10px;
+}
+
 .link {
+  width: 100%;
+  text-align: center;
   margin-top: 10px;
 }
 
@@ -13,6 +43,7 @@ body {
   display: flex;
   justify-content: center;
   list-style: none;
+  flex-wrap: wrap;
   padding: 0;
 }
 

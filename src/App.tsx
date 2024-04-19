@@ -15,6 +15,7 @@ const links: Link[] = [
   { routeName: "media-query", url: "/media-query" },
   { routeName: "read-file", url: "/read-file" },
   { routeName: "traffic-light", url: "/traffic-light" },
+  { routeName: "coffee-cup", url: "/coffee-cup" },
 ];
 
 function Link() {
