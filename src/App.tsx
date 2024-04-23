@@ -16,6 +16,7 @@ const links: Link[] = [
   { routeName: "read-file", url: "/read-file" },
   { routeName: "traffic-light", url: "/traffic-light" },
   { routeName: "coffee-cup", url: "/coffee-cup" },
+  { routeName: "bubble-up", url: "/bubble-up" },
 ];
 
 function Link() {
