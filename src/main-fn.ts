@@ -153,3 +153,14 @@ function useDefer(maxCount = 100) {
 // const v2 = new sClass();
 
 // console.log(v1 instanceof sClass, v2 instanceof sClass, v1 === v2);
+
+// debounce with type
+
+// const count = (n: number, m: number) => {
+//   return n + m;
+// };
+
+// type debounce<T extends unknown[], K> = (
+//   fn: (...args: T) => K,
+//   duration: number
+// ) => (...args: T) => void;
