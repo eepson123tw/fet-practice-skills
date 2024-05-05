@@ -18,6 +18,7 @@ const links: Link[] = [
   { routeName: "coffee-cup", url: "/coffee-cup" },
   { routeName: "bubble-up", url: "/bubble-up" },
   { routeName: "box-reflect", url: "/box-reflect" },
+  { routeName: "text-track", url: "/text-track" },
 ];
 
 function Link() {
