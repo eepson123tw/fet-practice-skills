@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BtnCollapse</title>
+	<style>
+		button {
+			background-color: #3498db;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.detail {
+			height: 0;
+			overflow: hidden;
+		}
+		.content {
+			background-color: #f1c40f;
+			padding: 20px;
+		}
+	</style>
+</head>
+<body>
+	<button>collapse</button>
+	<div class="detail">
+		<div class="content">
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum vel impedit quaerat consequuntur repudiandae eius itaque voluptate incidunt, cumque cum. Exercitationem cumque minus illo, aperiam ullam voluptatum in assumenda reiciendis.</p>
+		</div>
+	</div>
+	<script>
+
+	const btn = document.querySelector('button'); // DOM 操作：選取按鈕元素
+	const detail = document.querySelector('.detail'); // DOM 操作：選取 detail 元素
+	const content = document.querySelector('.content'); // DOM 操作：選取 content 元素
+
+	// btn.addEventListener('mouseenter', () => {
+	// 	content.style.height = 'auto'; // 動態修改樣式：先設置高度為 auto 以計算實際高度
+	// 	const {height} = content.getBoundingClientRect(); // 獲取元素的高度
+	// 	content.style.height = '0'; // 重設高度為 0
+	// 	content.style.transition = 'height 0.5s'; // 設置過渡效果
+	// 	document.offsetHeight; // 強制重排 回流 讀取幾何屬性
+	// 	content.style.height = `${height}px`; // 設置為實際高度以觸發過渡效果
+	// });
+
+	// btn.addEventListener('mouseleave', () => {
+	// 	content.style.height = '0'; // 設置高度為 0 以觸發過渡效果
+	// });
+
+
+	btn.addEventListener('mouseenter', () => {
+		// First: 儲存初始狀態
+		const first = detail.getBoundingClientRect();
+
+		// 將高度設置為自動，以計算最終狀態
+		detail.style.height = 'auto';
+
+		// Last: 儲存最終狀態
+		const last = detail.getBoundingClientRect();
+
+		// Invert: 設置初始高度為 0，以便從 0 過渡到最終高度
+		detail.style.height = `${first.height}px`;
+
+		// 使用 requestAnimationFrame 確保下一個動畫幀才應用過渡效果
+		requestAnimationFrame(() => {
+			detail.style.transition = 'height 0.3s';
+			detail.style.height = `${last.height}px`;
+		});
+	});
+
+	btn.addEventListener('mouseleave', () => {
+		// 重設高度為初始狀態，觸發過渡效果
+		detail.style.height = '0px';
+	});
+
+
+	</script>
+
+</body>
+</html>
