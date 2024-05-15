@@ -20,6 +20,7 @@ const links: Link[] = [
   { routeName: "box-reflect", url: "/box-reflect" },
   { routeName: "text-track", url: "/text-track" },
   { routeName: "btn-collapse", url: "/btn-collapse" },
+  { routeName: "text-title", url: "/text-title" },
 ];
 
 function Link() {
