@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>RunThousandTask</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		.container{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: black;
+		}
+		.ball{
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			border-radius: 50%;
+			animation: move 1s infinite;
+		}
+		@keyframes move{
+			0%{
+				transform: translateY(0);
+			}
+			50%{
+				transform: translateY(100px);
+			}
+			100%{
+				transform: translateY(0);
+			}
+		}
+		.button{
+			padding: 10px 20px;
+			background-color: #fff;
+			border: none;
+			outline: none;
+			cursor: pointer;
+		}
+		.runtime{
+			color: #fff;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="ball"></div>
+		<div class="runtime"></div>
+		<button >Run Task 1000</button>
+	</div>
+	<script>
+		const btn = document.querySelector('button');	
+		const runtime = document.querySelector('.runtime');
+		btn.addEventListener('click', runAllTask);
+		// count js run time
+		
+
+		// function runAllTask() {
+		// 	const startTime = performance.now();
+
+		// 	let i = 0;
+		// 	function nextTask() {
+		// 		if (i < 1000) {
+		// 			runTask();
+		// 			i++;
+		// 		} else {
+		// 			const endTime = performance.now();
+		// 			const runtime = endTime - startTime;
+		// 			document.querySelector('.runtime').textContent = `Runtime: ${runtime/1000}s`;
+		// 		}
+		// 	}
+
+		// 	function runTask() {
+		// 		window.requestIdleCallback((deadline) => {
+		// 			if (deadline.timeRemaining() < 16.6) {  // 1ms buffer to avoid exceeding frame budget
+		// 				console.log('run task');
+		// 				nextTask();  // Schedule next task
+		// 			} else {
+		// 				nextTask();  // Try again later
+		// 			}
+		// 		})
+		// 	}
+
+		// 	nextTask();  // Start the first task
+		// }
+
+		function runAllTask(){
+			for(i = 0; i < 1000; i++){
+				_runTask(i)
+			}
+		}
+
+		function _runTask(i){
+			setTimeout(() => {
+				return new Promise((resolve, reject) => {
+					runTask(resolve)
+				})
+			})
+		}
+
+		function runTask(resolve){
+			window.requestIdleCallback((deadline) => {
+				if (deadline.timeRemaining() > 0) {  // 1ms buffer to avoid exceeding frame budget
+					console.log('run task');
+					resolve();  // Schedule next task
+				}else{
+					runTask(resolve);  // Try again later
+				} 
+			})
+		}
+
+	</script>
+</body>
+</html>
