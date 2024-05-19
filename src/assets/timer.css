@@ -3,6 +3,22 @@
   justify-content: center;
   align-items: center;
 }
+.container {
+  background: wheat;
+  margin-top: 20px;
+  width: 50%;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 10px;
+}
+.container ul {
+  margin-top: 10px;
+  display: block;
+}
+.container ul li:hover {
+  cursor: pointer;
+  color: azure;
+}
 
 .card-container {
   background-color: white;

@@ -123,6 +123,15 @@ function App() {
         <Canvas></Canvas>
         <Timer></Timer>
         <Link></Link>
+        <div className="container">
+          <h2> React 19:</h2>
+          <ul>
+            <li>useFormStatus</li>
+            <li>use</li>
+            <li>React complier useMemo or useCallback to optimize</li>
+            <li>Preload Preinit</li>
+          </ul>
+        </div>
       </div>
     </>
   );
