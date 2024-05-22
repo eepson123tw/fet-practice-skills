@@ -119,6 +119,7 @@ function Canvas() {
 function App() {
   return (
     <>
+      <meta name="description" content="test react 19 meta" />
       <div id="app">
         <Canvas></Canvas>
         <Timer></Timer>
@@ -130,6 +131,7 @@ function App() {
             <li>use</li>
             <li>React complier useMemo or useCallback to optimize</li>
             <li>Preload Preinit</li>
+            <li>react meta config</li>
           </ul>
         </div>
       </div>
