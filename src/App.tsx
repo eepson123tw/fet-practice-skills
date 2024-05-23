@@ -22,6 +22,7 @@ const links: Link[] = [
   { routeName: "btn-collapse", url: "/btn-collapse" },
   { routeName: "text-title", url: "/text-title" },
   { routeName: "run-thousand-task", url: "/run-thousand-task" },
+  { routeName: "text-eraser", url: "/text-eraser" },
 ];
 
 function Link() {
