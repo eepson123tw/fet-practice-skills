@@ -23,6 +23,7 @@ const links: Link[] = [
   { routeName: "text-title", url: "/text-title" },
   { routeName: "run-thousand-task", url: "/run-thousand-task" },
   { routeName: "text-eraser", url: "/text-eraser" },
+  { routeName: "frame-img", url: "/frame-img" },
 ];
 
 function Link() {
