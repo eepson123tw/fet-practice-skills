@@ -25,6 +25,7 @@ const links: Link[] = [
   { routeName: "run-thousand-task", url: "/run-thousand-task" },
   { routeName: "text-eraser", url: "/text-eraser" },
   { routeName: "frame-img", url: "/frame-img" },
+  { routeName: "rotate-img", url: "/rotate-img" },
 ];
 
 function Link() {
