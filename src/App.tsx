@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "./main-fn";
 import Timer from "./timer.tsx";
+import { MutationObserve } from "./mutationObserve.tsx";
 
 interface Link {
   url: string;
@@ -136,6 +137,12 @@ function App() {
             <li>react meta config</li>
           </ul>
         </div>
+        <MutationObserve text="浮水印" gap={15} fontSize={14}>
+          <div>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores
+            quasi tempora modi, quo cupiditate incidunt suscipit molestias
+          </div>
+        </MutationObserve>
       </div>
     </>
   );
