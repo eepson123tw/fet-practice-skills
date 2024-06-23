@@ -15,6 +15,11 @@
             margin: 0;
             background-color: #faf8ef;
         }
+        #instructions {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #776e65;
+        }
         #game {
             display: grid;
             grid-template-columns: repeat(4, 100px);
@@ -57,6 +62,10 @@
     </style>
 </head>
 <body>
+    <div id="instructions">
+        <h1>2048 Game</h1>
+        <p>Use the arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!</p>
+    </div>
     <div id="info">
         Steps: <span id="steps">0</span> - <span id="message"></span>
     </div>
