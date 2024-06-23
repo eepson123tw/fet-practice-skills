@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "./main-fn";
 import Timer from "./timer.tsx";
 import { MutationObserve } from "./mutationObserve.tsx";
+import Container from "./Components/Container.tsx";
 
 interface Link {
   url: string;
@@ -26,6 +27,7 @@ const links: Link[] = [
   { routeName: "text-eraser", url: "/text-eraser" },
   { routeName: "frame-img", url: "/frame-img" },
   { routeName: "rotate-img", url: "/rotate-img" },
+  { routeName: "2048", url: "/2048" },
 ];
 
 function Link() {
@@ -128,8 +130,7 @@ function App() {
         <Canvas></Canvas>
         <Timer></Timer>
         <Link></Link>
-        <div className="container">
-          <h2> React 19:</h2>
+        <Container title="React 19 Info:">
           <ul>
             <li>useFormStatus</li>
             <li>use</li>
@@ -137,13 +138,15 @@ function App() {
             <li>Preload Preinit</li>
             <li>react meta config</li>
           </ul>
-        </div>
-        <MutationObserve text="浮水印" gap={15} fontSize={14}>
-          <div>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores
-            quasi tempora modi, quo cupiditate incidunt suscipit molestias
-          </div>
-        </MutationObserve>
+        </Container>
+        <Container title="浮水印">
+          <MutationObserve text="浮水印" gap={15} fontSize={14}>
+            <div>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores
+              quasi tempora modi, quo cupiditate incidunt suscipit molestias
+            </div>
+          </MutationObserve>
+        </Container>
       </div>
     </>
   );
