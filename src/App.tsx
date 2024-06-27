@@ -28,6 +28,7 @@ const links: Link[] = [
   { routeName: "frame-img", url: "/frame-img" },
   { routeName: "rotate-img", url: "/rotate-img" },
   { routeName: "2048", url: "/2048" },
+  { routeName: "aspect-ratio", url: "/aspect-ratio" },
 ];
 
 function Link() {
