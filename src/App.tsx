@@ -4,50 +4,95 @@ import Timer from "./timer.tsx";
 import { MutationObserve } from "./mutationObserve.tsx";
 import Container from "./Components/Container.tsx";
 
+enum Group {
+  Canvas = "canvas",
+  BrowserApi = "browser-api",
+  Js = "js-trick",
+  Css = "css-trick",
+}
+// "canvas" | "browser..."
+type GroupValue = `${Group}` extends `${infer N extends string}` ? N : never;
+
 interface Link {
   url: string;
   routeName: string;
+  group: Group;
 }
 
 const links: Link[] = [
-  { routeName: "canvas-music", url: "/canvas-music.html" },
-  { routeName: "clipboard-api", url: "/clipboard-api.html" },
-  { routeName: "canvas-img", url: "/canvas-img.html" },
-  { routeName: "eye-dropper", url: "/eye-dropper.html" },
-  { routeName: "media-query", url: "/media-query" },
-  { routeName: "read-file", url: "/read-file" },
-  { routeName: "traffic-light", url: "/traffic-light" },
-  { routeName: "coffee-cup", url: "/coffee-cup" },
-  { routeName: "bubble-up", url: "/bubble-up" },
-  { routeName: "box-reflect", url: "/box-reflect" },
-  { routeName: "text-track", url: "/text-track" },
-  { routeName: "btn-collapse", url: "/btn-collapse" },
-  { routeName: "text-title", url: "/text-title" },
-  { routeName: "run-thousand-task", url: "/run-thousand-task" },
-  { routeName: "text-eraser", url: "/text-eraser" },
-  { routeName: "frame-img", url: "/frame-img" },
-  { routeName: "rotate-img", url: "/rotate-img" },
-  { routeName: "2048", url: "/2048" },
-  { routeName: "aspect-ratio", url: "/aspect-ratio" },
+  { routeName: "canvas-music", url: "/canvas-music.html", group: Group.Canvas },
+  {
+    routeName: "clipboard-api",
+    url: "/clipboard-api.html",
+    group: Group.BrowserApi,
+  },
+  { routeName: "canvas-img", url: "/canvas-img.html", group: Group.Canvas },
+  {
+    routeName: "eye-dropper",
+    url: "/eye-dropper.html",
+    group: Group.BrowserApi,
+  },
+  { routeName: "media-query", url: "/media-query", group: Group.BrowserApi },
+  { routeName: "read-file", url: "/read-file", group: Group.BrowserApi },
+  { routeName: "traffic-light", url: "/traffic-light", group: Group.Js },
+  { routeName: "coffee-cup", url: "/coffee-cup", group: Group.Css },
+  { routeName: "bubble-up", url: "/bubble-up", group: Group.Css },
+  { routeName: "box-reflect", url: "/box-reflect", group: Group.Css },
+  { routeName: "text-track", url: "/text-track", group: Group.Js },
+  { routeName: "btn-collapse", url: "/btn-collapse", group: Group.Css },
+  { routeName: "text-title", url: "/text-title", group: Group.Css },
+  {
+    routeName: "run-thousand-task",
+    url: "/run-thousand-task",
+    group: Group.Js,
+  },
+  { routeName: "text-eraser", url: "/text-eraser", group: Group.Css },
+  { routeName: "frame-img", url: "/frame-img", group: Group.Js },
+  { routeName: "rotate-img", url: "/rotate-img", group: Group.Css },
+  { routeName: "2048", url: "/2048", group: Group.Js },
+  { routeName: "aspect-ratio", url: "/aspect-ratio", group: Group.Css },
 ];
+
+function isValidKey(key: string): key is GroupValue {
+  return Object.values(Group).some((enumValue) => enumValue === key);
+}
+
+const groupBy = (arr: Link[], key: keyof Link) => {
+  return arr.reduce((acc, cur) => {
+    const groupKey = cur[key];
+    if (isValidKey(groupKey)) {
+      (acc[groupKey] = acc[groupKey] || []).push(cur);
+    }
+    return acc;
+  }, {} as Record<GroupValue, Link[]>);
+};
+
+console.log(groupBy(links, "group"), isValidKey("css-trick"));
 
 function Link() {
   // if is build change the link to under '/'
   const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
   return (
     <>
-      <div className="link">
-        <h2>Web Api</h2>
-        <ul>
-          {links.map((link) => {
-            return (
-              <li key={link.routeName}>
-                <a href={`${urlHead}${link.url}`}>{link.routeName}</a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <h2>Web Api</h2>
+      {Object.keys(groupBy(links, "group")).map((group) => {
+        return (
+          <div key={group} className="link-group">
+            <h3 className="link-title">{group}</h3>
+            <ul>
+              {groupBy(links, "group")[group as GroupValue].map((link) => {
+                return (
+                  <li key={link.routeName}>
+                    <a className="link" href={`${urlHead}${link.url}`}>
+                      {link.routeName}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
     </>
   );
 }
@@ -92,7 +137,7 @@ function Canvas() {
     const nextChar = new Array(columns).fill(0);
     // draw a row of text
     const draw = () => {
-      ctx.fillStyle = "rgba(240, 240, 240, 0.1)";
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
       ctx.fillRect(0, 0, width, height);
       for (let i = 0; i < columns; i++) {
         ctx.fillStyle = randomColor();
@@ -131,23 +176,26 @@ function App() {
         <Canvas></Canvas>
         <Timer></Timer>
         <Link></Link>
-        <Container title="React 19 Info:">
-          <ul>
-            <li>useFormStatus</li>
-            <li>use</li>
-            <li>React complier useMemo or useCallback to optimize</li>
-            <li>Preload Preinit</li>
-            <li>react meta config</li>
-          </ul>
-        </Container>
-        <Container title="浮水印">
-          <MutationObserve text="浮水印" gap={15} fontSize={14}>
-            <div>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores
-              quasi tempora modi, quo cupiditate incidunt suscipit molestias
-            </div>
-          </MutationObserve>
-        </Container>
+        <div style={{ display: "flex" }}>
+          <Container title="React 19 Info:">
+            <ul>
+              <li>useFormStatus</li>
+              <li>use</li>
+              <li>React complier useMemo or useCallback to optimize</li>
+              <li>Preload Preinit</li>
+              <li>react meta config</li>
+            </ul>
+          </Container>
+          <Container title="浮水印">
+            <MutationObserve text="浮水印" gap={15} fontSize={14}>
+              <div>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Dolores quasi tempora modi, quo cupiditate incidunt suscipit
+                molestias
+              </div>
+            </MutationObserve>
+          </Container>
+        </div>
       </div>
     </>
   );
