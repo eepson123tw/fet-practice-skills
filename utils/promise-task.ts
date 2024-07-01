@@ -46,7 +46,11 @@ function addTask(time: number, name: string) {
   superTask
     .add(() => timeout(time))
     .then(() => {
-      console.log("%cParallel Promise Task", consoleStyle, name + "任務完成");
+      console.log(
+        "%cParallel Promise Task",
+        consoleStyle,
+        "第" + name + "任務完成花費" + time + "ms"
+      );
     });
 }
 
