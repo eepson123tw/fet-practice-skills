@@ -49,6 +49,7 @@ const links: Link[] = [
   },
   { routeName: "text-eraser", url: "/text-eraser", group: Group.Css },
   { routeName: "frame-img", url: "/frame-img", group: Group.Js },
+  { routeName: "color-thief", url: "/color-thief", group: Group.Js },
   { routeName: "rotate-img", url: "/rotate-img", group: Group.Css },
   { routeName: "2048", url: "/2048", group: Group.Js },
   { routeName: "aspect-ratio", url: "/aspect-ratio", group: Group.Css },
