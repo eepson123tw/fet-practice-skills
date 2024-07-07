@@ -53,6 +53,11 @@ const links: Link[] = [
   { routeName: "rotate-img", url: "/rotate-img", group: Group.Css },
   { routeName: "2048", url: "/2048", group: Group.Js },
   { routeName: "aspect-ratio", url: "/aspect-ratio", group: Group.Css },
+  {
+    routeName: "broadcastChannel-card",
+    url: "/broadcastChannel-card",
+    group: Group.Js,
+  },
 ];
 
 function isValidKey(key: string): key is GroupValue {

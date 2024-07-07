@@ -37,12 +37,16 @@ a {
 
 .link-group {
   text-align: center;
-  height: 40px;
   overflow: hidden;
-  transition: height 0.3s ease;
+  margin-bottom: 1rem;
+  cursor: pointer;
 }
-.link-group:hover {
-  height: 100px;
+.link-group ul {
+  max-height: 0;
+  transition: max-height 1s;
+}
+.link-group:hover ul {
+  max-height: 500px;
 }
 
 .link {
