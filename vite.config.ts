@@ -53,6 +53,15 @@ export default defineConfig({
         entryFileNames: `assets/[name].js`,
         chunkFileNames: `assets/[name].js`,
         assetFileNames: `assets/[name].[ext]`,
+        // manualChunks: {
+        //   react: ["react"],
+        //   "react-dom": ["react-dom"],
+        // },
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
       },
     },
   },

@@ -43,6 +43,7 @@ const links: Link[] = [
   { routeName: "text-title", url: "/text-title", group: Group.Css },
   { routeName: "hover-effect", url: "/hover-effect", group: Group.Css },
   { routeName: "text-empty", url: "/text-empty", group: Group.Css },
+  { routeName: "image-size", url: "/img-size", group: Group.Css },
   {
     routeName: "run-thousand-task",
     url: "/run-thousand-task",
