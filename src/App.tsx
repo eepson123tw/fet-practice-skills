@@ -21,12 +21,17 @@ interface Link {
 
 const links: Link[] = [
   { routeName: "canvas-music", url: "/canvas-music.html", group: Group.Canvas },
+  { routeName: "canvas-img", url: "/canvas-img.html", group: Group.Canvas },
+  {
+    routeName: "canvas-drawer",
+    url: "/canvas-drawer.html",
+    group: Group.Canvas,
+  },
   {
     routeName: "clipboard-api",
     url: "/clipboard-api.html",
     group: Group.BrowserApi,
   },
-  { routeName: "canvas-img", url: "/canvas-img.html", group: Group.Canvas },
   {
     routeName: "eye-dropper",
     url: "/eye-dropper.html",
