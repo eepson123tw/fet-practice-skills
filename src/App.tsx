@@ -1,93 +1,31 @@
 import { useEffect } from "react";
 import "./main-fn";
+
 import Timer from "./timer.tsx";
 import { MutationObserve } from "./mutationObserve.tsx";
 import Container from "./Components/Container.tsx";
-
-enum Group {
-  Canvas = "canvas",
-  BrowserApi = "browser-api",
-  Js = "js-trick",
-  Css = "css-trick",
-}
-// "canvas" | "browser..."
-type GroupValue = `${Group}` extends `${infer N extends string}` ? N : never;
-
-interface Link {
-  url: string;
-  routeName: string;
-  group: Group;
-}
-
-const links: Link[] = [
-  { routeName: "canvas-music", url: "/canvas-music.html", group: Group.Canvas },
-  { routeName: "canvas-img", url: "/canvas-img.html", group: Group.Canvas },
-  {
-    routeName: "canvas-drawer",
-    url: "/canvas-drawer.html",
-    group: Group.Canvas,
-  },
-  {
-    routeName: "clipboard-api",
-    url: "/clipboard-api.html",
-    group: Group.BrowserApi,
-  },
-  {
-    routeName: "eye-dropper",
-    url: "/eye-dropper.html",
-    group: Group.BrowserApi,
-  },
-  { routeName: "media-query", url: "/media-query", group: Group.BrowserApi },
-  { routeName: "read-file", url: "/read-file", group: Group.BrowserApi },
-  { routeName: "coffee-cup", url: "/coffee-cup", group: Group.Css },
-  { routeName: "bubble-up", url: "/bubble-up", group: Group.Css },
-  { routeName: "box-reflect", url: "/box-reflect", group: Group.Css },
-  { routeName: "btn-collapse", url: "/btn-collapse", group: Group.Css },
-  { routeName: "text-title", url: "/text-title", group: Group.Css },
-  { routeName: "hover-effect", url: "/hover-effect", group: Group.Css },
-  { routeName: "text-empty", url: "/text-empty", group: Group.Css },
-  { routeName: "image-size", url: "/img-size", group: Group.Css },
-  { routeName: "aspect-ratio", url: "/aspect-ratio", group: Group.Css },
-  { routeName: "rotate-img", url: "/rotate-img", group: Group.Css },
-  { routeName: "text-eraser", url: "/text-eraser", group: Group.Css },
-  { routeName: "traffic-light", url: "/traffic-light", group: Group.Js },
-  {
-    routeName: "run-thousand-task",
-    url: "/run-thousand-task",
-    group: Group.Js,
-  },
-  { routeName: "frame-img", url: "/frame-img", group: Group.Js },
-  { routeName: "color-thief", url: "/color-thief", group: Group.Js },
-  { routeName: "2048", url: "/2048", group: Group.Js },
-  { routeName: "color-thief", url: "/color-thief", group: Group.Js },
-  { routeName: "text-track", url: "/text-track", group: Group.Js },
-  { routeName: "hoc-task", url: "/hoc-run-task", group: Group.Js },
-  {
-    routeName: "broadcastChannel-card",
-    url: "/broadcastChannel-card",
-    group: Group.Js,
-  },
-];
-
-function isValidKey(key: string): key is GroupValue {
-  return Object.values(Group).some((enumValue) => enumValue === key);
-}
-
-const groupBy = (arr: Link[], key: keyof Link) => {
-  return arr.reduce((acc, cur) => {
-    const groupKey = cur[key];
-    if (isValidKey(groupKey)) {
-      (acc[groupKey] = acc[groupKey] || []).push(cur);
-    }
-    return acc;
-  }, {} as Record<GroupValue, Link[]>);
-};
-
-console.log(groupBy(links, "group"), isValidKey("css-trick"));
-
+import { links, groupBy, isValidKey } from "./utils/links.ts";
 function Link() {
   // if is build change the link to under '/'
   const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
+  const linkList = (group: string) => {
+    if (!isValidKey(group)) {
+      return "";
+    }
+    return (
+      <ul>
+        {groupBy(links, "group")[group].map((link) => {
+          return (
+            <li key={link.routeName}>
+              <a className="link" href={`${urlHead}${link.url}`}>
+                {link.routeName}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
   return (
     <>
       <h2>Web Api</h2>
@@ -95,17 +33,7 @@ function Link() {
         return (
           <div key={group} className="link-group">
             <h3 className="link-title">{group}</h3>
-            <ul>
-              {groupBy(links, "group")[group as GroupValue].map((link) => {
-                return (
-                  <li key={link.routeName}>
-                    <a className="link" href={`${urlHead}${link.url}`}>
-                      {link.routeName}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+            {linkList(group)}
           </div>
         );
       })}
