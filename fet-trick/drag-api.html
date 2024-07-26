@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DragApi</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			list-style: none;
+		}
+		html, body{
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: #f1f1f1;
+		}
+		.list{
+			display: flex;
+			flex-direction: column;
+			width: 500px;
+			border: 1px solid #000;
+			padding: 10px;
+		}
+		.list-item{
+			background: rgba(20, 20, 232, 0.5);
+			padding: 10px;
+			margin: 5px 0;
+			border: 1px solid #000;
+			text-align: center;
+		}
+		.list-item.moving{
+			background: transparent;
+			color:transparent;
+			border: 1px dashed #000;
+		}
+	</style>
+</head>
+<body>
+	<div class="list">
+		<div draggable="true" class="list-item">1</div>
+		<div draggable="true" class="list-item">2</div>
+		<div draggable="true" class="list-item">3</div>
+		<div draggable="true" class="list-item">4</div>
+		<div draggable="true" class="list-item">5</div>
+	</div>
+	<script>
+		const list = document.querySelector('.list');
+		let dragNode
+		list.ondragstart = (e) => {
+			setTimeout(() => {
+				e.target.classList.add('moving'); // 利用 setTimeout 異步執行，讓拖曳時，拖曳的元素不會消失
+			}, 0);
+			dragNode = e.target;
+			e.dataTransfer.effectAllowed = 'move';
+		}
+		list.ondragover = (e) => {
+			e.preventDefault();
+		}
+		list.ondragend = (e) => {
+			e.preventDefault();
+			e.target.classList.remove('moving');
+		}
+		list.ondragenter = (e) => {
+			if(e.target === list || e.target === dragNode){
+				return;
+			}
+			const sourceIndex = Array.from(list.children).indexOf(dragNode);
+			const targetIndex = Array.from(list.children).indexOf(e.target);
+			if(sourceIndex < targetIndex){
+				list.insertBefore(dragNode, e.target.nextSibling);
+			}else{
+				list.insertBefore(dragNode, e.target);
+			}
+		}
+	</script>
+</body>
+</html>

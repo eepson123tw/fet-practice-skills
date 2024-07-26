@@ -64,6 +64,7 @@ export const links: Link[] = [
     url: "/broadcastChannel-card",
     group: Group.Js,
   },
+  { routeName: "drag-api", url: "/drag-api", group: Group.Js },
 ];
 
 export function isValidKey(key: string): key is GroupValue {
