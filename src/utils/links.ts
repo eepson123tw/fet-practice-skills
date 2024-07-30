@@ -35,6 +35,7 @@ export const links: Link[] = [
   },
   { routeName: "media-query", url: "/media-query", group: Group.BrowserApi },
   { routeName: "read-file", url: "/read-file", group: Group.BrowserApi },
+  { routeName: "page-api", url: "/page-api", group: Group.BrowserApi },
   { routeName: "coffee-cup", url: "/coffee-cup", group: Group.Css },
   { routeName: "bubble-up", url: "/bubble-up", group: Group.Css },
   { routeName: "box-reflect", url: "/box-reflect", group: Group.Css },
