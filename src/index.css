@@ -133,3 +133,10 @@ a.link:hover:after {
   transform: translateX(-20px);
   opacity: 1;
 }
+
+.theme-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}

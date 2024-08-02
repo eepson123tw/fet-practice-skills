@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import "./main-fn";
 
 import Timer from "./timer.tsx";
 import { MutationObserve } from "./mutationObserve.tsx";
 import Container from "./Components/Container.tsx";
 import { links, groupBy, isValidKey } from "./utils/links.ts";
+import { useTheme } from "./hook/useTheme.ts";
 function Link() {
   // if is build change the link to under '/'
   const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
@@ -41,7 +42,7 @@ function Link() {
   );
 }
 
-function Canvas() {
+function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
   useEffect(() => {
     const cvs = document.getElementById("canvas") as HTMLCanvasElement;
     const width = window.innerWidth * devicePixelRatio;
@@ -79,9 +80,10 @@ function Canvas() {
     const columns = Math.floor(width / columnWidth);
     // each column next text y position
     const nextChar = new Array(columns).fill(0);
-    // draw a row of text
+
     const draw = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      const bgColor = theme === "dark" ? "rgba(0, 0, 0, 1)" : "#C4D7F2";
+      ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, width, height);
       for (let i = 0; i < columns; i++) {
         ctx.fillStyle = randomColor();
@@ -99,11 +101,13 @@ function Canvas() {
       }
     };
 
-    setInterval(() => {
-      draw();
-    }, 30);
+    const intervalId = setInterval(draw, 30);
     draw();
-  }, []);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [theme]);
 
   return (
     <>
@@ -112,13 +116,48 @@ function Canvas() {
   );
 }
 
+function SystemChangeColor({
+  theme,
+  setTheme,
+}: {
+  theme: "light" | "dark" | "os";
+  setTheme: (theme: "light" | "dark" | "os") => void;
+}) {
+  const selectRef = useRef<HTMLSelectElement>(null);
+  useLayoutEffect(() => {
+    if (selectRef.current && theme === "os") {
+      selectRef.current.value = theme;
+    }
+  }, [theme]);
+
+  return (
+    <div className="theme-select">
+      <select
+        ref={selectRef}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+          setTheme(e.target.value as "light" | "dark" | "os")
+        }
+      >
+        <option value="light">light</option>
+        <option value="dark">dark</option>
+        <option value="os">os</option>
+      </select>
+    </div>
+  );
+}
+
 function App() {
+  const { theme, setTheme } = useTheme();
   return (
     <>
       <meta name="description" content="test react 19 meta" />
       <div id="app">
-        <Canvas></Canvas>
+        <Canvas theme={theme}></Canvas>
         <Timer></Timer>
+        <SystemChangeColor
+          theme={theme}
+          setTheme={setTheme}
+        ></SystemChangeColor>
         <Link></Link>
         <div style={{ display: "flex" }}>
           <Container title="React 19 Info:">
