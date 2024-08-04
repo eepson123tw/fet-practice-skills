@@ -66,6 +66,7 @@ export const links: Link[] = [
     group: Group.Js,
   },
   { routeName: "drag-api", url: "/drag-api", group: Group.Js },
+  { routeName: "visible-list", url: "/visible-list", group: Group.Js },
 ];
 
 export function isValidKey(key: string): key is GroupValue {
