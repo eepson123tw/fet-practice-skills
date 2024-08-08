@@ -48,6 +48,7 @@ export const links: Link[] = [
   { routeName: "rotate-img", url: "/rotate-img", group: Group.Css },
   { routeName: "text-eraser", url: "/text-eraser", group: Group.Css },
   { routeName: "css-selector", url: "/css-selector", group: Group.Css },
+  { routeName: "dot-loading", url: "/dot-loading", group: Group.Css },
   { routeName: "traffic-light", url: "/traffic-light", group: Group.Js },
   {
     routeName: "run-thousand-task",
