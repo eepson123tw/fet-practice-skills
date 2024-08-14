@@ -18,6 +18,7 @@ interface Link {
 export const links: Link[] = [
   { routeName: "canvas-music", url: "/canvas-music.html", group: Group.Canvas },
   { routeName: "canvas-img", url: "/canvas-img.html", group: Group.Canvas },
+  { routeName: "draw-dot", url: "/draw-dot", group: Group.Canvas },
   {
     routeName: "canvas-drawer",
     url: "/canvas-drawer.html",
@@ -36,6 +37,11 @@ export const links: Link[] = [
   { routeName: "media-query", url: "/media-query", group: Group.BrowserApi },
   { routeName: "read-file", url: "/read-file", group: Group.BrowserApi },
   { routeName: "page-api", url: "/page-api", group: Group.BrowserApi },
+  {
+    routeName: "rounded-highlight",
+    url: "/rounded-highlight",
+    group: Group.Css,
+  },
   { routeName: "coffee-cup", url: "/coffee-cup", group: Group.Css },
   { routeName: "bubble-up", url: "/bubble-up", group: Group.Css },
   { routeName: "box-reflect", url: "/box-reflect", group: Group.Css },
@@ -68,7 +74,6 @@ export const links: Link[] = [
   },
   { routeName: "drag-api", url: "/drag-api", group: Group.Js },
   { routeName: "visible-list", url: "/visible-list", group: Group.Js },
-  { routeName: "draw-dot", url: "/draw-dot", group: Group.Canvas },
 ];
 
 export function isValidKey(key: string): key is GroupValue {
