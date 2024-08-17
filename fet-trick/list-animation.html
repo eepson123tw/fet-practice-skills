@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ListAnimation</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			box-sizing: border-box;
+		}
+		html,body{
+			height: 100%;
+			background-color: #000;
+			justify-content: center;
+			align-items: flex-start;
+			display: flex;
+		}
+		.container{
+			padding: 10px;
+			background: #222;
+		}
+		.item{
+			width: 300px;
+			height: 400px;
+			background-color: #fff;
+			margin: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #000;
+			overflow: hidden;
+			border-radius: 10px;
+			transition: background-color 1s;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="item">item1</div>
+		<div class="item">item2</div>
+		<div class="item">item3</div>
+		<div class="item">item4</div>
+		<div class="item">item5</div>
+		<div class="item">item6</div>
+		<div class="item">item7</div>
+		<div class="item">item8</div>
+		<div class="item">item9</div>
+		<div class="item">item10</div>
+	</div>
+	<script>
+		const weakmap = new WeakMap();
+
+		const observer = new IntersectionObserver(entries => {
+			entries.forEach(entry => {
+			
+				if (entry.isIntersecting) {
+					entry.target.style.backgroundColor = 'red';
+					const animation = weakmap.get(entry.target);
+					animation && animation.play();
+					observer.unobserve(entry.target);
+				} 
+			});
+		});
+
+		const items = document.querySelectorAll('.item');
+		const isOverlapping = (element) => {
+			const rect = element.getBoundingClientRect();
+			return rect.top - window.innerHeight > 0;
+		}
+		items.forEach(item => {
+			if(!isOverlapping(item)){
+				return
+			}
+			const animation = item.animate([
+				{transform: 'translateY(100px)'},
+				{transform: 'translateY(0)'}
+			], {
+				duration: 1000,
+				easing: 'ease-in-out',
+				fill: 'forwards'
+			});
+
+			animation.pause();
+			weakmap.set(item, animation);
+			observer.observe(item);
+		});
+
+	</script>
+</body>
+</html>
