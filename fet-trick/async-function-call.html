@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AsyncFunctionCall</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			box-sizing: border-box;
+		}
+		html,body{
+			height: 100%;
+			background-color: #000;
+			justify-content: center;
+			align-items: center;
+			display: flex;
+		}
+		div{
+			padding: 10px;
+			background: #222;
+			color: white;
+		}
+		span{
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<button id="btn">Click me</button>
+		<span class="span"></span>
+	</div>
+	<script>
+		let count = 0;
+		const span = document.querySelector('.span');
+		const btn = (dom)=>{
+			const proxyDom = new Proxy(dom, {
+				get: function(target, prop, receiver){
+					const propType = prop.includes('wait');
+					if(propType){
+						const event = prop.split('wait')[1].toLowerCase();
+						console.log(event);
+						return new Promise((resolve, reject)=>{
+							dom.addEventListener(event, ()=>{
+								resolve();
+							})
+						})
+					}else{
+						return Reflect.get(...arguments);
+					}
+				}
+			})
+			return proxyDom
+		}
+ 		// IIFE
+		(async function(){
+			const button = btn(document.getElementById('btn'));
+			while(1){
+				span.textContent = count++;
+				// await button.waitClick;
+				await button.waitMouseover;
+				console.log('I am an async function');
+			}
+		})()
+
+	</script>
+</body>
+</html>
