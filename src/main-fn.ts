@@ -165,3 +165,24 @@ function useDefer(maxCount = 100) {
 //   fn: (...args: T) => K,
 //   duration: number
 // ) => (...args: T) => void;
+
+const functionWrapperWithTypeCheck = <T>(obj: T) => {
+  return {
+    on: <K extends keyof T & string>(
+      a: `${K}Changed`,
+      b: (a: T[K], b: T) => void
+    ) => {
+      console.log(a, b, obj);
+    },
+  };
+};
+
+const fnWrapper = functionWrapperWithTypeCheck({
+  apple: 1,
+  banana: 2,
+  isRAG: false,
+});
+
+fnWrapper.on("bananaChanged", (a, b) => {
+  console.log(a, b);
+});
