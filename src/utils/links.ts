@@ -80,6 +80,16 @@ export const links: Link[] = [
     url: "/async-function-call",
     group: Group.Js,
   },
+  {
+    routeName: "intersection-observer-one",
+    url: "/intersection-observer-one",
+    group: Group.Js,
+  },
+  {
+    routeName: "intersection-observer-two",
+    url: "/intersection-observer-two",
+    group: Group.Js,
+  },
 ];
 
 export function isValidKey(key: string): key is GroupValue {

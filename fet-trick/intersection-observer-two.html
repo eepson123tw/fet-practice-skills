@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>IOT</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			box-sizing: border-box;
+		}
+		html,body{
+			height: 100%;
+			background-color: #000;
+		}
+		.container{
+			padding: 10px;
+			background: #222;
+		}
+		.video{
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			margin-bottom: 40px;
+		}
+		.item{
+			height: 600px;
+			background-color: #fff;
+			margin: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #000;
+			overflow: hidden;
+			border-radius: 10px;
+			transition: background-color 1s;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="video">
+
+			<iframe src="https://www.youtube.com/embed/JW5meKfy3fY?autoplay=1&mute=1&enablejsapi=1" allow="autoplay; encrypted-media"  width="100%" height="800px"></iframe>
+		</div>
+		<div class="item"></div>
+	</div>
+
+	<script>
+		const weakmap = new WeakMap();
+		const iframe = document.getElementsByTagName("iframe")[0].contentWindow;
+
+		const observer = new IntersectionObserver(entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					iframe.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
+				} else {
+					iframe.postMessage('{"event":"command","func":"playVideo","args":""}',"*");
+				}
+			}, {threshold: 1});
+		});
+
+		document.querySelectorAll('.item').forEach(item => {
+			observer.observe(item);
+		});
+	</script>
+</body>
+</html>
