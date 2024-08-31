@@ -90,6 +90,11 @@ export const links: Link[] = [
     url: "/intersection-observer-two",
     group: Group.Js,
   },
+  {
+    routeName: "animation-api",
+    url: "/animation-api",
+    group: Group.Js,
+  },
 ];
 
 export function isValidKey(key: string): key is GroupValue {

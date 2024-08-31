@@ -166,24 +166,24 @@ function useDefer(maxCount = 100) {
 //   duration: number
 // ) => (...args: T) => void;
 
-type Watcher<T> = {
-  on<K extends keyof T & string>(
-    eventName: `${K}Changed`,
-    callback: (oldValue: T[K], newValue: T[K]) => void
-  ): void;
-};
+// type Watcher<T> = {
+//   on<K extends keyof T & string>(
+//     eventName: `${K}Changed`,
+//     callback: (oldValue: T[K], newValue: T[K]) => void
+//   ): void;
+// };
 
-declare const createWatcher: <T>(obj: T) => Watcher<T>;
+// declare const createWatcher: <T>(obj: T) => Watcher<T>;
 
-const watcher = createWatcher({
-  apple: 1,
-  banana: 2,
-  isRAG: false,
-});
+// const watcher = createWatcher({
+//   apple: 1,
+//   banana: 2,
+//   isRAG: false,
+// });
 
-watcher.on("appleChanged", (oldValue, newValue) => {
-  console.log(oldValue, newValue);
-});
+// watcher.on("appleChanged", (oldValue, newValue) => {
+//   console.log(oldValue, newValue);
+// });
 
 const functionWrapperWithTypeCheck = <T>(obj: T) => {
   return {
