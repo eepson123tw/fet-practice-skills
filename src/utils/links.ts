@@ -95,6 +95,11 @@ export const links: Link[] = [
     url: "/animation-api",
     group: Group.Js,
   },
+  {
+    routeName: "canvas-draw-tree",
+    url: "/canvas-draw-tree",
+    group: Group.Js,
+  },
 ];
 
 export function isValidKey(key: string): key is GroupValue {

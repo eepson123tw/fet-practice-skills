@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CanvasDrawTree</title>
+</head>
+<body>
+	<canvas></canvas>
+	<script>
+		const canvas = document.querySelector('canvas');
+		const ctx = canvas.getContext('2d');
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		const branch = (x, y, len, angle,thick) => {
+			if (thick <5 && Math.random()<0.3) {
+				return;
+			}
+			if (thick<2){
+				ctx.beginPath();
+				ctx.arc(x,y,10,0,Math.PI*2);
+				ctx.fillStyle = 'white';
+				ctx.fill();
+				return
+			}
+			ctx.beginPath();
+			ctx.moveTo(x, y);
+			const v1 = [
+				 x + len * Math.cos(angle * Math.PI / 180),
+				 y + len * Math.sin(angle * Math.PI / 180)
+			];
+			ctx.lineTo(...v1);
+			ctx.strokeStyle = '#333';
+			ctx.lineWidth = thick;
+			ctx.lineCap = 'round';
+			ctx.stroke();
+			
+			branch(v1[0], v1[1], len * 0.67, angle+Math.random()*30,thick*0.7);
+			branch(v1[0], v1[1], len * 0.67, angle-Math.random()*30,thick*0.7);
+		}
+
+		ctx.translate(canvas.width / 2, canvas.height);
+		ctx.scale(1,-1)
+
+		branch(0, 0, 200, 90,30);
+
+		window.addEventListener('resize', () => {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			ctx.translate(canvas.width / 2, canvas.height);
+		ctx.scale(1,-1)
+			branch(0, 0, 200, 90,30);
+		});
+
+	</script>
+</body>
+</html>
