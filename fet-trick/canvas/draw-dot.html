@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DrawDot</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			box-sizing: border-box;
+		}
+		html,body{
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background: black;
+		}
+	</style>
+</head>
+<body>
+	<canvas></canvas>
+	<script>
+		const canvas = document.querySelector('canvas');
+		const ctx = canvas.getContext('2d');
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		const mouse = {
+			x: null,
+			y: null
+		}
+
+
+
+	
+
+		function init (){
+			ctx.width = window.innerWidth * devicePixelRatio;
+			ctx.height = window.innerHeight * devicePixelRatio;
+		}
+
+		init();
+
+
+		function getRandom(min,max){
+			return Math.floor(Math.random() * (max - min + 1) + min);
+		}
+
+		class Point {
+			constructor(x, y, radius, color){
+				this.r = 10;
+				this.x = getRandom(0, ctx.width - this.r/2);
+				this.y = getRandom(0, ctx.height - this.r/2);
+				this.color = 'rgb(200, 200, 200)';
+				this.xSpeed = getRandom(-50, 50);
+				this.ySpeed = getRandom(-50, 50);
+				this.lastMoveTime = null
+			}
+			draw(){
+				if(this.lastMoveTime){
+					const now = Date.now();
+					const deltaTime = (now - this.lastMoveTime) / 1000;
+					const x = this.x + this.xSpeed * deltaTime;
+					const y = this.y + this.ySpeed * deltaTime;
+					if(x < 0 || x > ctx.width - this.r){
+						this.xSpeed = -this.xSpeed;
+					}
+					if(y < 0 || y > ctx.height -this.r){
+						this.ySpeed = -this.ySpeed;
+					}
+					this.x = x;
+					this.y = y;
+				}
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+				ctx.fillStyle = this.color;
+				ctx.fill();
+				this.lastMoveTime = Date.now();
+			}
+		}
+
+		class Dot {
+			constructor(x, y, radius, color){
+				this.x = x;
+				this.y = y;
+				this.radius = radius;
+				this.color = color;
+			}
+			draw(){
+				// touch the point will became bigger and other color
+				this.radius = 10;
+				this.color = 'white';
+				for(let i = 0; i < graph.points.length; i++){
+					const p = graph.points[i];
+					const dis = Math.sqrt((this.x - p.x) ** 2 + (this.y - p.y) ** 2);
+					if(dis < 100){
+						p.radius = 5;
+						p.color = 'red';
+						this.radius = 20;
+						this.color = 'gray';
+					}else{
+						p.radius = 5;
+						p.color = 'white';
+					}
+				}
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+				ctx.fillStyle = this.color;
+				ctx.fill();
+			}
+		}
+
+		const dot = new Dot(10, 10, 10, 'white');
+
+		class Graph{
+			constructor(pointNumber = 50,maxDis = 500){
+				this.points  = new Array(pointNumber).fill(0).map(() => new Point());
+				this.maxDis = maxDis;
+			}
+			draw(){
+				requestAnimationFrame(()=>{
+					this.draw();
+					dot.x = mouse.x;
+					dot.y = mouse.y;
+					dot.draw();
+				})
+				ctx.clearRect(0, 0, ctx.width, ctx.height);
+
+
+				for(let i = 0; i < this.points.length; i++){
+					const p1 = this.points[i];
+					p1.draw();
+					for(let j = i + 1; j < this.points.length; j++){
+						const p2 = this.points[j];
+						const dis = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+						if(dis < this.maxDis){
+							ctx.beginPath();
+							ctx.moveTo(p1.x, p1.y);
+							ctx.lineTo(p2.x, p2.y);
+							ctx.strokeStyle = 'rgba(200, 200, 200, 0.5)';
+							ctx.stroke();
+						}
+					}
+				}
+			}
+		}
+
+		const graph = new Graph();
+		graph.draw();
+
+		window.addEventListener('mousemove', (e) => {
+			mouse.x = e.x;
+			mouse.y = e.y;
+		});
+
+
+
+
+
+
+	</script>
+</body>
+</html>

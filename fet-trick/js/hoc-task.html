@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HOCRUNTASK</title>
+</head>
+<body>
+	<button>Run 10000 Task With HOC</button>
+	<main></main>
+	<script>
+		const btn = document.querySelector('button');
+		const main = document.querySelector('main');
+		btn.addEventListener('click',()=>{
+			// if(window){
+			// 	webBrowserChunk()
+			// }else{
+			// 	performanceChunk()
+			// }
+
+			const taskHandler = (i)=>{
+				const div = document.createElement('div');
+				div.textContent = i
+				main.appendChild(div);
+			}
+			const schedular =(callbackTask)=>{
+				setTimeout(callbackTask((index,task)=>{
+					return requestIdleCallback((idle)=>{
+						return index < task.length && idle.timeRemaining() 
+					})
+				}),1000)
+					// setTimeout(()=>{
+				// 	const now = performance.now();
+				// 	callbackTask(()=> performance.now()-now<=10)
+				// },1000)
+				
+				// requestIdleCallback((idle)=>{
+				// 	callbackTask((i,task)=> i<= task.length && idle.timeRemaining()>0
+				// 	)
+				// })
+			}
+
+			performanceChunk(10000,taskHandler,schedular)
+		})
+		// 實現分片邏輯及任務切分,HOC 
+		// 下一次分片什麼時候開始，每一次分片執行多少任務
+		function performanceChunk(task,taskHandler,schedular){
+			if(typeof task === "number"){
+				task = {length:task}
+			}
+			if(task.length === 0){
+				return
+			}
+			let i = 0;
+			function runTask(){
+				if(i >= task.length){
+					return
+				}
+				schedular((goOn)=>{
+					while(i<task.length && goOn(i,task)){
+						taskHandler(i)
+						i++;
+					}
+				})
+				runTask()
+			}
+			runTask()
+		}
+		function webBrowserChunk(){}
+
+	</script>
+</body>
+</html>

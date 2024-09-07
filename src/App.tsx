@@ -9,6 +9,17 @@ import { useTheme } from "./hook/useTheme.ts";
 function Link() {
   // if is build change the link to under '/'
   const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
+  const urlFilter = (url: string) => {
+    const filterTxts = ["/js/", "/css/", "/browser/", "/canvas/"];
+    let resFilterUrl = url;
+    filterTxts.forEach((filter) => {
+      const regex = new RegExp(`^${filter}`, "gi"); // Match the filter only at the start of the string
+      resFilterUrl = resFilterUrl.replace(regex, "/"); // Remove the filter from the beginning
+    });
+
+    return import.meta.env.MODE === "production" ? resFilterUrl + ".html" : url;
+  };
+
   const linkList = (group: string) => {
     if (!isValidKey(group)) {
       return "";
@@ -18,7 +29,7 @@ function Link() {
         {groupBy(links, "group")[group].map((link) => {
           return (
             <li key={link.routeName}>
-              <a className="link" href={`${urlHead}${link.url}`}>
+              <a className="link" href={`${urlHead}${urlFilter(link.url)}`}>
                 {link.routeName}
               </a>
             </li>
@@ -31,6 +42,7 @@ function Link() {
     <>
       <h2>Web Api</h2>
       {Object.keys(groupBy(links, "group")).map((group) => {
+        console.log(linkList(group));
         return (
           <div key={group} className="link-group">
             <h3 className="link-title">{group}</h3>
