@@ -40,7 +40,7 @@ function Link() {
   };
   return (
     <>
-      <h2>Web Api</h2>
+      <h2>F2E Practice</h2>
       {Object.keys(groupBy(links, "group")).map((group) => {
         console.log(linkList(group));
         return (

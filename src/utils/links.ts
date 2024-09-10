@@ -24,6 +24,7 @@ export const groupBy = (arr: Link[], key: keyof Link) => {
     const groupKey = cur[key];
     if (isValidKey(groupKey)) {
       (acc[groupKey] = acc[groupKey] || []).push(cur);
+      acc[groupKey].sort((a, b) => a.routeName.localeCompare(b.routeName));
     }
     return acc;
   }, {} as Record<GroupValue, Link[]>);

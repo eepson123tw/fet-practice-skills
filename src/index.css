@@ -62,12 +62,16 @@ a {
   color: #fff;
 }
 
+.link-title::first-letter {
+  text-transform: uppercase; /* Makes the first letter uppercase */
+}
+
 .link-group ul {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   list-style: none;
   flex-wrap: wrap;
-  padding: 0;
+  padding: 10px;
 }
 
 .link-group li {
