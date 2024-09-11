@@ -22,8 +22,8 @@ InstanceType<T>; // 獲取構造函數實例
 
 ## TS 協變和逆變
 
-類型安全
-須保證所有成員可用
+類型安全保證
+所有成員可用
 
 給:超集 子類型 Fans
 收:子集 父類型 Aaron
@@ -38,6 +38,11 @@ interface Aaron extends Fans {
   sing(): void;
   baseketball(): void;
 }
+
+let fans: Fans = {};
+let aaron: Aaron = {};
+
+fans = aaron; // 保證之後調用父類型時所有成員可用
 
 interface SuperAaron extends Aaron {
   fly(): void;

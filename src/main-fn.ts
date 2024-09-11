@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { consoleStyle } from "../utils/console";
 import "../utils/fn-overload";
 import "../utils/promise-task";
@@ -205,3 +206,30 @@ const fnWrapper = functionWrapperWithTypeCheck({
 fnWrapper.on("bananaChanged", (a, b) => {
   console.log(a, b);
 });
+
+// write mycall to the function prototype
+// ignore ts error for now
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+Function.prototype.myCall = function <T, R>(
+  this: (...args: unknown[]) => R,
+  ctx: T,
+  ...args: Parameters<typeof this>
+): R {
+  ctx = ctx === null || ctx === undefined ? globalThis : Object(ctx);
+  const key = Symbol();
+  const fn = this as typeof this;
+  Object.defineProperty(ctx, key, {
+    value: fn,
+    enumerable: false,
+  });
+  const res = (ctx as T & Record<symbol, typeof this>)[key](...args);
+  delete (ctx as T & Record<symbol, typeof this>)[key];
+  return res;
+};
+
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+// console.log(add.myCall(null, 1, 2)); // 3
