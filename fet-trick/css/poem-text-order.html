@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PoemTextOrder</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f5f5f5;
+			flex-direction: column;
+		}
+		.poem {
+			width: 300px;
+			margin: 0 auto;
+			font-family: '微軟正黑體', 'Microsoft JhengHei', sans-serif;
+
+		}
+		.poem h1 {
+			text-align: center;
+			font-size: 1.5em;
+			margin: 0;
+		}
+		.poem .author {
+			text-align: center;
+			font-size: 0.8em;
+			margin-block-start: 1.5em;
+		}
+		.poem .author .year {
+			color: #666;
+			text-combine-upright: all;
+		}
+		.poem .author span {
+			margin: 0 0.2em;
+		}
+		.poem .content {
+			text-align: center;
+			margin: 1em auto;
+			padding: 0 1em;
+			border-left: 2px solid #333;
+		}
+		.poem .content p {
+			margin: 0.5em 0;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="poem">
+		<h1>山居秋暝</h1>
+		<div class="author">
+			<span>王維</span>
+			<span class="year">701</span>
+			<span class="to">~</span>
+			<span class="year">761</span>
+		</div>
+		<div class="content">
+			<p>空山新雨後，天氣晚來秋。</p>
+			<p>明月松間照，清泉石上流。</p>
+			<p>竹喧歸浣女，蓮動下漁舟。</p>
+			<p>隨意春芳歇，王孫自可留。</p>
+		</div>
+	</div>
+
+	<p>
+		<h2>initial</h2>
+		<button>change text mode</button>
+	</p>
+	
+	<script>
+		const btn = document.querySelector('button');
+		const author = document.querySelector('.author');
+		const poem = document.querySelector('.poem');
+		const h2 = document.querySelector('h2');
+		let isVertical = false;
+
+		btn.addEventListener('click', () => {
+			isVertical = !isVertical;
+			poem.style.writingMode = isVertical ? 'vertical-rl' : 'initial';
+			h2.innerText = isVertical ? 'vertical-rl' : 'initial';
+			// logic align
+			author.style.marginBlockStart = isVertical ? '1em' : '1.5em';
+
+		});
+	</script>
+</body>
+</html>

@@ -123,4 +123,9 @@ export const cssGroups: Array<Link> = [
   { routeName: "css-selector", url: "/css/css-selector", group: Group.Css },
   { routeName: "dot-loading", url: "/css/dot-loading", group: Group.Css },
   { routeName: "svg-animation", url: "/css/svg-animation", group: Group.Css },
+  {
+    routeName: "poem-text-order",
+    url: "/css/poem-text-order",
+    group: Group.Css,
+  },
 ];
