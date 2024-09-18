@@ -31,6 +31,14 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
         '<script type="module" crossorigin src="/assets/index.js"></script>'
       );
 
+      const title = content.match(/<title>([^<]+)<\/title>/)?.[1];
+      // Update <script> add icon
+      if (title) {
+        content = content.replace(
+          /<title>([^<]+)<\/title>/,
+          `<title>FE練習 - $1</title>\n   <link rel="icon" type="image/svg+xml" href="/vite.svg" />`
+        );
+      }
       // Write the modified file to the target directory
       await fs.promises.writeFile(
         path.join(targetDir, fileName),

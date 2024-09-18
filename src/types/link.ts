@@ -88,7 +88,7 @@ export const jsGroups: Array<Link> = [
     group: Group.Js,
   },
   {
-    routeName: "intersection-observer-two",
+    routeName: "intersection-observer-autoplay",
     url: "/js/intersection-observer-two",
     group: Group.Js,
   },
