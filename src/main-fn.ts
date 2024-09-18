@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { consoleStyle } from "../utils/console";
 import "../utils/fn-overload";
@@ -207,13 +208,32 @@ fnWrapper.on("bananaChanged", (a, b) => {
   console.log(a, b);
 });
 
+declare global {
+  interface Function {
+    myBind<
+      ThisType,
+      BoundArgs extends any[],
+      RemainingArgs extends any[],
+      ReturnType
+    >(
+      this: (
+        this: ThisType,
+        ...args: [...BoundArgs, ...RemainingArgs]
+      ) => ReturnType,
+      thisArg: ThisType,
+      ...boundArgs: BoundArgs
+    ): (...args: RemainingArgs) => ReturnType;
+    myCall<ThisType, ReturnType>(
+      this: (...args: any[]) => ReturnType,
+      ctx: ThisType | null | undefined,
+      ...args: Parameters<typeof this>
+    ): ReturnType;
+  }
+}
 // write mycall to the function prototype
-// ignore ts error for now
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 Function.prototype.myCall = function <T, R>(
-  this: (...args: unknown[]) => R,
-  ctx: T,
+  this: (...args: any[]) => R,
+  ctx: T | null | undefined,
   ...args: Parameters<typeof this>
 ): R {
   ctx = ctx === null || ctx === undefined ? globalThis : Object(ctx);
@@ -228,8 +248,31 @@ Function.prototype.myCall = function <T, R>(
   return res;
 };
 
+// write myBind to the function prototype
+Function.prototype.myBind = function <
+  ThisType,
+  BoundArgs extends any[],
+  RemainingArgs extends any[],
+  ReturnType
+>(
+  this: (
+    this: ThisType,
+    ...args: [...BoundArgs, ...RemainingArgs]
+  ) => ReturnType,
+  thisArg: ThisType,
+  ...boundArgs: BoundArgs
+): (...args: RemainingArgs) => ReturnType {
+  return (...args2: RemainingArgs): ReturnType => {
+    return this.apply(thisArg, [...boundArgs, ...args2]);
+  };
+};
+
+// 使用範例
 function add(a: number, b: number): number {
   return a + b;
 }
 
-// console.log(add.myCall(null, 1, 2)); // 3
+const aBind = add.myBind(null, 1, 2);
+const aCall = add.myCall(null, 1, 2);
+console.log(aCall); // 3
+console.log(aBind()); // 3
