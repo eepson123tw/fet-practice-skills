@@ -40,7 +40,6 @@ function Link() {
   };
   return (
     <>
-      <h2>F2E Practice</h2>
       {Object.keys(groupBy(links, "group")).map((group) => {
         console.log(linkList(group));
         return (
@@ -164,6 +163,7 @@ function App() {
     <>
       <meta name="description" content="test react 19 meta" />
       <div id="app">
+        <h2>F2E Practice</h2>
         <Canvas theme={theme}></Canvas>
         <Timer></Timer>
         <SystemChangeColor

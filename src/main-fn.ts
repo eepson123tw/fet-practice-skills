@@ -244,7 +244,7 @@ Function.prototype.myCall = function <T, R>(
     enumerable: false,
   });
   const res = (ctx as T & Record<symbol, typeof this>)[key](...args);
-  delete (ctx as T & Record<symbol, typeof this>)[key];
+  // delete (ctx as T & Record<symbol, typeof this>)[key];
   return res;
 };
 

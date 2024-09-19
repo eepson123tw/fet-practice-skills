@@ -102,6 +102,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/canvas-draw-tree",
     group: Group.Js,
   },
+  {
+    routeName: "gsap-animation",
+    url: "/js/gsap-animation",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {
