@@ -275,4 +275,16 @@ function add(a: number, b: number): number {
 const aBind = add.myBind(null, 1, 2);
 const aCall = add.myCall(null, 1, 2);
 console.log(aCall); // 3
-console.log(aBind()); // 3
+
+function countAB(a: number, b: number, c: string, d: number) {
+  return a + b + c + d;
+}
+
+declare function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  fn: T,
+  timer: number
+): (...args: Parameters<T>) => void;
+
+const debounceFn = debounce(countAB, 1000);
+
+debounceFn(1, 2, "123", 4);
