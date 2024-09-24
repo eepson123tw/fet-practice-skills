@@ -288,3 +288,29 @@ declare function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
 const debounceFn = debounce(countAB, 1000);
 
 debounceFn(1, 2, "123", 4);
+
+type TsTypeMap = {
+  string: string;
+  number: number;
+  boolean: boolean;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  function: Function;
+  object: object;
+  symbol: symbol;
+  undefined: undefined;
+  bigint: bigint;
+};
+
+type TsTypes = keyof TsTypeMap; // type TsTypes = "string" | "number" | "boolean" | "function" | "object" | "symbol" | "undefined" | "bigint";
+
+type tsType<T extends TsTypes[]> = {
+  [K in keyof T]: TsTypeMap[T[K]]; // type [string, number, boolean]。
+};
+
+declare function parameterFn<T extends TsTypes[]>(
+  ...args: [...T, (...args: tsType<T>) => any]
+): any;
+
+parameterFn("string", "number", "boolean", "number", (a, b, c, d) => {
+  console.log(a, b, c, d);
+});
