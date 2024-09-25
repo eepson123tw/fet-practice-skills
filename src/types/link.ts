@@ -133,4 +133,9 @@ export const cssGroups: Array<Link> = [
     url: "/css/poem-text-order",
     group: Group.Css,
   },
+  {
+    routeName: "noise-img",
+    url: "/css/noise-img",
+    group: Group.Css,
+  },
 ];

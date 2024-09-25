@@ -285,9 +285,9 @@ declare function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
   timer: number
 ): (...args: Parameters<T>) => void;
 
-const debounceFn = debounce(countAB, 1000);
+// const debounceFn = debounce(countAB, 1000);
 
-debounceFn(1, 2, "123", 4);
+// debounceFn(1, 2, "123", 4);
 
 type TsTypeMap = {
   string: string;
@@ -311,6 +311,6 @@ declare function parameterFn<T extends TsTypes[]>(
   ...args: [...T, (...args: tsType<T>) => any]
 ): any;
 
-parameterFn("string", "number", "boolean", "number", (a, b, c, d) => {
-  console.log(a, b, c, d);
-});
+// parameterFn("string", "number", "boolean", "number", (a, b, c, d) => {
+//   console.log(a, b, c, d);
+// });
