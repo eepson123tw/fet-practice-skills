@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HoverEffectEdge</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body{
+			background: black;
+			height: 100vh;
+			width: 100vw;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.container{
+			width: 100%;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-gap: 1em;
+			justify-items: center;
+			position: relative;
+		}
+		img{
+			width: 300px;
+			height: 300px;
+			object-fit: cover;
+			transition: transform 0.5s;
+		}
+		.pointer {
+			position: absolute; /* 添加此行 */
+			cursor: pointer;
+			--l: 30px;
+			--t: 3px;
+			--g: 15px;
+			--s: 240px;
+			--x: -400px;
+			--y: -110px;
+			width: calc(var(--s) + var(--g) * 2);
+			height: calc(var(--s) + var(--g) * 2);
+			border: var(--t) solid white;
+			left: calc(var(--x) - var(--g));
+			top: calc(var(--y) - var(--g));
+			pointer-events: none; 
+			transition: left 0.5s, top 0.5s; /* 平滑移动效果 */
+			mask:  conic-gradient(
+				at 50px 50px,
+				transparent 75%,
+				blue 75% 100%
+			) 0 0 / calc(100% - 50px) calc(100% - 50px) repeat;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="pointer"></div>
+		<div><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div ><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div ><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div ><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div ><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div ><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div ><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+		<div ><img src="https://picsum.photos/seed/picsum/500/500" alt=""></div>
+	</div>
+
+	<script>
+		const imgs = document.querySelectorAll('img');
+		const pointer = document.querySelector('.pointer');
+		const container = document.querySelector('.container');
+
+		imgs.forEach(img => {
+			img.addEventListener('mouseover', (e) => {
+				pointer.style.setProperty('--s', `${img.offsetWidth}px`);
+				pointer.style.setProperty('--x', `${img.offsetLeft}px`);
+				pointer.style.setProperty('--y', `${img.offsetTop}px`);
+			});
+		});
+	</script>
+</body>
+</html>

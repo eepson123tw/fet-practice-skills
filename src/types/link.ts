@@ -120,6 +120,11 @@ export const cssGroups: Array<Link> = [
   { routeName: "btn-collapse", url: "/css/btn-collapse", group: Group.Css },
   { routeName: "text-title", url: "/css/text-title", group: Group.Css },
   { routeName: "hover-effect", url: "/css/hover-effect", group: Group.Css },
+  {
+    routeName: "hover-effect-edge",
+    url: "/css/hover-effect-edge",
+    group: Group.Css,
+  },
   { routeName: "text-empty", url: "/css/text-empty", group: Group.Css },
   { routeName: "image-size", url: "/css/img-size", group: Group.Css },
   { routeName: "aspect-ratio", url: "/css/aspect-ratio", group: Group.Css },
