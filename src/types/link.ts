@@ -134,6 +134,11 @@ export const cssGroups: Array<Link> = [
     group: Group.Css,
   },
   {
+    routeName: "rwd-width-height",
+    url: "/css/rwd-width-height",
+    group: Group.Css,
+  },
+  {
     routeName: "noise-img",
     url: "/css/noise-img",
     group: Group.Css,
