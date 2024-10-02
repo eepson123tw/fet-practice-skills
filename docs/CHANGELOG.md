@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.2.0...v1.3.0) (2024-10-02)
+
+
+### Features
+
+* **canvas-effect:** add canvas effect ([144bd88](https://github.com/eepson123tw/fet-practice-skills/commit/144bd88e4e1ca9d349f0190e3735ab84677a454c))
+* **test:** add test ([92eba22](https://github.com/eepson123tw/fet-practice-skills/commit/92eba220daed69836873b4cba8974ff09bd098ce))
+* **test:** add test ([ab7ca60](https://github.com/eepson123tw/fet-practice-skills/commit/ab7ca60cbc46517d0ffe19b8c8c12ad9ac2960c5))
+
 # [1.2.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.1.0...v1.2.0) (2024-10-02)
 
 
