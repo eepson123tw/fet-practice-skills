@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.1.0...v1.2.0) (2024-10-02)
+
+
+### Features
+
+* **canvas-effect:** add canvas effect ([045d256](https://github.com/eepson123tw/fet-practice-skills/commit/045d2567b12df8a129188cf3dd22e9f8748e167a))
+
 # [1.1.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.0.0...v1.1.0) (2024-10-02)
 
 
