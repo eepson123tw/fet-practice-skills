@@ -9,7 +9,7 @@ A repository to practice Front-End (FE) skills and explore fun projects.
 - **Automated GitHub Actions**
 - **HTML, CSS, and JavaScript Skills**
 
-For more details, refer to the [changelog.md](docs/changelog.md).
+For more details, refer to the [changelog.md](docs/CHANGELOG.md).
 
 ## 🔍 Key Points
 
