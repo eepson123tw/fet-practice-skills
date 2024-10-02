@@ -107,6 +107,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/gsap-animation",
     group: Group.Js,
   },
+  {
+    routeName: "waterfall-grid",
+    url: "/js/waterfall-grid",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {

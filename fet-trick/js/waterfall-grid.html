@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WaterfallGrid</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body{
+			font-family: Arial, sans-serif;
+			background-color: #eaeaea;
+			padding: 20px;
+		}
+		.waterfall-grid{
+			display: flex;
+			justify-content: space-between;
+			gap: 20px;
+		
+		}
+		.waterfall-grid > div{
+			width: 30%;
+			margin-bottom: 20px;
+			color: white;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+		.waterfall-grid .item{
+			background-color: #fff;
+			border-radius: 5px;
+			overflow: hidden;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			transition: transform 0.3s, box-shadow 0.3s;
+		}
+		.waterfall-grid .item:hover{
+			transform: translateY(-5px);
+			box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+			cursor: pointer;
+		}
+		.waterfall-grid .item img{
+			width: 100%;
+			display: block;
+			transition: transform 0.5s;
+		}
+		.waterfall-grid .item:hover img{
+			transform: scale(1.1);
+		}
+		.waterfall-grid .item .content{
+			padding: 15px;
+		}
+		.waterfall-grid .item .content h3{
+			font-size: 1.2em;
+			margin-bottom: 10px;
+			color: #333;
+		}
+		.waterfall-grid .item .content p{
+			font-size: 0.95em;
+			color: #666;
+			line-height: 1.5;
+		}
+		/* Responsive adjustments */
+		@media (max-width: 600px) {
+			.waterfall-grid{
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1 style="text-align:center; margin-bottom: 20px;">Waterfall Grid Gallery</h1>
+	<div class="waterfall-grid">
+		<div class="waterfall-grid-one">
+			
+		</div>
+		<div class="waterfall-grid-two">
+			
+		</div>
+		<div class="waterfall-grid-three">
+			
+		</div>
+	</div>
+	<script>
+		const waterfallGrid = document.querySelector('.waterfall-grid');
+		const waterfallGridOne = document.querySelector('.waterfall-grid-one');
+		const waterfallGridTwo = document.querySelector('.waterfall-grid-two');
+		const waterfallGridThree = document.querySelector('.waterfall-grid-three');
+		const generateItem = (number) => {
+			const items = [];
+			const randomHeight = (i) => Math.floor(Math.random() * (i + 1) * 50 +100);
+			for (let i = 0; i < number; i++) {
+				// Create the item container
+				const itemDiv = document.createElement('div');
+				itemDiv.classList.add('item');
+				// Create the image element but need to add placeholder wait image download
+				const img = document.createElement('img');
+				const height = randomHeight(i);
+				img.src = `https://via.placeholder.com/400x${height}?text=Loading...`; // Placeholder image
+				img.dataset.src = `https://picsum.photos/400/${height}`; // Actual image
+				img.alt = 'Beautiful Landscape';
+				img.loading = 'lazy'; // Enable lazy loading
+				// Handle image loading
+				img.onload = () => {
+					img.classList.add('loaded');
+					img.src = img.dataset.src;
+				};
+				img.onerror = () => {
+					img.src = 'https://via.placeholder.com/400x300?text=Image+Not+Found'; // Fallback image
+					img.classList.remove('loaded');
+				};
+
+				// Create the content container
+				const contentDiv = document.createElement('div');
+				contentDiv.classList.add('content');
+
+				// Create the heading
+				const heading = document.createElement('h3');
+				heading.textContent = 'Beautiful Landscape';
+
+				// Create the paragraph
+				const paragraph = document.createElement('p');
+				paragraph.textContent = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.';
+
+				// Assemble the content
+				contentDiv.appendChild(heading);
+				contentDiv.appendChild(paragraph);
+
+				// Assemble the item
+				itemDiv.appendChild(img);
+				itemDiv.appendChild(contentDiv);
+
+				// Add the item to the array
+				items.push(itemDiv);
+			}
+			return items;
+		};
+
+		const insertDom = (domList)=>{
+			// clear the dom list
+			domList.forEach((dom)=>{
+				dom.innerHTML = '';
+			});
+			// compare the height of the three dom list
+			const domHeight = [0,0,0];
+			const domListHeight = [0,0,0];
+			const list = generateItem(12);
+			domList.forEach((dom,index)=>{
+				domListHeight[index] = dom.clientHeight;
+			});
+			list.forEach((item)=>{
+				const minHeight = Math.min(...domListHeight);
+				const minHeightIndex = domListHeight.indexOf(minHeight);
+				domList[minHeightIndex].appendChild(item);
+				domListHeight[minHeightIndex] += item.clientHeight;
+			});
+		} 
+
+		insertDom([waterfallGridOne,waterfallGridTwo,waterfallGridThree]);
+
+		window.addEventListener('resize',()=>{
+			// reset the dom list
+			insertDom([waterfallGridOne,waterfallGridTwo,waterfallGridThree]);
+		});
+
+	</script>
+</body>
+</html>
