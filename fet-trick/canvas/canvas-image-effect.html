@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CanvasImageEffect</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f1f1f1;
+			position: relative;
+		}
+		canvas {
+			border: 1px solid #000;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		image{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+	<canvas id="canvas"></canvas>
+	<img src="https://picsum.photos/seed/picsum/600/600" alt="image">
+
+	<script>
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		const image = document.querySelector('img');
+		canvas.width = 600;
+		canvas.height = 600;
+
+
+		const cell = (effect,x,y,i) =>{
+			const _cell = {effect, x, y,width: effect.cellWidth, height: effect.cellHeight,slideX: -51, slideY: 0,vx: 0, vy: 0,ease:0.02,friction:0.99,
+				positionX:Math.random()*effect.width*0.5, positionY:effect.height,speedX:0, speedY:0,
+				randomSize: Math.random() * 50 + 2,
+				i,
+	
+			};
+			const draw=(context) => {
+				context.drawImage(image, _cell.x + _cell.slideX, _cell.y + _cell.slideY, _cell.width, _cell.height,_cell.positionX, _cell.positionY, _cell.width, _cell.height);
+				context.strokeRect(_cell.positionX, _cell.positionY, _cell.width, _cell.height);
+			}
+			const start = () => {
+				_cell.speedX = (_cell.x - _cell.positionX) /_cell.randomSize;
+				_cell.speedY = (_cell.y - _cell.positionY) /_cell.randomSize;
+			}
+			start();
+			// setTimeout(()=>{
+			// 	start();
+			// }, _cell.i*10);
+			const update = () => {
+				// cell position
+				if(Math.abs(_cell.speedX) >0.01||Math.abs(_cell.speedY)>0.01){
+					_cell.speedX = (_cell.x - _cell.positionX) /_cell.randomSize;
+					_cell.speedY = (_cell.y - _cell.positionY) /_cell.randomSize;
+					_cell.positionX += _cell.speedX;
+					_cell.positionY += _cell.speedY;
+				}
+				// crop image
+				const dx = effect.mouse.x - _cell.x;
+				const dy = effect.mouse.y - _cell.y;
+				const distance = Math.hypot(dx, dy);
+				if(distance< effect.mouse.radius){
+					const angle = Math.atan2(dy, dx);
+					const force = distance / effect.mouse.radius;
+					_cell.vx = force * Math.cos(angle);
+					_cell.vy = force * Math.sin(angle);
+				}else{
+					_cell.vx = 0;
+					_cell.vy = 0;
+				}
+				_cell.slideX += (_cell.vx*=_cell.friction) - _cell.slideX * _cell.ease;
+				_cell.slideY += (_cell.vy*=_cell.friction) - _cell.slideY * _cell.ease;
+
+			}
+			return {..._cell, draw,update};
+		};
+
+		const effect = (canvas)=>{
+			const canvasDom = canvas;
+			const width = canvasDom.width;
+			const height = canvasDom.height;
+			const cellWidth = width / 20;
+			const cellHeight = height / 30;
+			const mouse = {
+				x: undefined, 
+				y: undefined,
+				radius: 150
+			};
+			const effectDom =  {canvasDom, width, height,cellWidth, cellHeight,mouse};
+			const cellInfo = cell(effectDom, 0, 0);
+			const imageGrid = [];
+			canvasDom.addEventListener('mousemove', (e) => {
+				mouse.x = e.offsetX;
+				mouse.y = e.offsetY;
+			});
+			canvasDom.addEventListener('mouseleave', (e) => {
+				mouse.x = undefined;
+				mouse.y = undefined;
+			});
+			let i = 0;
+			const createGrid = ()=>{
+				for (let x = 0; x < width; x += cellWidth) {
+					for (let y = 0; y < height; y += cellHeight) {
+						i++
+						imageGrid.unshift(cell(effectDom, x, y,i));
+					}
+				}
+			}
+			const render = (_ctx) => {
+				imageGrid.forEach((cell) => {
+					cell.update();
+					cell.draw(_ctx);
+				});
+			}
+			createGrid();
+
+			return {...effectDom,render};
+		}
+
+
+
+		const effectCanvas = effect(canvas); 
+
+
+		function animate(ctx){
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			effectCanvas.render(ctx);
+			requestAnimationFrame(animate.bind(this, ctx));
+		}
+		requestAnimationFrame(animate.bind(this, ctx));
+
+
+	</script>
+	
+</body>
+</html>

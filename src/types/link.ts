@@ -32,6 +32,11 @@ export const canvasGroups: Array<Link> = [
     url: "/canvas/canvas-drawer",
     group: Group.Canvas,
   },
+  {
+    routeName: "canvas-image-effect",
+    url: "/canvas/canvas-image-effect",
+    group: Group.Canvas,
+  },
 ];
 export const browserApiGroups: Array<Link> = [
   {
