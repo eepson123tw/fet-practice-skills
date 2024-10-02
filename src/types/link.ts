@@ -33,8 +33,8 @@ export const canvasGroups: Array<Link> = [
     group: Group.Canvas,
   },
   {
-    routeName: "canvas-image-effect",
-    url: "/canvas/canvas-image-effect",
+    routeName: "canvas-effect",
+    url: "/canvas/canvas-effect",
     group: Group.Canvas,
   },
 ];
