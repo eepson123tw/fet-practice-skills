@@ -117,6 +117,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/waterfall-grid",
     group: Group.Js,
   },
+  {
+    routeName: "1",
+    url: "/js/1",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {
