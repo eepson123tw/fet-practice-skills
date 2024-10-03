@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CanvasLyrics Particle Effect</title>
+	<style>
+		/* 全局樣式重置 */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+			font-family: 'Helvetica Neue', sans-serif;
+			background-color: #141414;
+			color: #fff;
+		}
+		/* 歌詞容器樣式 */
+		.lyrics-container {
+			position: relative;
+			width: 100%;
+			height: 90%;
+			background-color: #141414;
+			overflow: hidden;
+		}
+		#lyrics-canvas {
+			width: 100%;
+			height: 100%;
+			display: block;
+		}
+		/* 音樂播放器樣式 */
+		audio {
+			width: 50%;
+			margin-top: 10px;
+			outline: none;
+			display: block;
+			margin: 10px auto;
+		}
+		/* 自定義 audio 控制元件樣式 */
+		audio::-webkit-media-controls-panel {
+			background-color: gainsboro;
+		}
+		audio::-webkit-media-controls-play-button,
+		audio::-webkit-media-controls-pause-button,
+		audio::-webkit-media-controls-mute-button,
+		audio::-webkit-media-controls-volume-slider,
+		audio::-webkit-media-controls-timeline {
+			filter: invert(100%);
+		}
+		/* 兼容 Firefox */
+		audio::-moz-volume-control {
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="lyrics-container">
+		<canvas id="lyrics-canvas"></canvas>
+	</div>
+	
+	<audio src="../public/02.mp3" controls type="audio/ogg" id="audio-player"></audio>
+	<script>
+		const lyrics = [
+			{ time: 0, text: "(傷心酒店 city pop)" },
+			{ time: 21, text: "冷淡的光線 哀怨的歌聲 飲酒的人無心晟" },
+			{ time: 30, text: "世間的繁華 親像夢一攤 也是無較詛" },
+			{ time: 42, text: "暗淡酒店內 悲傷誰人知 痛苦吞腹內" },
+			{ time: 49, text: "一杯擱再來" },
+			{ time: 51, text: "你若有瞭解 甭問阮對叼位來" },
+			{ time: 67, text: "不願講出來 鬱卒放心內 感情失落的無奈" },
+			{ time: 78, text: "苦苦塊等待 還是等無愛 虛情的對待" },
+			{ time: 85, text: "多情的世界 找無真情愛 引阮心悲哀" },
+			{ time: 93, text: "有愛也罷 無愛嘛快活 今夜伴阮是孤單" },
+			{ time: 100, text: "(間奏)" },
+			{ time: 123, text: "冷淡的光線 哀怨的歌聲 飲酒的人無心晟" },
+			{ time: 134, text: "世間的繁華 親像夢一攤 也是無較詛" },
+			{ time: 144, text: "暗淡酒店內 悲傷誰人知 痛苦吞腹內" },
+			{ time: 150, text: "一杯擱再來 你若有瞭解 甭問阮對叼位來" },
+			{ time: 159, text: "(間奏)" },
+			{ time: 173, text: "多情的世界 找無真情愛 引阮心悲哀" },
+			{ time: 181, text: "有愛也罷 無愛嘛快活 今夜伴阮是孤單" },
+			{ time: 191, text: "(間奏)" },
+			{ time: 206, text: "今夜伴阮是孤單" }
+		];
+
+		document.addEventListener('DOMContentLoaded', function() {
+			const audio = document.getElementById('audio-player');
+			const canvas = document.getElementById('lyrics-canvas');
+			const ctx = canvas.getContext('2d');
+
+			// 設定字體大小
+			let fontSize = canvas.width / 10;
+
+			// 設定 Canvas 大小
+			function resizeCanvas() {
+				canvas.width = canvas.clientWidth;
+				canvas.height = canvas.clientHeight;
+			}
+			resizeCanvas();
+
+			window.addEventListener('resize', function() {
+				fontSize = canvas.width / 10;
+				resizeCanvas();
+				createParticles(lyrics[currentLineIndex].text);
+			});
+
+			let particles = [];
+			const particleSize = 1; // 粒子更小
+			let currentLineIndex = 0;
+			let previousLineIndex = -1;
+			const mouse = { x: 0, y: 0, radius: 80 };
+			let isMouseOver = false;
+
+			// 監聽滑鼠事件
+			canvas.addEventListener('mousemove', function(e) {
+				const rect = canvas.getBoundingClientRect();
+				mouse.x = e.clientX - rect.left;
+				mouse.y = e.clientY - rect.top;
+				isMouseOver = true;
+			});
+
+			canvas.addEventListener('mouseleave', function() {
+				isMouseOver = false;
+			});
+
+			// 粒子物件
+			function Particle(x, y, color) {
+				this.x = x + canvas.width / 2 - textWidth / 2;
+				this.y = y + canvas.height / 2 - textHeight / 2;
+				this.baseX = this.x;
+				this.baseY = this.y;
+				this.color = color;
+				this.size = particleSize;
+				this.vx = 0;
+				this.vy = 0;
+				this.alpha = Math.random() * 0.5 + 0.5; // 初始透明度隨機
+			}
+
+			Particle.prototype.update = function() {
+				const dx = mouse.x - this.x;
+				const dy = mouse.y - this.y;
+				const distance = Math.sqrt(dx * dx + dy * dy);
+
+				if (isMouseOver && distance < mouse.radius) {
+					const angle = Math.atan2(dy, dx);
+					const force = (mouse.radius - distance) / mouse.radius;
+					const forceX = Math.cos(angle) * force * 6;
+					const forceY = Math.sin(angle) * force * 6;
+
+					this.vx -= forceX;
+					this.vy -= forceY;
+				} else {
+					// 緩慢回到原始位置
+					this.vx = (this.baseX - this.x) * 0.1;
+					this.vy = (this.baseY - this.y) * 0.1;
+				}
+
+				this.x += this.vx;
+				this.y += this.vy;
+
+				// 減速
+				this.vx *= 0.9;
+				this.vy *= 0.9;
+
+				// 微微閃爍效果
+				this.alpha = 0.7 + Math.sin(Date.now() * 0.005 + this.x * 0.01) * 0.3;
+			};
+
+			Particle.prototype.draw = function() {
+				ctx.fillStyle = this.color;
+				ctx.globalAlpha = this.alpha;
+				ctx.fillRect(this.x, this.y, this.size, this.size);
+				ctx.globalAlpha = 1;
+			};
+
+			let textWidth = 0;
+			let textHeight = 0;
+
+			function createParticles(text) {
+				particles = [];
+				const tempCanvas = document.createElement('canvas');
+				const tempCtx = tempCanvas.getContext('2d');
+				tempCanvas.width = canvas.width;
+				tempCanvas.height = canvas.height;
+
+				// 設定字體樣式
+				fontSize = canvas.width / 15; // 調整字體大小
+				tempCtx.font = fontSize + "px 'Microsoft YaHei', sans-serif";
+				tempCtx.textAlign = "center";
+				tempCtx.textBaseline = 'middle';
+
+				// 自動換行
+				const maxWidth = canvas.width * 0.8; // 留點邊距
+				const lineHeight = fontSize * 1.2;
+				const lines = wrapText(tempCtx, text, maxWidth);
+
+				// 計算文字總高度
+				textHeight = lines.length * lineHeight;
+
+				// 設定為亮白色
+				tempCtx.fillStyle = '#FFFFFF';
+
+				// 繪製每一行文字
+				for (let i = 0; i < lines.length; i++) {
+					tempCtx.fillText(
+						lines[i],
+						tempCanvas.width / 2,
+						tempCanvas.height / 2 - textHeight / 2 + i * lineHeight + lineHeight / 2
+					);
+				}
+
+				// 取得文字尺寸
+				textWidth = maxWidth; // 文字寬度即為最大寬度
+
+				const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+				for (let y = 0; y < tempCanvas.height; y += 2) {
+					for (let x = 0; x < tempCanvas.width; x += 2) {
+						const index = (y * tempCanvas.width + x) * 4;
+						const alpha = imageData.data[index + 3];
+						if (alpha > 128) {
+							// 使用亮白色
+							const color = '#FFFFFF';
+
+							const particle = new Particle(
+								x - canvas.width / 2 + textWidth / 2,
+								y - canvas.height / 2 + textHeight / 2,
+								color
+							);
+							particles.push(particle);
+						}
+					}
+				}
+			}
+
+			// 自動換行函數
+			function wrapText(context, text, maxWidth) {
+				const words = text.split(' ');
+				let lines = [];
+				let currentLine = words[0];
+
+				for (let i = 1; i < words.length; i++) {
+					const word = words[i];
+					const width = context.measureText(currentLine + ' ' + word).width;
+					if (width < maxWidth) {
+						currentLine += ' ' + word;
+					} else {
+						lines.push(currentLine);
+						currentLine = word;
+					}
+				}
+				lines.push(currentLine);
+				return lines;
+			}
+
+			function animate() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+				for (let i = 0; i < particles.length; i++) {
+					particles[i].update();
+					particles[i].draw();
+				}
+				requestAnimationFrame(animate);
+			}
+
+			function updateLyrics() {
+				const currentTime = audio.currentTime;
+
+				// 找到當前的歌詞行
+				for (let i = 0; i < lyrics.length; i++) {
+					if (lyrics[i].time <= currentTime) {
+						currentLineIndex = i;
+					}
+				}
+
+				// 只有當歌詞行變化時才更新粒子效果
+				if (currentLineIndex !== previousLineIndex) {
+					createParticles(lyrics[currentLineIndex].text);
+					previousLineIndex = currentLineIndex;
+				}
+			}
+
+			// 音樂播放時更新歌詞
+			audio.addEventListener('timeupdate', updateLyrics);
+
+			// 開始動畫
+			animate();
+
+			// 初始化
+			createParticles(lyrics[currentLineIndex].text);
+		});
+	</script>
+</body>
+</html>

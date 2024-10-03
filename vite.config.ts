@@ -20,10 +20,15 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
       const fileName = path.basename(file); // Get the file name, e.g., 'example.html'
       console.log(`Processing: ${fileName}`);
       let content = await fs.promises.readFile(file, "utf-8");
+
+      content = content.replace(
+        /<audio src="\.\.\/public\/([^"]+)" controls type="audio\/ogg"><\/audio>/g,
+        '<audio src="./$1" type="audio/ogg"></audio>'
+      );
       // Update <source> paths
       content = content.replace(
         /<source src="\.\.\/public\/([^"]+)" type="audio\/ogg">/g,
-        '<source src="./$1" type="audio/ogg">'
+        '<source src="./$1" controls type="audio/ogg">'
       );
       // Update <script> paths
       content = content.replace(

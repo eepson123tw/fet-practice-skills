@@ -42,6 +42,11 @@ export const canvasGroups: Array<Link> = [
     url: "/canvas/canvas-particle",
     group: Group.Canvas,
   },
+  {
+    routeName: "canvas-lyrics-player",
+    url: "/canvas/canvas-lyrics-player",
+    group: Group.Canvas,
+  },
 ];
 export const browserApiGroups: Array<Link> = [
   {
