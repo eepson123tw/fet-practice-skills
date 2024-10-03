@@ -1,6 +1,19 @@
 # [1.5.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.4.0...v1.5.0) (2024-10-03)
 
 
+### Bug Fixes
+
+* **canvas:** fix the path and id ([01c5e6e](https://github.com/eepson123tw/fet-practice-skills/commit/01c5e6e0066ae1920345d84019cf9ec181323081))
+
+
+### Features
+
+* **canvas:** add particles player ([0406e66](https://github.com/eepson123tw/fet-practice-skills/commit/0406e66292cb6ca1e68017b797289cc77f0d6c0e))
+* **canvas:** add particles player path ([ebb5576](https://github.com/eepson123tw/fet-practice-skills/commit/ebb55766ee2134bde3a71520e365d520873fd30f))
+
+# [1.5.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.4.0...v1.5.0) (2024-10-03)
+
+
 ### Features
 
 * **canvas:** add particles player ([0406e66](https://github.com/eepson123tw/fet-practice-skills/commit/0406e66292cb6ca1e68017b797289cc77f0d6c0e))
