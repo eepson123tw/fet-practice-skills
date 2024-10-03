@@ -37,6 +37,11 @@ export const canvasGroups: Array<Link> = [
     url: "/canvas/canvas-effect",
     group: Group.Canvas,
   },
+  {
+    routeName: "canvas-particle",
+    url: "/canvas/canvas-particle",
+    group: Group.Canvas,
+  },
 ];
 export const browserApiGroups: Array<Link> = [
   {
