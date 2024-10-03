@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.4.0...v1.5.0) (2024-10-03)
+
+
+### Features
+
+* **canvas:** add particles player ([0406e66](https://github.com/eepson123tw/fet-practice-skills/commit/0406e66292cb6ca1e68017b797289cc77f0d6c0e))
+
 # [1.4.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.3.0...v1.4.0) (2024-10-03)
 
 
