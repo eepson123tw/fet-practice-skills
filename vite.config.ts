@@ -23,7 +23,7 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
 
       content = content.replace(
         /<audio src="\.\.\/public\/([^"]+)" controls type="audio\/ogg"><\/audio>/g,
-        '<audio src="./$1" type="audio/ogg"></audio>'
+        '<audio src="./$1" type="audio/ogg" controls></audio>'
       );
       // Update <source> paths
       content = content.replace(
