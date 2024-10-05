@@ -128,8 +128,8 @@ export const jsGroups: Array<Link> = [
     group: Group.Js,
   },
   {
-    routeName: "1",
-    url: "/js/1",
+    routeName: "mouse-hover-effect",
+    url: "/js/mouse-hover-effect",
     group: Group.Js,
   },
 ];
