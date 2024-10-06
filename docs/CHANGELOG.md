@@ -4,6 +4,22 @@
 ### Bug Fixes
 
 * **canvas-path:** fix canvas img path ([e4a348b](https://github.com/eepson123tw/fet-practice-skills/commit/e4a348bd23ff0a586a1a41d794e8f879bed3d997))
+* **canvas-path:** fix canvas img path and public file ([902cce2](https://github.com/eepson123tw/fet-practice-skills/commit/902cce251d616cf9c04a5b0367edcb9094a5d293))
+* **canvas:** fix the path and id ([01c5e6e](https://github.com/eepson123tw/fet-practice-skills/commit/01c5e6e0066ae1920345d84019cf9ec181323081))
+* **hover-card:** add hover card to the scene ([10b76bc](https://github.com/eepson123tw/fet-practice-skills/commit/10b76bc1b44b6713856db1d5e2a11349e9f9b77d))
+
+
+### Features
+
+* **canvas:** add particles player ([0406e66](https://github.com/eepson123tw/fet-practice-skills/commit/0406e66292cb6ca1e68017b797289cc77f0d6c0e))
+* **canvas:** add particles player path ([ebb5576](https://github.com/eepson123tw/fet-practice-skills/commit/ebb55766ee2134bde3a71520e365d520873fd30f))
+
+# [1.5.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.4.0...v1.5.0) (2024-10-06)
+
+
+### Bug Fixes
+
+* **canvas-path:** fix canvas img path ([e4a348b](https://github.com/eepson123tw/fet-practice-skills/commit/e4a348bd23ff0a586a1a41d794e8f879bed3d997))
 * **canvas:** fix the path and id ([01c5e6e](https://github.com/eepson123tw/fet-practice-skills/commit/01c5e6e0066ae1920345d84019cf9ec181323081))
 * **hover-card:** add hover card to the scene ([10b76bc](https://github.com/eepson123tw/fet-practice-skills/commit/10b76bc1b44b6713856db1d5e2a11349e9f9b77d))
 
