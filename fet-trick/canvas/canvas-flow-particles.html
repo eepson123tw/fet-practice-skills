@@ -48,7 +48,7 @@
 	<p></p>
 	<script>
 		let tag = 0;
-		const imglist = ['../../public/miko.png','../../public/suisei.png'];
+		const imglist = ['./miko.png','./suisei.png'];
 		const namelist = ['Sakura Miko', 'Hoshimachi Suisei '];
 		let name = namelist[0].split('');
 
@@ -133,7 +133,7 @@
 					this.speed = mappedImage[this.position1][this.position2][0];
 				}
 				let movement = (2.5 - this.speed) + this.velocity;
-				this.angle += this.speed / 20;
+				this.angle += this.speed / (Math.random() * 20 + 20);
 				this.y += movement + Math.sin(this.angle) * 3;
 				this.x += movement + Math.sin(this.angle) * 3;
 
@@ -153,6 +153,7 @@
 					ctx.strokeStyle = mappedImage[this.position1][this.position2][1];
 				}
 				ctx.strokeRect(this.x, this.y, this.size * 3, this.size * 3);
+				// ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
 				ctx.fillText(this.letter, this.x, this.y);
 				ctx.fill();
 			}
@@ -167,7 +168,7 @@
 		function animate(){
 			ctx.globalAlpha = 0.05;
 			ctx.fillStyle = 'rgb(0, 0, 0)';
-			ctx.globalAlpha = 1;
+			ctx.globalAlpha = 0.85;
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 			for(let i = 0; i < particlesAry.length; i++){
 				particlesAry[i].update();
@@ -177,7 +178,6 @@
 			requestAnimationFrame(animate);
 		}
 
-		// 开始动画循环
 		animate();
 
 	</script>
