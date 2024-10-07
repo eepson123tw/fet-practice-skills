@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HoudiniCSS</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			position: relative;
+			background: #000;
+		}
+		@property --rotate {
+			syntax: "<angle>";
+			initial-value: 0deg;
+			inherits: false;
+		}
+		.card{
+			width: 300px;
+			height: 400px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.1);
+			position: relative;
+			margin: 50px auto;
+			background: url('https://ix-www.imgix.net/case-study/unsplash/woman-hat.jpg?ixlib=js-3.8.0&w=300&auto=compress%2Cformat&dpr=1&q=75');
+		}
+		.card::after{
+			content: '';
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 102%;
+			height: 102%;
+			border-radius: 10px;
+			background: linear-gradient(var(--rotate), #ff0000, #00ff00, #0000ff, #ff0000);
+			animation: rotate 5s linear infinite;
+			z-index: -1;
+		}
+		@keyframes rotate{
+			0%{
+				--rotate: 0deg;
+			}
+			100%{
+				--rotate: 360deg;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="card"></div>
+</body>
+</html>

@@ -179,4 +179,9 @@ export const cssGroups: Array<Link> = [
     url: "/css/noise-img",
     group: Group.Css,
   },
+  {
+    routeName: "houdini-apis",
+    url: "/css/houdini-apis",
+    group: Group.Css,
+  },
 ];
