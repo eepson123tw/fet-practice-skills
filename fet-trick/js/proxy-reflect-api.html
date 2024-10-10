@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ProxyReflectApi</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			position: relative;
+			background: #000;
+		}
+		.container{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: row;
+			color: white;
+		}
+		button{
+			padding: 10px 20px;
+			margin: 10px;
+			background: #000;
+			color: white;
+			border: 1px solid white;
+			cursor: pointer;
+		}
+		button:hover{
+			background: white;
+			color: black;
+		}
+		span{
+			font-size: 2rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<span>0</span>
+		<button>+</button>
+		<button>-</button>
+	</div>
+	<script>
+		const target = {
+			count: 0,
+			get(){
+				this.count  =  this.count * 2;
+
+				console.log('get');
+			}
+		};
+
+		const span = document.querySelector('span');
+		const buttons = document.querySelectorAll('button');
+
+		const handler = {
+			set: function(obj, prop, value) {
+				// obj[prop] = value;
+				span.textContent = obj[prop];
+		
+				return Reflect.set(target, prop, value);
+			}
+		};
+
+		const proxy = new Proxy(target, handler);
+		buttons.forEach(button => {
+			button.addEventListener('click', function(){
+				proxy.count += (this.textContent === '+' ? 1 : -1);
+						console.log(target.count);
+			});
+		});
+
+	</script>
+</body>
+</html>

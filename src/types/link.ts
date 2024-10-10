@@ -138,6 +138,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/mouse-hover-effect",
     group: Group.Js,
   },
+  {
+    routeName: "proxy-reflect-api",
+    url: "/js/proxy-reflect-api",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {
