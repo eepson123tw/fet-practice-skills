@@ -143,6 +143,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/proxy-reflect-api",
     group: Group.Js,
   },
+  {
+    routeName: "img-split-hover",
+    url: "/js/img-split-hover",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {

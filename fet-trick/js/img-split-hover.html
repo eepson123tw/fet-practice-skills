@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ImgSplitHover</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		:root{
+			--x:0;
+			--y:0;
+			--ditX: 0;
+			--ditY: 0;
+		}
+		body{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: black;
+		}
+		.container{
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			cursor: pointer;
+			border: 1px solid white;
+		}
+		.img-item{
+			width: 100px;
+			height: 100px;
+			background-image: url('https://picsum.photos/300/300');
+			background-position: var(--x,0) var(--y,0);
+			transform: translate(var(--ditX,0), var(--ditY,0));
+			border: 1px solid white;
+		}
+		body:hover .img-item{	
+			transform: translate(0,0);
+			transition: all 0.5s;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+		<div class="img-item"></div>
+	</div>
+	<script>
+		const container = document.querySelector('.container');
+		const items = document.querySelectorAll('.img-item');
+		items.forEach((item,i) => {
+				const r = i % 3;
+				const c = Math.floor(i / 3);
+				item.style.setProperty('--x', `${-r * 100}px`);
+				item.style.setProperty('--y', `${-c * 100}px`);
+				const dx =  (c - 1) * -250
+				const dy =  (r - 1) * 200
+				item.style.setProperty('--ditX', `${dx}px`);
+				item.style.setProperty('--ditY', `${dy}px`);
+			});
+
+
+	</script>
+</body>
+</html>
