@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.5.0...v1.6.0) (2024-10-12)
+
+
+### Features
+
+* **fet-practice:** add practice img hover ([6b1afdf](https://github.com/eepson123tw/fet-practice-skills/commit/6b1afdf3371d9e30a129323d124fcece6e9ee633))
+
 # [1.5.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.4.0...v1.5.0) (2024-10-10)
 
 
