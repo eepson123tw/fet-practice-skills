@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.6.0...v1.7.0) (2024-10-18)
+
+
+### Features
+
+* **flip:** add flip animation to the scene ([4613854](https://github.com/eepson123tw/fet-practice-skills/commit/461385495696ea12502da2d298d7719a1983d860))
+
 # [1.6.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.5.0...v1.6.0) (2024-10-12)
 
 
