@@ -148,6 +148,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/img-split-hover",
     group: Group.Js,
   },
+  {
+    routeName: "flip-animation",
+    url: "/js/flip-animation",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {

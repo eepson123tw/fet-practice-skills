@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FlipAnimation</title>
+	<style>
+		.container {
+			width: 100%;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex;
+		}
+		li {
+			width: 100px;
+			height: 100px;
+			background-color: #f1f1f1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 24px;
+			font-weight: bold;
+			margin: 0 10px;
+			cursor: pointer;
+			
+			/* Define CSS variables for transformations */
+			--translate-x: 0;
+			--rotate-y: 0;
+			
+			/* Apply transformations using CSS variables */
+			transform: translateX(var(--translate-x)) rotateY(var(--rotate-y));
+			transition: transform 0.5s;
+		}
+		li:nth-child(1) {
+			background-color: #f00;
+		}
+		li:nth-child(2) {
+			background-color: #0f0;
+		}
+		li:nth-child(3) {
+			background-color: #00f;
+		}
+		li:nth-child(4) {
+			background-color: #ff0;
+		}
+		li:nth-child(5) {
+			background-color: #f0f;
+		}
+		li:hover {
+			/* Update the rotateY variable on hover */
+			--rotate-y: 180deg;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<button>Flip</button>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+	</div>
+	<script>
+		const button = document.querySelector('button');
+		const list = document.querySelectorAll('li');
+		const container = document.querySelector('.container');
+
+		const getDist = (li) => {
+			const rect = li.getBoundingClientRect();
+			const distX = rect.left;
+			return distX;
+		}
+
+		const transformAnimation = (element) => {
+			const randomElement = list[Math.floor(Math.random() * list.length)];
+			const firstDist = getDist(list[0]);
+			container.insertAdjacentElement('beforeend', list[0]);		
+			const lastDist = getDist(list[0]);
+			const dist = lastDist - firstDist;
+			element.style.setProperty('--translate-x', `-${dist}px`);
+
+			raf(() => {
+				element.style.setProperty('--translate-x', `0`);
+			});
+		}
+
+		const raf = (cb) => {
+			window.requestAnimationFrame(cb);
+		}
+
+		button.addEventListener('click', () => {
+			list.forEach(element => {
+				transformAnimation(element);
+			});
+		});
+	</script>
+</body>
+</html>
