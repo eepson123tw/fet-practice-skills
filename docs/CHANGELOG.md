@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.7.0...v1.8.0) (2024-10-23)
+
+
+### Features
+
+* add screen capture ([b320733](https://github.com/eepson123tw/fet-practice-skills/commit/b320733aecc135e9bba9f4a71b976c2d36095982))
+
 # [1.7.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.6.0...v1.7.0) (2024-10-18)
 
 
