@@ -153,6 +153,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/flip-animation",
     group: Group.Js,
   },
+  {
+    routeName: "screen-capture",
+    url: "/js/screen-capture",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {
