@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.8.0...v1.9.0) (2024-10-26)
+
+
+### Features
+
+* add refresh token page ([5e239c2](https://github.com/eepson123tw/fet-practice-skills/commit/5e239c25e13a9fa2851f569f9b63a2473ce4f1c6))
+
 # [1.8.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.7.0...v1.8.0) (2024-10-23)
 
 
