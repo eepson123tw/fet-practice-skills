@@ -158,6 +158,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/screen-capture",
     group: Group.Js,
   },
+  {
+    routeName: "token-flash",
+    url: "/js/token-flash",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {

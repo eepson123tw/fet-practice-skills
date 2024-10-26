@@ -243,6 +243,7 @@
                 mediaRecorder.start();
                 log.textContent += '\n正在錄影中...';
             } catch (err) {
+				console.error(err);
                 log.textContent = `無法訪問攝像頭和麥克風: ${err}`;
                 startButton.disabled = false;
                 stopButton.disabled = true;
