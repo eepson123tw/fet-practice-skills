@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.10.0...v1.10.1) (2024-10-29)
+
+
+### Bug Fixes
+
+* dom parser type ([b2a3811](https://github.com/eepson123tw/fet-practice-skills/commit/b2a381164697b1eb67c9fb0610a9e42777d86fd2))
+
 # [1.10.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.9.0...v1.10.0) (2024-10-29)
 
 
