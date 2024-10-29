@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.9.0...v1.10.0) (2024-10-29)
+
+
+### Features
+
+* add dom parser ([cc74965](https://github.com/eepson123tw/fet-practice-skills/commit/cc74965229138c8e8881dd7f391d27b1f5f225da))
+
 # [1.9.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.8.0...v1.9.0) (2024-10-26)
 
 
