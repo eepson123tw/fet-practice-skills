@@ -76,6 +76,11 @@ export const browserApiGroups: Array<Link> = [
     group: Group.BrowserApi,
   },
   { routeName: "page-api", url: "/browser/page-api", group: Group.BrowserApi },
+    {
+    routeName:"dom-parser",
+    url:"/js/dom-parser",
+    group:Group.BrowserApi
+  }
 ];
 export const jsGroups: Array<Link> = [
   { routeName: "traffic-light", url: "/js/traffic-light", group: Group.Js },
@@ -163,11 +168,6 @@ export const jsGroups: Array<Link> = [
     url: "/js/token-flash",
     group: Group.Js,
   },
-  {
-    routeName:"dom-parser",
-    url:"/js/dom-parser",
-    group:Group.Js
-  }
 ];
 export const cssGroups: Array<Link> = [
   {
