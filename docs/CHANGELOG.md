@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.10.1...v1.11.0) (2024-10-31)
+
+
+### Features
+
+* add the promise task ([c1a3afe](https://github.com/eepson123tw/fet-practice-skills/commit/c1a3afe71ac70e5a5b87cd95bde9ebbca8395d0c))
+
 ## [1.10.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.10.0...v1.10.1) (2024-10-29)
 
 
