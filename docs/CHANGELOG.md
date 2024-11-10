@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.11.0...v1.12.0) (2024-11-10)
+
+
+### Features
+
+* **css:** add background linear ([10339b1](https://github.com/eepson123tw/fet-practice-skills/commit/10339b1e4140f49ea3de06cead7d3702bf19e33b))
+
 # [1.11.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.10.1...v1.11.0) (2024-10-31)
 
 
