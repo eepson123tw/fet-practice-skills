@@ -214,4 +214,9 @@ export const cssGroups: Array<Link> = [
     url: "/css/houdini-apis",
     group: Group.Css,
   },
+    {
+    routeName: "hover-padding",
+    url: "/css/hover-padding",
+    group: Group.Css,
+  },
 ];

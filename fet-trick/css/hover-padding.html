@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HoverPadding</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f1f1f1;
+		}
+		.card {
+			width: 300px;
+			border-radius: 5px;
+			padding: 10px;	
+			text-align: center;
+			position: relative;
+			transition: all 1s;
+			background: repeating-linear-gradient(-45deg, #f3ec78 0px 10px, #af4261 10px 20px, #577399 20px 30px, #2b4f81 30px 40px);	
+			background-size:200% 200%;
+		}
+		.card:hover{
+			background-size: 100% 100%;
+		}
+		.card-content {
+			background: wheat;
+			border-radius: inherit
+		}
+	</style>
+</head>
+<body>
+	<div class="card">
+		<div class="card-content">
+			<h3>Card Title</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod.</p>
+		</div>
+	</div>
+</body>
+</html>
