@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.12.0...v1.13.0) (2024-11-13)
+
+
+### Features
+
+* **carousel:** add carousel page ([97fca50](https://github.com/eepson123tw/fet-practice-skills/commit/97fca5077d9c2e85bb28b9333a176a060109f83e))
+
 # [1.12.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.11.0...v1.12.0) (2024-11-10)
 
 
