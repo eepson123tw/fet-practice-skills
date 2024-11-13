@@ -168,6 +168,11 @@ export const jsGroups: Array<Link> = [
     url: "/js/token-flash",
     group: Group.Js,
   },
+   {
+    routeName: "carousel",
+    url: "/js/carousel",
+    group: Group.Js,
+  },
 ];
 export const cssGroups: Array<Link> = [
   {
