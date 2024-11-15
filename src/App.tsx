@@ -1,4 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+
 import "./main-fn";
 
 import Timer from "./timer.tsx";
@@ -6,6 +9,9 @@ import { MutationObserve } from "./mutationObserve.tsx";
 import Container from "./Components/Container.tsx";
 import { links, groupBy, isValidKey } from "./utils/links.ts";
 import { useTheme } from "./hook/useTheme.ts";
+
+import "./index.css";
+import "@/src/assets/globals.css";
 function Link() {
   // if is build change the link to under '/'
   const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
@@ -159,10 +165,24 @@ function SystemChangeColor({
 
 function App() {
   const { theme, setTheme } = useTheme();
+
   return (
     <>
       <meta name="description" content="test react 19 meta" />
       <div id="app">
+        <Tabs defaultValue="account" className="w-[500px] justify-around">
+          <TabsList className="[&>*]:mx-4 p-2 ">
+            <TabsTrigger value="account">Canvas</TabsTrigger>
+            <TabsTrigger value="password">Browser</TabsTrigger>
+            <TabsTrigger value="password">CSS</TabsTrigger>
+            <TabsTrigger value="password">JS</TabsTrigger>
+          </TabsList>
+          <TabsContent value="account">
+            Make changes to your account here.
+          </TabsContent>
+          <TabsContent value="password">Change your password here.</TabsContent>
+        </Tabs>
+        <Badge variant="outline">Badge</Badge>
         <h2>F2E Practice</h2>
         <Canvas theme={theme}></Canvas>
         <Timer></Timer>

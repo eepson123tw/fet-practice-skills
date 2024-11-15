@@ -22,7 +22,11 @@
     "strict": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
