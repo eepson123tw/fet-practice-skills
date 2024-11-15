@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.13.0...v1.14.0) (2024-11-15)
+
+
+### Features
+
+* **shadcn:** add shadcn ([c90c248](https://github.com/eepson123tw/fet-practice-skills/commit/c90c2483f8942757d95054190887d41dba4838f4))
+
 # [1.13.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.12.0...v1.13.0) (2024-11-13)
 
 
