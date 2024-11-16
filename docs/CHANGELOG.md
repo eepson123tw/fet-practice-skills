@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.14.0...v1.15.0) (2024-11-16)
+
+
+### Features
+
+* **shadcn:** add sidebar and other setting ([f1c0e05](https://github.com/eepson123tw/fet-practice-skills/commit/f1c0e0526d21a257853895145816537d37f73bd8))
+
 # [1.14.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.13.0...v1.14.0) (2024-11-15)
 
 
