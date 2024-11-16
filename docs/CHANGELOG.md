@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.15.0...v1.16.0) (2024-11-16)
+
+
+### Features
+
+* **shadcn:** add sidebar triiger ([1b9d27c](https://github.com/eepson123tw/fet-practice-skills/commit/1b9d27c4d6feaf648456e17bb27e6ef00ba27a23))
+
 # [1.15.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.14.0...v1.15.0) (2024-11-16)
 
 
