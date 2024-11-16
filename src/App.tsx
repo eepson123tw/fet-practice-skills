@@ -1,218 +1,129 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import "@/assets/globals.css";
+import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
+import { Separator } from "@components/ui/separator";
+import { MyWork } from "./Components/MyWork";
 
-import "./main-fn";
-
-import Timer from "./timer.tsx";
-import { MutationObserve } from "./mutationObserve.tsx";
-import Container from "./Components/Container.tsx";
-import { links, groupBy, isValidKey } from "./utils/links.ts";
-import { useTheme } from "./hook/useTheme.ts";
-
-import "./index.css";
-import "@/src/assets/globals.css";
-function Link() {
-  // if is build change the link to under '/'
-  const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
-  const urlFilter = (url: string) => {
-    const filterTxts = ["/js/", "/css/", "/browser/", "/canvas/"];
-    let resFilterUrl = url;
-    filterTxts.forEach((filter) => {
-      const regex = new RegExp(`^${filter}`, "gi"); // Match the filter only at the start of the string
-      resFilterUrl = resFilterUrl.replace(regex, "/"); // Remove the filter from the beginning
-    });
-
-    return import.meta.env.MODE === "production" ? resFilterUrl + ".html" : url;
-  };
-
-  const linkList = (group: string) => {
-    if (!isValidKey(group)) {
-      return "";
-    }
-    return (
-      <ul>
-        {groupBy(links, "group")[group].map((link) => {
-          return (
-            <li key={link.routeName}>
-              <a className="link" href={`${urlHead}${urlFilter(link.url)}`}>
-                {link.routeName}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
-  return (
-    <>
-      {Object.keys(groupBy(links, "group")).map((group) => {
-        console.log(linkList(group));
-        return (
-          <div key={group} className="link-group">
-            <h3 className="link-title">{group}</h3>
-            {linkList(group)}
-          </div>
-        );
-      })}
-    </>
-  );
+export interface Album {
+  name: string;
+  artist: string;
+  cover: string;
 }
 
-function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
-  useEffect(() => {
-    const cvs = document.getElementById("canvas") as HTMLCanvasElement;
-    const width = window.innerWidth * devicePixelRatio;
-    const height = window.innerHeight * devicePixelRatio;
+export type Playlist = (typeof playlists)[number];
 
-    cvs.width = width;
-    cvs.height = height;
+export const playlists = [
+  "Recently Added",
+  "Recently Played",
+  "Top Songs",
+  "Top Albums",
+  "Top Artists",
+  "Logic Discography",
+  "Bedtime Beats",
+  "Feeling Happy",
+  "I miss Y2K Pop",
+  "Runtober",
+  "Mellow Days",
+  "Eminem Essentials",
+];
 
-    const ctx = cvs.getContext("2d") as CanvasRenderingContext2D;
+export const listenNowAlbums: Album[] = [
+  {
+    name: "React Rendezvous",
+    artist: "Ethan Byte",
+    cover:
+      "https://images.unsplash.com/photo-1611348586804-61bf6c080437?w=300&dpr=2&q=80",
+  },
+  {
+    name: "Async Awakenings",
+    artist: "Nina Netcode",
+    cover:
+      "https://images.unsplash.com/photo-1468817814611-b7edf94b5d60?w=300&dpr=2&q=80",
+  },
+  {
+    name: "The Art of Reusability",
+    artist: "Lena Logic",
+    cover:
+      "https://images.unsplash.com/photo-1528143358888-6d3c7f67bd5d?w=300&dpr=2&q=80",
+  },
+  {
+    name: "Stateful Symphony",
+    artist: "Beth Binary",
+    cover:
+      "https://images.unsplash.com/photo-1490300472339-79e4adc6be4a?w=300&dpr=2&q=80",
+  },
+];
 
-    const fontSize = 20 * devicePixelRatio;
-
-    const randomColor = () => {
-      const fontColors = [
-        "#33B5E5",
-        "#AA66CC",
-        "#99CC00",
-        "#FFBB33",
-        "#FF4444",
-        "#0099CC",
-        "#9933CC",
-        "#669900",
-        "#FF8800",
-        "#CC0000",
-      ];
-      return fontColors[Math.floor(Math.random() * fontColors.length)];
-    };
-
-    const randomText = () => {
-      const str = "My Code Base Test";
-      return str[Math.floor(Math.random() * str.length)];
-    };
-    // columnWidth
-    const columnWidth = fontSize;
-    const columns = Math.floor(width / columnWidth);
-    // each column next text y position
-    const nextChar = new Array(columns).fill(0);
-
-    const draw = () => {
-      const bgColor = theme === "dark" ? "rgba(0, 0, 0, 1)" : "#C4D7F2";
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, width, height);
-      for (let i = 0; i < columns; i++) {
-        ctx.fillStyle = randomColor();
-        const text = randomText();
-        ctx.font = `${fontSize}px Arial`;
-        const x = i * columnWidth;
-        const s = nextChar[i];
-        const y = (s + 1) * fontSize;
-        ctx.fillText(text, x, y);
-        if (y > height && Math.random() > 0.975) {
-          nextChar[i] = 0;
-        } else {
-          nextChar[i]++;
-        }
-      }
-    };
-
-    const intervalId = setInterval(draw, 30);
-    draw();
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [theme]);
-
-  return (
-    <>
-      <canvas id="canvas" className="canvas"></canvas>
-    </>
-  );
-}
-
-function SystemChangeColor({
-  theme,
-  setTheme,
-}: {
-  theme: "light" | "dark" | "os";
-  setTheme: (theme: "light" | "dark" | "os") => void;
-}) {
-  const selectRef = useRef<HTMLSelectElement>(null);
-  useLayoutEffect(() => {
-    if (selectRef.current && theme === "os") {
-      selectRef.current.value = theme;
-    }
-  }, [theme]);
-
-  return (
-    <div className="theme-select">
-      <select
-        ref={selectRef}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-          setTheme(e.target.value as "light" | "dark" | "os")
-        }
-      >
-        <option value="light">light</option>
-        <option value="dark">dark</option>
-        <option value="os">os</option>
-      </select>
-    </div>
-  );
-}
+export const madeForYouAlbums: Album[] = [
+  {
+    name: "Thinking Components",
+    artist: "Lena Logic",
+    cover:
+      "https://images.unsplash.com/photo-1615247001958-f4bc92fa6a4a?w=300&dpr=2&q=80",
+  },
+  {
+    name: "Functional Fury",
+    artist: "Beth Binary",
+    cover:
+      "https://images.unsplash.com/photo-1513745405825-efaf9a49315f?w=300&dpr=2&q=80",
+  },
+  {
+    name: "React Rendezvous",
+    artist: "Ethan Byte",
+    cover:
+      "https://images.unsplash.com/photo-1614113489855-66422ad300a4?w=300&dpr=2&q=80",
+  },
+  {
+    name: "Stateful Symphony",
+    artist: "Beth Binary",
+    cover:
+      "https://images.unsplash.com/photo-1446185250204-f94591f7d702?w=300&dpr=2&q=80",
+  },
+  {
+    name: "Async Awakenings",
+    artist: "Nina Netcode",
+    cover:
+      "https://images.unsplash.com/photo-1468817814611-b7edf94b5d60?w=300&dpr=2&q=80",
+  },
+  {
+    name: "The Art of Reusability",
+    artist: "Lena Logic",
+    cover:
+      "https://images.unsplash.com/photo-1490300472339-79e4adc6be4a?w=300&dpr=2&q=80",
+  },
+];
 
 function App() {
-  const { theme, setTheme } = useTheme();
-
   return (
-    <>
-      <meta name="description" content="test react 19 meta" />
-      <div id="app">
-        <Tabs defaultValue="account" className="w-[500px] justify-around">
-          <TabsList className="[&>*]:mx-4 p-2 ">
-            <TabsTrigger value="account">Canvas</TabsTrigger>
-            <TabsTrigger value="password">Browser</TabsTrigger>
-            <TabsTrigger value="password">CSS</TabsTrigger>
-            <TabsTrigger value="password">JS</TabsTrigger>
-          </TabsList>
-          <TabsContent value="account">
-            Make changes to your account here.
-          </TabsContent>
-          <TabsContent value="password">Change your password here.</TabsContent>
-        </Tabs>
-        <Badge variant="outline">Badge</Badge>
-        <h2>F2E Practice</h2>
-        <Canvas theme={theme}></Canvas>
-        <Timer></Timer>
-        <SystemChangeColor
-          theme={theme}
-          setTheme={setTheme}
-        ></SystemChangeColor>
-        <Link></Link>
-        <div style={{ display: "flex" }}>
-          <Container title="React 19 Info:">
-            <ul>
-              <li>useFormStatus</li>
-              <li>use</li>
-              <li>React complier useMemo or useCallback to optimize</li>
-              <li>Preload Preinit</li>
-              <li>react meta config</li>
-            </ul>
-          </Container>
-          <Container title="浮水印">
-            <MutationObserve text="浮水印" gap={15} fontSize={14}>
-              <div>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Dolores quasi tempora modi, quo cupiditate incidunt suscipit
-                molestias
-              </div>
-            </MutationObserve>
-          </Container>
+    <div className="relative bg-white/25">
+      <div className="flex items-center justify-between p-2">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-semibold tracking-tight  text-red-400">
+            To Learn new thing
+          </h2>
+          <p className="text-sm text-muted-foreground text-red-400">
+            Updated daily.
+          </p>
         </div>
       </div>
-    </>
+      <Separator className="mb-2" />
+      <div className="relative overflow-hidden p-4">
+        <ScrollArea>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2  auto-cols-max">
+            {listenNowAlbums.map((album) => (
+              <MyWork
+                key={album.name}
+                album={album}
+                className="w-full text-center items-center flex flex-col justify-center"
+                aspectRatio="portrait"
+                width={250}
+                height={330}
+              />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type Theme = "light" | "dark" | "os";
+export type Theme = "light" | "dark" | "os";
 const LOCAL__KEY = "theme";
 
 export function useTheme() {
