@@ -1,4 +1,4 @@
-import { SidebarProvider } from "@components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@components/ui/sidebar";
 import { AppSidebar } from "@components/app-sidebar";
 
 import React, { useEffect } from "react";
@@ -83,7 +83,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar theme={theme} setTheme={setTheme} />
-      <main className="w-full h-100vh relative overflow-hidden">
+      <main className="w-full relative overflow-hidden">
+        <SidebarTrigger type="button" className="fixed z-20 top-1/2" />
         {children}
         <Canvas theme={theme}></Canvas>
       </main>

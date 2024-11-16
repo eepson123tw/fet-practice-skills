@@ -94,7 +94,7 @@ export const madeForYouAlbums: Album[] = [
 
 function App() {
   return (
-    <div className="relative bg-white/25">
+    <div className="relative bg-white/25 h-full">
       <div className="flex items-center justify-between p-2">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight  text-red-400">
@@ -106,9 +106,9 @@ function App() {
         </div>
       </div>
       <Separator className="mb-2" />
-      <div className="relative overflow-hidden p-4">
+      <div className="relative overflow-hidden p-4 h-full">
         <ScrollArea>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2  auto-cols-max">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2  auto-cols-max">
             {listenNowAlbums.map((album) => (
               <MyWork
                 key={album.name}
