@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.16.0...v1.17.0) (2024-11-17)
+
+
+### Features
+
+* **shadcn:** add py and fix some page issue ([1ee9099](https://github.com/eepson123tw/fet-practice-skills/commit/1ee9099840ee4d33cfe9c71f57b0ca8ee7cb6e80))
+
 # [1.16.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.15.0...v1.16.0) (2024-11-16)
 
 
