@@ -5,11 +5,24 @@ import React, { useEffect } from "react";
 import { useTheme } from "./hook/useTheme.ts";
 
 function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const cvs = document.getElementById("canvas") as HTMLCanvasElement;
-    const width = window.innerWidth * devicePixelRatio;
-    const height = window.innerHeight * devicePixelRatio;
-
+    const main = document.querySelector("main") as HTMLElement;
+    const mainHeight = main.clientHeight;
+    const mainWidth = main.clientWidth;
+    const width = (mainWidth || window.innerWidth) * devicePixelRatio;
+    const height = (mainHeight || window.innerHeight) * devicePixelRatio;
     cvs.width = width;
     cvs.height = height;
 
@@ -69,11 +82,11 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
     return () => {
       clearInterval(intervalId);
     };
-  }, [theme]);
+  }, [theme, windowWidth]);
 
   return (
     <>
-      <canvas id="canvas" className="canvas absolute  -z-10 top-0"></canvas>
+      <canvas id="canvas" className="canvas absolute -z-10 top-0"></canvas>
     </>
   );
 }
@@ -84,7 +97,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <AppSidebar theme={theme} setTheme={setTheme} />
       <main className="w-full relative overflow-hidden">
-        <SidebarTrigger type="button" className="fixed z-20 top-1/2" />
+        <SidebarTrigger
+          type="button"
+          className="fixed z-20 top-1/2 translate-x-2 bg-white outline outline-gray-400 rounded-full p-2"
+        />
         {children}
         <Canvas theme={theme}></Canvas>
       </main>

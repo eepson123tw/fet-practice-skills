@@ -12,31 +12,34 @@ import {
   ContextMenuTrigger,
 } from "@components/ui/context-menu";
 
-import { Album, playlists } from "@src/App";
-
-interface AlbumArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
-  album: Album;
+import { Link } from "@/src/types/link.ts";
+interface MyWorkProps extends React.HTMLAttributes<HTMLDivElement> {
+  link: Link;
   aspectRatio?: "portrait" | "square";
   width?: number;
   height?: number;
 }
 
 export function MyWork({
-  album,
+  link,
   aspectRatio = "portrait",
   width,
   height,
   className,
   ...props
-}: AlbumArtworkProps) {
+}: MyWorkProps) {
   return (
-    <div className={cn("space-y-3", className)} {...props}>
+    <div
+      className={cn("space-y-3", className)}
+      {...props}
+      onClick={() => window.open(link.url, "_blank")}
+    >
       <ContextMenu>
         <ContextMenuTrigger>
           <div className="overflow-hidden rounded-md  items-center flex">
             <img
-              src={album.cover}
-              alt={album.name}
+              src={link.cover}
+              alt={link.description}
               style={{ width, height }}
               className={cn(
                 "h-auto w-auto object-cover transition-all hover:scale-105",
@@ -55,7 +58,7 @@ export function MyWork({
                 New Playlist
               </ContextMenuItem>
               <ContextMenuSeparator />
-              {playlists.map((playlist) => (
+              {/* {playlists.map((playlist) => (
                 <ContextMenuItem key={playlist}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +74,7 @@ export function MyWork({
                   </svg>
                   {playlist}
                 </ContextMenuItem>
-              ))}
+              ))} */}
             </ContextMenuSubContent>
           </ContextMenuSub>
           <ContextMenuSeparator />
@@ -84,8 +87,10 @@ export function MyWork({
         </ContextMenuContent>
       </ContextMenu>
       <div className="space-y-1 text-sm">
-        <h3 className="font-medium leading-none">{album.name}</h3>
-        <p className="text-xs text-muted-foreground">{album.artist}</p>
+        <h3 className="font-medium leading-none">{link.routeName}</h3>
+        <p className="text-xs text-muted-foreground">
+          {link.description || "currently no desc"}
+        </p>
       </div>
     </div>
   );

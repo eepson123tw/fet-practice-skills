@@ -15,32 +15,33 @@ import {
 } from "@components/ui/sidebar";
 
 import { ThemeSwitcher } from "@components/theme-switcher";
+import { Group } from "@src/types/link.ts";
+import useRoute from "@src/composable/useRoute.ts";
 
-// Menu items.
 const items = [
   {
     title: "JS",
-    url: "#",
+    url: "#" + Group.Js,
     icon: Hexagon,
   },
   {
     title: "CSS",
-    url: "#CSS",
+    url: "#" + Group.Css,
     icon: Eclipse,
   },
   {
     title: "Browser",
-    url: "#Browser",
+    url: "#" + Group.Browser,
     icon: Globe,
   },
   {
     title: "Canvas",
-    url: "#Canvas",
+    url: "#" + Group.Canvas,
     icon: PenTool,
   },
   {
     title: "Code Experiment",
-    url: "#Code",
+    url: "#code",
     icon: Code,
   },
 ];
@@ -52,6 +53,8 @@ export function AppSidebar({
   theme: Theme;
   setTheme: React.Dispatch<React.SetStateAction<Theme>>;
 }) {
+  const { currentPage } = useRoute();
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -62,10 +65,13 @@ export function AppSidebar({
         <SidebarGroup>
           <SidebarGroupLabel>F2E Practice</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu accessKey="">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={item.url.includes(currentPage)}
+                  >
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>

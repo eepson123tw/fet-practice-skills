@@ -1,6 +1,6 @@
 export enum Group {
   Canvas = "canvas",
-  BrowserApi = "browser-api",
+  Browser = "browser",
   Js = "js-trick",
   Css = "css-trick",
 }
@@ -9,10 +9,14 @@ export type GroupValue = `${Group}` extends `${infer N extends string}`
   ? N
   : never;
 
+export type GroupKey = Lowercase<keyof typeof Group>;
+
 export interface Link {
-  url: string;
   routeName: string;
+  url: `/${GroupKey}/${Link['routeName']}`;
   group: Group;
+  cover?: string;
+  description?: string;
 }
 
 export const canvasGroups: Array<Link> = [
@@ -58,28 +62,28 @@ export const browserApiGroups: Array<Link> = [
   {
     routeName: "clipboard-api",
     url: "/browser/clipboard-api",
-    group: Group.BrowserApi,
+    group: Group.Browser,
   },
   {
     routeName: "eye-dropper",
     url: "/browser/eye-dropper",
-    group: Group.BrowserApi,
+    group: Group.Browser,
   },
   {
     routeName: "media-query",
     url: "/browser/media-query",
-    group: Group.BrowserApi,
+    group: Group.Browser,
   },
   {
     routeName: "read-file",
     url: "/browser/read-file",
-    group: Group.BrowserApi,
+    group: Group.Browser,
   },
-  { routeName: "page-api", url: "/browser/page-api", group: Group.BrowserApi },
+  { routeName: "page-api", url: "/browser/page-api", group: Group.Browser },
     {
     routeName:"dom-parser",
     url:"/js/dom-parser",
-    group:Group.BrowserApi
+    group:Group.Browser
   }
 ];
 export const jsGroups: Array<Link> = [
@@ -92,7 +96,6 @@ export const jsGroups: Array<Link> = [
   { routeName: "frame-img", url: "/js/frame-img", group: Group.Js },
   { routeName: "color-thief", url: "/js/color-thief", group: Group.Js },
   { routeName: "2048", url: "/js/2048", group: Group.Js },
-  { routeName: "color-thief", url: "/js/color-thief", group: Group.Js },
   { routeName: "text-track", url: "/js/text-track", group: Group.Js },
   { routeName: "hoc-task", url: "/js/hoc-run-task", group: Group.Js },
   {
@@ -115,7 +118,7 @@ export const jsGroups: Array<Link> = [
   },
   {
     routeName: "intersection-observer-autoplay",
-    url: "/js/intersection-observer-two",
+    url: "/js/intersection-observer-autoplay",
     group: Group.Js,
   },
   {
@@ -192,7 +195,7 @@ export const cssGroups: Array<Link> = [
     group: Group.Css,
   },
   { routeName: "text-empty", url: "/css/text-empty", group: Group.Css },
-  { routeName: "image-size", url: "/css/img-size", group: Group.Css },
+  { routeName: "image-size", url: "/css/image-size", group: Group.Css },
   { routeName: "aspect-ratio", url: "/css/aspect-ratio", group: Group.Css },
   { routeName: "rotate-img", url: "/css/rotate-img", group: Group.Css },
   { routeName: "text-eraser", url: "/css/text-eraser", group: Group.Css },

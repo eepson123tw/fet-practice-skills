@@ -22,7 +22,7 @@ export function isValidKey(key: string): key is GroupValue {
 export const groupBy = (arr: Link[], key: keyof Link) => {
   return arr.reduce((acc, cur) => {
     const groupKey = cur[key];
-    if (isValidKey(groupKey)) {
+    if ( groupKey&&isValidKey(groupKey)) {
       (acc[groupKey] = acc[groupKey] || []).push(cur);
       acc[groupKey].sort((a, b) => a.routeName.localeCompare(b.routeName));
     }
