@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.18.0...v1.19.0) (2024-11-18)
+
+
+### Features
+
+* **darkmode:** add dark mode ([afea6c2](https://github.com/eepson123tw/fet-practice-skills/commit/afea6c2a45a651fcf0198a5532ea02b854ed6afa))
+
 # [1.18.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.17.1...v1.18.0) (2024-11-18)
 
 
