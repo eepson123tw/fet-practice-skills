@@ -20,9 +20,9 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
     const cvs = document.getElementById("canvas") as HTMLCanvasElement;
     const main = document.querySelector("main") as HTMLElement;
     const mainHeight = main.clientHeight;
-    const mainWidth = main.clientWidth;
-    const width = (mainWidth || window.innerWidth) * devicePixelRatio;
+    const width = window.innerWidth * devicePixelRatio;
     const height = (mainHeight || window.innerHeight) * devicePixelRatio;
+
     cvs.width = width;
     cvs.height = height;
 

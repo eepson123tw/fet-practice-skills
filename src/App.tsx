@@ -48,14 +48,14 @@ function App() {
         </div>
       </div>
       <Separator className="mb-2" />
-      <div className="relative overflow-hidden p-4 h-full">
+      <div className="relative p-3 h-full">
         <ScrollArea>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2  auto-cols-max">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4  auto-cols-max p-1">
             {linkGroup.map((link, index) => (
               <MyWork
                 key={index}
                 link={link}
-                className="w-full text-center items-center flex flex-col justify-center cursor-pointer"
+                className="w-full text-center items-center flex flex-col  justify-start cursor-pointer bg-white rounded-lg ring-2 dark:ring-yellow-300 light:ring-gray-800 hover:ring-red-400 overflow-hidden"
                 aspectRatio="portrait"
                 width={500}
                 height={310} // Approximately 250/1.618 for golden ratio

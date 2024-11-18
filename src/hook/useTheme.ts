@@ -17,7 +17,7 @@ export function useTheme() {
         setTheme(e.matches ? "dark" : "light");
       });
     } else {
-      document.documentElement.style.setProperty("--color", theme);
+      document.documentElement.setAttribute('data-mode', theme);
       localStorage.setItem(LOCAL__KEY, theme);
     }
   }, [theme]);

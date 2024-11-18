@@ -11,6 +11,7 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@components/ui/context-menu";
+import { Separator } from "@components/ui/separator";
 
 import { Link } from "@/src/types/link.ts";
 interface MyWorkProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -36,13 +37,13 @@ export function MyWork({
     >
       <ContextMenu>
         <ContextMenuTrigger>
-          <div className="overflow-hidden rounded-md  items-center flex">
+          <div className="items-center flex p-1">
             <img
               src={link.cover}
               alt={link.description}
               style={{ width, height }}
               className={cn(
-                "h-auto w-auto object-cover transition-all hover:scale-105",
+                "h-auto w-auto object-cover transition-all hover:scale-105 rounded-sm",
                 aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
               )}
             />
@@ -86,8 +87,11 @@ export function MyWork({
           <ContextMenuItem>Share</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
-      <div className="space-y-1 text-sm">
-        <h3 className="font-medium leading-none">{link.routeName}</h3>
+      <Separator style={{ margin: "unset" }} />
+      <div className="text-sm [&>*]:mb-4">
+        <h3 className="font-medium leading-none text-xl uppercase">
+          {link.routeName}
+        </h3>
         <p className="text-xs text-muted-foreground">
           {link.description || "currently no desc"}
         </p>

@@ -14,10 +14,15 @@ import {
 
 import { Theme } from "@src/hook/useTheme";
 
-
 const themes: Theme[] = ["light", "dark", "os"];
 
-export function ThemeSwitcher({theme,setTheme}:{theme:Theme,setTheme:React.Dispatch<React.SetStateAction<Theme>>}) {
+export function ThemeSwitcher({
+  theme,
+  setTheme,
+}: {
+  theme: Theme;
+  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
+}) {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
