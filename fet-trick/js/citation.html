@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GPT-Style Citation Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #2c3e50, #4ca1af);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 10px;
+    }
+    h1, h2 {
+      text-align: center;
+      font-weight: 300;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      margin-bottom: 20px;
+      resize: vertical;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background: #e74c3c;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #c0392b;
+    }
+    #output {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 5px;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    #output.error {
+      background: rgba(231, 76, 60, 0.2);
+    }
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 14px;
+      color: #ddd;
+    }
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+      button {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GPT-Style Citation Generator</h1>
+    <textarea id="input-data" placeholder='Enter your bibliographic data in JSON format'></textarea>
+    <p>
+      {
+      "type": "article-journal",
+      "author": [
+        {
+          "family": "Doe",
+          "given": "John"
+        }
+      ],
+      "title": "An Example Article",
+      "container-title": "Journal of Examples",
+      "issued": {
+        "date-parts": [
+          [2024]
+        ]
+      }
+    }
+    </p>
+    <button onclick="generateCitation()">Generate Citation</button>
+    <h2>Formatted Citation:</h2>
+    <div id="output">Your citation will appear here...</div>
+  </div>
+  
+  <footer>
+    &copy; 2024 GPT Citation Generator
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/citation-js@0.5.0/build/citation.min.js"></script>
+  <script>
+    const Cite = require('citation-js')
+    function generateGPTStyleCitation(data) {
+      try {
+        const citation = new Cite(data);
+        const formattedCitation = citation.format('bibliography', {
+          format: 'html',
+          template: 'apa',
+          lang: 'en-US'
+        });
+        return formattedCitation;
+      } catch (error) {
+        console.error('Error generating citation:', error);
+        return '<span class="error">Error generating citation. Please check your data.</span>';
+      }
+    }
+
+    function generateCitation() {
+      const inputData = document.getElementById('input-data').value;
+      const outputElement = document.getElementById('output');
+      try {
+        const data = JSON.parse(inputData);
+        const citationText = generateGPTStyleCitation(data);
+        outputElement.innerHTML = citationText;
+      } catch (error) {
+        outputElement.innerHTML = '<span class="error">Error: Invalid input data. Please check the format.</span>';
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
