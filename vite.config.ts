@@ -41,7 +41,7 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
       if (title) {
         content = content.replace(
           /<title>([^<]+)<\/title>/,
-          `<title>FE練習 - $1</title>\n   <link rel="icon" type="image/svg+xml" href="/vite.svg" />`
+          `<title>FE Practice - $1</title>\n   <link rel="icon" type="image/svg+xml" href="/favicon.ico" />`
         );
       }
       // Write the modified file to the target directory
