@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.17.0...v1.17.1) (2024-11-18)
+
+
+### Bug Fixes
+
+* **setting:** fix setting and a favicon ([a7174bf](https://github.com/eepson123tw/fet-practice-skills/commit/a7174bfea03958b165bd090426608e4543907b5b))
+
 # [1.17.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.16.0...v1.17.0) (2024-11-17)
 
 
