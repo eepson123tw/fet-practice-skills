@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.17.1...v1.18.0) (2024-11-18)
+
+
+### Features
+
+* **citation:** add citation page ([b6f8119](https://github.com/eepson123tw/fet-practice-skills/commit/b6f8119ae0c56ba196fa4f4e706d6adfe8028d88))
+
 ## [1.17.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.17.0...v1.17.1) (2024-11-18)
 
 
