@@ -134,7 +134,13 @@ export const jsGroups: Array<Link> = [
   { routeName: "screen-capture", url: "/js/screen-capture", group: Group.Js, description: "Capture screenshots of the web page programmatically." },
   { routeName: "token-flash", url: "/js/token-flash", group: Group.Js, description: "Demonstrate a token flash effect using JavaScript." },
   { routeName: "carousel", url: "/js/carousel", group: Group.Js, description: "Create an interactive image or content carousel." },
-  { routeName: "citation", url: "/js/citation", group: Group.Js, description: "Generate and manage citations dynamically." }
+  { routeName: "citation", url: "/js/citation", group: Group.Js, description: "Generate and manage citations dynamically." },
+  {
+    routeName: "password-strength",
+    url: "/js/password-strength",
+    group: Group.Js,
+    description: "Check and display password strength dynamically."
+  }
 ];
 
 export const cssGroups: Array<Link> = [
