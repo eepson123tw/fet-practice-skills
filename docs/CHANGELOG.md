@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.19.0...v1.20.0) (2024-11-19)
+
+
+### Features
+
+* **typography:** add typography ([282a171](https://github.com/eepson123tw/fet-practice-skills/commit/282a171c4b633aec9afc833089b0969a6adbbb12))
+
 # [1.19.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.18.0...v1.19.0) (2024-11-18)
 
 
