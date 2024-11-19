@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.20.0...v1.21.0) (2024-11-19)
+
+
+### Features
+
+* **regex:** add password validator ([bf76421](https://github.com/eepson123tw/fet-practice-skills/commit/bf764218f69f920b52d4d904216d18a9aa4c39a4))
+
 # [1.20.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.19.0...v1.20.0) (2024-11-19)
 
 
