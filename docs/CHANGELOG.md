@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.21.0...v1.22.0) (2024-11-23)
+
+
+### Features
+
+* **concurrent:** add concurrent page ([9623b29](https://github.com/eepson123tw/fet-practice-skills/commit/9623b29b34a496b1008e82b95523129ce621fa6b))
+
 # [1.21.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.20.0...v1.21.0) (2024-11-19)
 
 
