@@ -140,6 +140,12 @@ export const jsGroups: Array<Link> = [
     url: "/js/password-strength",
     group: Group.Js,
     description: "Check and display password strength dynamically."
+  },
+  {
+    routeName: "concurrent-task",
+    url: "/js/concurrent-task",
+    group: Group.Js,
+    description: "Handle concurrent tasks effectively in JavaScript."
   }
 ];
 
