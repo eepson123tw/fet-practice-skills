@@ -1,3 +1,11 @@
+# [1.23.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.22.0...v1.23.0) (2024-11-24)
+
+
+### Features
+
+* **info:** add info page ([f741b44](https://github.com/eepson123tw/fet-practice-skills/commit/f741b44b35dce1630b2f1cdaf1c27c31e538728e))
+* **title:** add f2e title ([b2b0653](https://github.com/eepson123tw/fet-practice-skills/commit/b2b06539760ecbf67fb106b411f0a2a4a2449d10))
+
 # [1.22.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.21.0...v1.22.0) (2024-11-23)
 
 
