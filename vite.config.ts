@@ -99,6 +99,7 @@ export default defineConfig({
       "@hooks":path.resolve(__dirname, "./hooks"),
       "@lib":path.resolve(__dirname, "./lib"),
       "@src":path.resolve(__dirname, "./src"),
+      "@public":path.resolve(__dirname, "./public"),
     },
   },
 });

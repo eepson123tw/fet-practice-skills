@@ -1,6 +1,7 @@
 import "@/assets/globals.css";
 import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
 import { Separator } from "@components/ui/separator";
+import InfoView from "./view/InfoView";
 import { MyWork } from "./Components/MyWork";
 import { useLayoutEffect, useMemo } from "react";
 
@@ -8,12 +9,14 @@ import { links, groupBy, isValidKey } from "./utils/links.ts";
 import { type Link } from "@src/types/link.ts";
 import useRoute from "@src/composable/useRoute.ts";
 function App() {
-  const { currentPage } = useRoute();
+  const { currentPage, isViewPage } = useRoute();
 
   const linkGroup = useMemo(() => {
     if (!isValidKey(currentPage)) {
       return [];
     }
+    console.log(currentPage, isViewPage);
+    if (isViewPage) return [];
     const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
     const filterTexts = ["/js/", "/css/", "/browser/", "/canvas/"];
     const urlFilter = (url: string) => {
@@ -29,6 +32,15 @@ function App() {
       cover: "/screenshots/" + link.routeName + ".png",
       url: (urlHead + urlFilter(link.url)) as Link["url"],
     }));
+  }, [currentPage, isViewPage]);
+
+  const ViewGroup = useMemo(() => {
+    if (currentPage === "code") {
+      return <div>Code</div>;
+    }
+    if (currentPage === "info") {
+      return <InfoView />;
+    }
   }, [currentPage]);
 
   useLayoutEffect(() => {
@@ -50,18 +62,22 @@ function App() {
       <Separator className="mb-2" />
       <div className="relative p-3 h-full">
         <ScrollArea>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4  auto-cols-max p-1">
-            {linkGroup.map((link, index) => (
-              <MyWork
-                key={index}
-                link={link}
-                className="w-full text-center items-center flex flex-col  justify-start cursor-pointer bg-white rounded-lg ring-2 dark:ring-yellow-300 light:ring-gray-800 hover:ring-red-400 overflow-hidden"
-                aspectRatio="portrait"
-                width={500}
-                height={310} // Approximately 250/1.618 for golden ratio
-              />
-            ))}
-          </div>
+          {!isViewPage ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4  auto-cols-max p-1">
+              {linkGroup.map((link, index) => (
+                <MyWork
+                  key={index}
+                  link={link}
+                  className="w-full text-center items-center flex flex-col  justify-start cursor-pointer bg-white rounded-lg ring-2 dark:ring-yellow-300 light:ring-gray-800 hover:ring-red-400 overflow-hidden"
+                  aspectRatio="portrait"
+                  width={500}
+                  height={310} // Approximately 250/1.618 for golden ratio
+                />
+              ))}
+            </div>
+          ) : (
+            ViewGroup
+          )}
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>

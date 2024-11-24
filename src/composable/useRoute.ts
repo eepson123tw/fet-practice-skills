@@ -1,5 +1,5 @@
 
-import { useState,useEffect,useCallback } from "react";
+import { useState,useEffect,useCallback, useMemo } from "react";
 import { GroupValue, } from "@src/types/link.ts";
 
 const useRoute = () => {
@@ -11,6 +11,10 @@ const useRoute = () => {
 		setCurrentPage(resFilterUrl === "" ? "js-trick" : resFilterUrl);
 	}, []);
 
+	const isViewPage = useMemo(() => {
+		return currentPage === "code" || currentPage === "info";
+	},[currentPage])
+
 	useEffect(() => {
 		window.addEventListener("hashchange", watchRoute);
 		return () => {
@@ -18,7 +22,7 @@ const useRoute = () => {
 		};
 	}, [watchRoute]);
 
-	return { currentPage ,setCurrentPage};
+	return { isViewPage,currentPage ,setCurrentPage};
 	
 
 }

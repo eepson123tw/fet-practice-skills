@@ -1,4 +1,4 @@
-import { Globe, PenTool, Eclipse, Hexagon, Code } from "lucide-react";
+import { Globe, PenTool, Eclipse, Hexagon, Code,Info } from "lucide-react";
 
 import { Theme } from "@src/hook/useTheme";
 
@@ -38,6 +38,11 @@ const items = [
     title: "Canvas",
     url: "#" + Group.Canvas,
     icon: PenTool,
+  },
+  {
+    title: "Info",
+    url: "#info",
+    icon: Info,
   },
   {
     title: "Code Experiment",

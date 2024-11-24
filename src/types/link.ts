@@ -3,6 +3,8 @@ export enum Group {
   Browser = "browser",
   Js = "js-trick",
   Css = "css-trick",
+  Code = "code",
+  Info = "info"
 }
 // "canvas" | "browser..."etc
 export type GroupValue = `${Group}` extends `${infer N extends string}`
