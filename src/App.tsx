@@ -39,18 +39,18 @@ function App() {
     <div className="relative">
       <div className="flex items-center justify-between p-2">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight  text-red-400">
-            To Learn new thing
+          <h2 className="text-2xl font-semibold tracking-tight dark:text-red-400">
+            Frontend Practice Skills
           </h2>
-          <p className="text-sm text-muted-foreground text-red-400">
-            Updated daily.
+          <p className="text-sm text-muted-foreground dark:text-red-400">
+            A collection of frontend demos and experiments
           </p>
         </div>
       </div>
       <Separator className="mb-2" />
       <div className="relative p-3 h-full">
         <ScrollArea>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4  auto-cols-max p-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4  auto-cols-max p-1">
             {linkGroup.map((link, index) => (
               <MyWork
                 key={index}
