@@ -1,24 +1,41 @@
-import { PlusCircle } from "lucide-react";
-
 import { cn } from "@lib/utils";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuSeparator,
   ContextMenuSub,
-  ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@components/ui/context-menu";
 import { Separator } from "@components/ui/separator";
+import { Skeleton } from '@components/ui/skeleton';
 
 import { Link } from "@/src/types/link.ts";
+import {  useEffect, useState } from 'react';
 interface MyWorkProps extends React.HTMLAttributes<HTMLDivElement> {
   link: Link;
   aspectRatio?: "portrait" | "square";
   width?: number;
   height?: number;
+}
+
+type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+  src:string;
+}
+
+const ImageLazyLoading = (props:ImageProps)=>{
+  const {src} = props;
+  const [image,setImage ] = useState<HTMLImageElement|null>(null);
+  useEffect(()=>{
+    const img = new Image();
+    img.src = src;
+    img.onload = ()=>{
+      setImage(img);
+    }
+  },[src])
+
+  return image ?  <img {...props} /> : <Skeleton className="rounded-full" {...props} />
+
 }
 
 export function MyWork({
@@ -38,53 +55,22 @@ export function MyWork({
       <ContextMenu>
         <ContextMenuTrigger>
           <div className="items-center flex p-1">
-            <img
+            {link.cover && <ImageLazyLoading  
               src={link.cover}
               alt={link.description}
               style={{ width, height }}
               className={cn(
-                "h-auto w-auto object-cover transition-all hover:scale-105 rounded-sm",
+                "h-auto w-auto object-cover transition-all hover:scale-105 hover:aspect-video rounded-sm",
                 aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
-              )}
-            />
+              )}></ImageLazyLoading>}
+          
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className="w-40">
-          <ContextMenuItem>Add to Library</ContextMenuItem>
+          <ContextMenuItem>Go to Page</ContextMenuItem>
           <ContextMenuSub>
-            <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
-            <ContextMenuSubContent className="w-48">
-              <ContextMenuItem>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                New Playlist
-              </ContextMenuItem>
-              <ContextMenuSeparator />
-              {/* {playlists.map((playlist) => (
-                <ContextMenuItem key={playlist}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="mr-2 h-4 w-4"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21 15V6M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM12 12H3M16 6H3M12 18H3" />
-                  </svg>
-                  {playlist}
-                </ContextMenuItem>
-              ))} */}
-            </ContextMenuSubContent>
+            <ContextMenuSubTrigger>Add to List</ContextMenuSubTrigger>
           </ContextMenuSub>
-          <ContextMenuSeparator />
-          <ContextMenuItem>Play Next</ContextMenuItem>
-          <ContextMenuItem>Play Later</ContextMenuItem>
-          <ContextMenuItem>Create Station</ContextMenuItem>
-          <ContextMenuSeparator />
-          <ContextMenuItem>Like</ContextMenuItem>
-          <ContextMenuItem>Share</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
       <Separator style={{ margin: "unset" }} />

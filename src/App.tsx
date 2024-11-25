@@ -2,7 +2,7 @@ import "@/assets/globals.css";
 import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
 import { Separator } from "@components/ui/separator";
 import InfoView from "./view/InfoView";
-import { MyWork } from "./Components/MyWork";
+import { MyWork } from "./components/MyWork";
 import { useLayoutEffect, useMemo } from "react";
 
 import { links, groupBy, isValidKey } from "./utils/links.ts";
