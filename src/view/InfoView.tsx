@@ -1,4 +1,4 @@
-import infoImg from "@public/info.webp";
+import infoImg from "/info.webp";
 import { AspectRatio } from "@components/ui/aspect-ratio";
 import { Separator } from "@components/ui/separator";
 
@@ -15,7 +15,7 @@ const InfoPage = () => {
     <Card className="p-2">
       <CardHeader>
         <CardTitle className="mb-2">About the Project</CardTitle>
-        <div className='mb-2 w-[300px] h-[300px]'>
+        <div className='mb-4 w-[300px] h-[300px]'>
             <AspectRatio ratio={16 / 9}>
               <img
                 src={infoImg}

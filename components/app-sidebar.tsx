@@ -41,12 +41,12 @@ const items = [
   },
   {
     title: "Info",
-    url: "#info",
+    url: "#" + Group.Info,
     icon: Info,
   },
   {
     title: "Code Experiment",
-    url: "#code",
+    url: "#" + Group.Code,
     icon: Code,
   },
 ];

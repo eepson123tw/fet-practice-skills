@@ -4,6 +4,7 @@ import { AppSidebar } from "@components/app-sidebar";
 import React, { useEffect } from "react";
 import { useTheme } from "./hook/useTheme.ts";
 
+
 function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
 
@@ -93,6 +94,7 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme, setTheme } = useTheme();
+
   return (
     <SidebarProvider>
       <AppSidebar theme={theme} setTheme={setTheme} />

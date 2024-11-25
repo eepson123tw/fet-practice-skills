@@ -1,15 +1,18 @@
 
-import { useState,useEffect,useCallback, useMemo } from "react";
+import { useEffect,useCallback, useMemo } from "react";
 import { GroupValue, } from "@src/types/link.ts";
+import { useAppContext } from '@src/store/AppContext';
 
 const useRoute = () => {
-	const [currentPage, setCurrentPage] = useState<GroupValue>("js-trick");
 
+	const { urlHash, setUrlHash } = useAppContext();
+
+	const  currentPage = urlHash.replace("#", "") as GroupValue | "";
 	const watchRoute = useCallback(() => {
 		const hash = window.location.hash.toLowerCase();
 		const resFilterUrl = hash.replace("#", "") as GroupValue | "";
-		setCurrentPage(resFilterUrl === "" ? "js-trick" : resFilterUrl);
-	}, []);
+		setUrlHash(resFilterUrl === "" ? "js-trick" : resFilterUrl);
+	}, [setUrlHash]);
 
 	const isViewPage = useMemo(() => {
 		return currentPage === "code" || currentPage === "info";
@@ -22,7 +25,7 @@ const useRoute = () => {
 		};
 	}, [watchRoute]);
 
-	return { isViewPage,currentPage ,setCurrentPage};
+	return { isViewPage,currentPage ,setCurrentPage:setUrlHash};
 	
 
 }

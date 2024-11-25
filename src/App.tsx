@@ -8,15 +8,15 @@ import { useLayoutEffect, useMemo } from "react";
 import { links, groupBy, isValidKey } from "./utils/links.ts";
 import { type Link } from "@src/types/link.ts";
 import useRoute from "@src/composable/useRoute.ts";
+import { useAppContext } from './store/AppContext.tsx';
 function App() {
   const { currentPage, isViewPage } = useRoute();
 
+  const { setUrlHash } = useAppContext();
   const linkGroup = useMemo(() => {
-    if (!isValidKey(currentPage)) {
+    if (!isValidKey(currentPage)|| isViewPage) {
       return [];
     }
-    console.log(currentPage, isViewPage);
-    if (isViewPage) return [];
     const urlHead = import.meta.env.MODE === "production" ? "." : "/fet-trick";
     const filterTexts = ["/js/", "/css/", "/browser/", "/canvas/"];
     const urlFilter = (url: string) => {
@@ -32,7 +32,7 @@ function App() {
       cover: "/screenshots/" + link.routeName + ".png",
       url: (urlHead + urlFilter(link.url)) as Link["url"],
     }));
-  }, [currentPage, isViewPage]);
+  }, [currentPage,isViewPage]);
 
   const ViewGroup = useMemo(() => {
     if (currentPage === "code") {
@@ -44,7 +44,7 @@ function App() {
   }, [currentPage]);
 
   useLayoutEffect(() => {
-    window.location.hash === "" ? "#js-trick" : window.location.hash;
+    setUrlHash(window.location.hash ? window.location.hash : "#js-trick");
   });
 
   return (
