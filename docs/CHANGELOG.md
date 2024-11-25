@@ -1,3 +1,10 @@
+## [1.25.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.25.0...v1.25.1) (2024-11-25)
+
+
+### Bug Fixes
+
+* **tiptap:** remove git catch ([0d2ad99](https://github.com/eepson123tw/fet-practice-skills/commit/0d2ad9935453faff27d14da30f784f8dc27c4db8))
+
 # [1.25.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.24.0...v1.25.0) (2024-11-25)
 
 
