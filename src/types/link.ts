@@ -148,6 +148,12 @@ export const jsGroups: Array<Link> = [
     url: "/js/concurrent-task",
     group: Group.Js,
     description: "Handle concurrent tasks effectively in JavaScript."
+  },
+  {
+    routeName:"tiptap",
+    url:"/js/tiptap",
+    group: Group.Js,
+    description: "try to use tiptap"
   }
 ];
 

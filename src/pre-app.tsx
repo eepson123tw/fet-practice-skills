@@ -4,7 +4,7 @@ import "./main-fn.ts";
 
 import Timer from "./timer.tsx";
 import { MutationObserve } from "./mutationObserve.tsx";
-import Container from "./Components/Container.tsx";
+import Container from "./components/Container.tsx";
 import { links, groupBy, isValidKey } from "./utils/links.ts";
 import { useTheme } from "./hook/useTheme.ts";
 

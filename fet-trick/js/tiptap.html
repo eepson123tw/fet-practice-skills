@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        background-color: #282c34;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: #fff;
+      }
+      .editor-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #3b3f46;
+        border: 1px solid #555;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+      .ProseMirror {
+        min-height: 300px;
+        color: #fff;
+      }
+      .ProseMirror h1,
+      .ProseMirror h2,
+      .ProseMirror h3 {
+        color: #61dafb;
+      }
+      .menu-bar {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .menu-bar button {
+        background: #61dafb;
+        border: none;
+        color: #282c34;
+        padding: 10px 15px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .menu-bar button.is-active {
+        background: #21a1f1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="editor-container">
+      <div class="menu-bar"></div>
+      <div class="element"></div>
+    </div>
+<script type="module">
+import { Editor } from 'https://esm.sh/@tiptap/core'
+import StarterKit from 'https://esm.sh/@tiptap/starter-kit'
+
+const editor = new Editor({
+  element: document.querySelector('.element'),
+  extensions: [
+    StarterKit,
+  ],
+  editorProps: {
+    attributes: {
+      class: 'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+    },
+  },
+  content: `
+    <h2>
+      Hi there,
+    </h2>
+    <p>
+      this is a basic <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
+    </p>
+    <ul>
+      <li>
+        That’s a bullet list with one …
+      </li>
+      <li>
+        … or two list items.
+      </li>
+    </ul>
+    <p>
+      Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
+    </p>
+<pre><code class="language-css">body {
+  display: none;
+}</code></pre>
+    <p>
+      I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
+    </p>
+    <blockquote>
+      Wow, that’s amazing. Good work, boy! 👏
+      <br />
+      — Mom
+    </blockquote>
+  `,
+})
+</script>
+  </body>
+</html>
