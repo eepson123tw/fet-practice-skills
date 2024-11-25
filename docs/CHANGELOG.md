@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.24.0...v1.25.0) (2024-11-25)
+
+
+### Features
+
+* **tiptap:** add tiptap ([771e72a](https://github.com/eepson123tw/fet-practice-skills/commit/771e72a0726d9e06fbd01f48e55362deb22a73f3))
+
 # [1.24.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.23.1...v1.24.0) (2024-11-25)
 
 
