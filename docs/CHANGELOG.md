@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.23.1...v1.24.0) (2024-11-25)
+
+
+### Features
+
+* **skeleton:** add skeleton and some loading ui ([b9dcf83](https://github.com/eepson123tw/fet-practice-skills/commit/b9dcf837934355d6b0b4200374604cfc266fd4a4))
+
 ## [1.23.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.23.0...v1.23.1) (2024-11-25)
 
 
