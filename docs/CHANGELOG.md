@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.23.0...v1.23.1) (2024-11-25)
+
+
+### Bug Fixes
+
+* **provider:** add provider to control hash ([840c028](https://github.com/eepson123tw/fet-practice-skills/commit/840c028d103e46cb14eef0a07a34e03267c93386))
+
 # [1.23.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.22.0...v1.23.0) (2024-11-24)
 
 
