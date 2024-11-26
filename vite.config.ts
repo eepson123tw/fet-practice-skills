@@ -100,6 +100,7 @@ export default defineConfig({
       "@lib":path.resolve(__dirname, "./lib"),
       "@src":path.resolve(__dirname, "./src"),
       "@public":path.resolve(__dirname, "./public"),
+      "@utils":path.resolve(__dirname, "./utils"),
     },
   },
 });

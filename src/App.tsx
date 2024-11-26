@@ -2,6 +2,7 @@ import "@/assets/globals.css";
 import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
 import { Separator } from "@components/ui/separator";
 import InfoView from "./view/InfoView";
+import CodeExperimentView from "./view/CodeExperimentView";
 import { MyWork } from "./component/MyWork.tsx";
 import { useLayoutEffect, useMemo } from "react";
 
@@ -36,7 +37,7 @@ function App() {
 
   const ViewGroup = useMemo(() => {
     if (currentPage === "code") {
-      return <div>Code</div>;
+      return <CodeExperimentView/>
     }
     if (currentPage === "info") {
       return <InfoView />;
