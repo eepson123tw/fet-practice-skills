@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.25.1...v1.26.0) (2024-11-26)
+
+
+### Features
+
+* **codeExperiment:** add experiment page ([caaf211](https://github.com/eepson123tw/fet-practice-skills/commit/caaf211b6f2826dabd298fb09f43d8bf9a00f90d))
+
 ## [1.25.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.25.0...v1.25.1) (2024-11-25)
 
 
