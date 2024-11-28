@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.27.0...v1.28.0) (2024-11-28)
+
+
+### Features
+
+* **depcheck:** fix error import ([2376ec1](https://github.com/eepson123tw/fet-practice-skills/commit/2376ec1a5e98925271306024dfd77aee54624945))
+
 # [1.27.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.26.0...v1.27.0) (2024-11-28)
 
 
