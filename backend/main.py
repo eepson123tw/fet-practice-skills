@@ -6,6 +6,17 @@ import time
 from pathlib import Path
 
 def capture_screenshot(html_file, output_dir):
+    # Create output filename
+    output_filename = os.path.join(
+        output_dir, 
+        os.path.splitext(os.path.basename(html_file))[0] + '.png'
+    )
+    
+    # Skip if the screenshot already exists
+    if os.path.exists(output_filename):
+        print(f"Screenshot already exists, skipping: {output_filename}")
+        return
+
     # Setup Chrome options
     chrome_options = Options()
     chrome_options.add_argument('--headless')  # Run in headless mode
@@ -24,12 +35,6 @@ def capture_screenshot(html_file, output_dir):
         
         # Get full page screenshot
         screenshot = driver.get_screenshot_as_png()
-        
-        # Create output filename
-        output_filename = os.path.join(
-            output_dir, 
-            os.path.splitext(os.path.basename(html_file))[0] + '.png'
-        )
         
         # Save and resize image
         with open(output_filename, 'wb') as f:
