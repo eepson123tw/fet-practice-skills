@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.26.0...v1.27.0) (2024-11-28)
+
+
+### Features
+
+* **autocheck:** add auto check file exist or not ([fc47d14](https://github.com/eepson123tw/fet-practice-skills/commit/fc47d14ef1cea42c5ab54b0e7d54a6e181cf2c45))
+
 # [1.26.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.25.1...v1.26.0) (2024-11-26)
 
 
