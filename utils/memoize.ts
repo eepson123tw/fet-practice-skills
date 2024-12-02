@@ -44,3 +44,14 @@ function memoize(func, resolver) {
   memoized.cache = new MemoizedMap();
   return memoized;
 }
+
+
+
+const memoized = memoize((a, b) => {
+  console.log("Calculating...");
+  return a + b;
+}, (a, b) => a + b);
+
+console.log(memoized(1, 2));
+
+
