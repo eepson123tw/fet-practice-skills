@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.28.0...v1.29.0) (2024-12-02)
+
+
+### Features
+
+* **code-previewer:** add code review ([53b8625](https://github.com/eepson123tw/fet-practice-skills/commit/53b86255708f1d153a3270eddbe5ad4004dd08f9))
+
 # [1.28.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.27.0...v1.28.0) (2024-11-28)
 
 
