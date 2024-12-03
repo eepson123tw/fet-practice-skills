@@ -1,6 +1,4 @@
-// https://github.com/codesandbox/sandpack/discussions/314
-
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import {
   SandpackProvider,
   SandpackLayout,
@@ -8,21 +6,28 @@ import {
   SandpackPreview,
   useSandpack,
   SandpackConsole,
+  SandpackPreviewRef,
 } from "@codesandbox/sandpack-react";
-import code from '@utils/memoize?raw';
+import code from "@utils/memoize?raw";
+import asyncReplaceAll from "@utils/asyncReplaceAll?raw";
 
 const files = {
-  "/argsType.ts": code
+  "/index.ts": `import "./argsType.ts";`, // Initial import
+  "/argsType.ts": code,
+  "/asyncReplaceAll.ts": asyncReplaceAll,
 };
 
 const Editor = () => {
   const { sandpack } = useSandpack();
-  useEffect(() => {
-    // *************************************** //
-    //      UPDATED CODE FROM STATE!!         //
-    // *************************************** //
-    console.log(sandpack.files);
-  }, [sandpack.files]);
+  const previewRef = useRef<SandpackPreviewRef>(null);
+  const { activeFile, files ,updateFile} = sandpack;
+    useEffect(() => {
+      const newIndexContent = `import "${activeFile}";`;
+      // Check if the content is different before updating
+      if (files["/index.ts"]?.code !== newIndexContent) {
+        updateFile("/index.ts", newIndexContent);
+      }
+    }, [activeFile,files,updateFile]);
 
   return (
     <Fragment>
@@ -34,12 +39,12 @@ const Editor = () => {
           showTabs={true}
         />
         <SandpackPreview
+          ref={previewRef}
           style={{ height: "600px" }}
-          showOpenInCodeSandbox={false}
+          showOpenInCodeSandbox={true}
           showRefreshButton={true}
-          showRestartButton={true}
         >
-          <SandpackConsole style={{ height: "300px" }} />
+          <SandpackConsole style={{ height: "600px" }} showHeader />
         </SandpackPreview>
       </SandpackLayout>
     </Fragment>
@@ -49,14 +54,13 @@ const Editor = () => {
 const CodeExperimentPage = () => {
   return (
     <SandpackProvider
-      lang="vanilla-ts"
       files={files}
       options={{
         activeFile: "/argsType.ts",
-        visibleFiles: ["/argsType.ts"],
+        visibleFiles: Object.keys(files),
       }}
       customSetup={{
-        entry: "/argsType.ts",
+        entry: "/index.ts", 
       }}
     >
       <SandpackLayout className="!block !rounded-none sm:!rounded-lg !-mx-4 sm:!mx-0">
