@@ -10,11 +10,13 @@ import {
 } from "@codesandbox/sandpack-react";
 import code from "@utils/memoize?raw";
 import asyncReplaceAll from "@utils/asyncReplaceAll?raw";
+import iterator from "@utils/iterator?raw";
 
 const files = {
   "/index.ts": `import "./argsType.ts";`, // Initial import
   "/argsType.ts": code,
   "/asyncReplaceAll.ts": asyncReplaceAll,
+  "/iterator.ts": iterator,
 };
 
 const Editor = () => {
