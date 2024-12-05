@@ -283,6 +283,12 @@ export const cssGroups: Array<Link> = [
     url: "/css/hover-padding",
     group: Group.Css,
     description: "Create hover effects with dynamic padding changes."
+  },
+  {
+    routeName: "mac-docker",
+    url: "/css/mac-docker",
+    group: Group.Css,
+    description: "Create a Mac-style dock with CSS."
   }
 ];
 

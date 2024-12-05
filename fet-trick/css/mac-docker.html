@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MacDocker</title>
+	<style>
+	body {
+		font-family: Arial, sans-serif;
+		background-color: #f0f0f0;
+		margin: 0;
+		padding: 0;
+	}
+	.docker-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+	}
+	.docker {
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		padding: 20px;
+		text-align: center;
+	}
+	.docker img {
+		width: 100px;
+		height: 100px;
+	}
+	.docker h1 {
+		font-size: 24px;
+		margin: 10px 0;
+	}
+	.docker p {
+		font-size: 16px;
+		color: #666;
+	}
+	.dock {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		bottom: 20px;
+		width: 100%;
+		background: black;
+		padding: 10px 0;
+	}
+	.item {
+		width: 50px;
+		height: 50px;
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		transition: transform 0.2s;
+		transform-origin: bottom center;
+	}
+	.gap {
+		width: 10px;
+	}
+	</style>
+</head>
+<body>
+
+<div class="docker-container">
+	<div class="docker">
+		<h1>Welcome to MacDocker</h1>
+		<p>Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.</p>
+	</div>
+	<div class="dock">
+		<div class="item"></div>
+		<div class="gap"></div>
+		<div class="item"></div>
+		<div class="gap"></div>
+		<div class="item"></div>
+		<div class="gap"></div>
+		<div class="item"></div>
+		<div class="gap"></div>
+		<div class="item"></div>
+		<div class="gap"></div>
+		<div class="item"></div>
+		<div class="gap"></div>
+		<div class="item"></div>
+		<div class="gap"></div>
+	</div>
+</div>
+
+
+<script>
+const dock = document.querySelector('.dock');
+const items = document.querySelectorAll('.item');
+
+dock.addEventListener('mousemove', (e) => {
+    const dockRect = dock.getBoundingClientRect();
+    const mouseX = e.clientX;
+
+    items.forEach(item => {
+        const itemRect = item.getBoundingClientRect();
+        const itemCenterX = itemRect.left + itemRect.width / 2;
+        const distance = Math.abs(mouseX - itemCenterX);
+        const maxDistance = 100; // Adjust this value for sensitivity
+
+        // Calculate scale factor
+        let scale = 1 + Math.max((maxDistance - distance) / maxDistance, 0) * 1; // Max scale up to 2
+        scale = Math.min(Math.max(scale, 1), 2); // Limit scale between 1 and 2
+
+        item.style.transform = `scale(${scale})`;
+    });
+});
+
+dock.addEventListener('mouseleave', () => {
+    items.forEach(item => {
+        item.style.transform = 'scale(1)';
+    });
+});
+</script>
+
+</body>
+</html>
