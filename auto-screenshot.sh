@@ -6,7 +6,7 @@ cd "$(git rev-parse --show-toplevel)"
 echo "Pre-push hook started."
 
 # Set the Python script's path
-SCRIPT_PATH="backend/main.py"
+SCRIPT_PATH="main.py"
 
 echo "Activating virtual environment..."
 
@@ -16,18 +16,8 @@ if [ ! -d "backend/env" ]; then
     exit 1
 fi
 
-# Activate the virtual environment
-source backend/env/bin/activate
-echo "Virtual environment activated."
-
-echo "Running main.py..."
-
-# Check if the Python script exists
-if [ ! -f "$SCRIPT_PATH" ]; then
-    echo "Error: Python script $SCRIPT_PATH not found. Push aborted."
-    exit 1
-fi
-
+cd backend
+source env/bin/activate
 # Execute the Python script
 python3 "$SCRIPT_PATH"
 
