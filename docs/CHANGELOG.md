@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.33.0...v1.34.0) (2024-12-05)
+
+
+### Features
+
+* **dock:** test py runner 3 ([3f45d68](https://github.com/eepson123tw/fet-practice-skills/commit/3f45d687941866388bb7cd456691895b2437702a))
+
 # [1.33.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.32.0...v1.33.0) (2024-12-05)
 
 
