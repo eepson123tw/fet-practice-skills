@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.31.0...v1.32.0) (2024-12-05)
+
+
+### Features
+
+* **dock:** add mac dock page & css ([9d6c049](https://github.com/eepson123tw/fet-practice-skills/commit/9d6c0492d42b3aa7586d3bc8bc0c6756f415d364))
+
 # [1.31.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.30.0...v1.31.0) (2024-12-03)
 
 
