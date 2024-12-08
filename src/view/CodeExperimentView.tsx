@@ -8,15 +8,15 @@ import {
   SandpackConsole,
   SandpackPreviewRef,
 } from "@codesandbox/sandpack-react";
-import code from "@utils/memoize?raw";
-import asyncReplaceAll from "@utils/asyncReplaceAll?raw";
-import iterator from "@utils/iterator?raw";
+
+import {code,asyncReplaceAll,iterator,newFetch} from '../utils/codeLinks'
 
 const files = {
   "/index.ts": `import "./argsType.ts";`, // Initial import
   "/argsType.ts": code,
   "/asyncReplaceAll.ts": asyncReplaceAll,
   "/iterator.ts": iterator,
+  '/newFetch.ts': newFetch
 };
 
 const Editor = () => {
