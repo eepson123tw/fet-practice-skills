@@ -1,9 +1,8 @@
 # [1.38.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.37.0...v1.38.0) (2024-12-08)
 
-
 ### Features
 
-* **newFetch:** add new fetch to the scene ([968325e](https://github.com/eepson123tw/fet-practice-skills/commit/968325e81333491d1073d961172ffffb1f8d6af0))
+- **newFetch:** add new fetch to the scene ([968325e](https://github.com/eepson123tw/fet-practice-skills/commit/968325e81333491d1073d961172ffffb1f8d6af0))
 
 # [1.37.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.36.0...v1.37.0) (2024-12-05)
 

@@ -1,77 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>RWDWidthHeight</title>
-	<style>
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			list-style: none;
-		}
-		html,body{
-			font-family: Arial, sans-serif;
-			font-size: 16px;
-			line-height: 1.5;
-			width: 100%;
-			height: 100%;
-		}
-		.wrapper{
-			width: 100%;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		}
-		p{
-			width: 50%;
-			background-color: #f1f1f1;
-			margin: 10px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.aspect-ratio{
-			background: black;
-			color: white;
-			aspect-ratio: 4/3;
-		}
-		.container{
-			width: 50%;
-			background-color: #f1f1f1;
-			border: 1px solid #ccc;
-			margin: 10px;
-		}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RWDWidthHeight</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+      }
+      html,
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        width: 100%;
+        height: 100%;
+      }
+      .wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      p {
+        width: 50%;
+        background-color: #f1f1f1;
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .aspect-ratio {
+        background: black;
+        color: white;
+        aspect-ratio: 4/3;
+      }
+      .container {
+        width: 50%;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        margin: 10px;
+      }
 
-		.inner{
-			width: 100%;
-			padding-top: 75%;
-			background: red;
-			color: white;
-			position: relative;
-		}
-		.inner span{
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			display: block;
-			width: 100%;
-			text-align: center;
-		}
-	</style>
-</head>
-<body>
-	<div class="wrapper">
-		<p class="aspect-ratio">aspect-ratio</p>
-		<div class="container">
-			<div class="inner">
-				<span>inner</p>
-			</div>
-		</div>
-	</div>
-</body>
+      .inner {
+        width: 100%;
+        padding-top: 75%;
+        background: red;
+        color: white;
+        position: relative;
+      }
+      .inner span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <p class="aspect-ratio">aspect-ratio</p>
+      <div class="container">
+        <div class="inner">
+          <span>inner</span>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

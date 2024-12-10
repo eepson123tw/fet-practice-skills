@@ -7,9 +7,15 @@ import {
 } from "@components/ui/context-menu";
 import { Separator } from "@components/ui/separator";
 import { Skeleton } from "@components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@components/ui/tooltip";
 
 import { Link } from "@/src/types/link.ts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 interface MyWorkProps extends React.HTMLAttributes<HTMLDivElement> {
   link: Link;
@@ -20,6 +26,23 @@ interface MyWorkProps extends React.HTMLAttributes<HTMLDivElement> {
 
 type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
+};
+
+type TooltipProps = {
+  children?: ReactNode;
+};
+
+const TooltipHoc = (props: TooltipProps) => {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{props.children}</TooltipTrigger>
+        <TooltipContent>
+          <p>Right Click open menu</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
 };
 
 const ImageLazyLoading = (props: ImageProps) => {
@@ -52,45 +75,55 @@ export function MyWork({
     "https://github.com/eepson123tw/fet-practice-skills/tree/master";
 
   return (
-    <div className={cn("space-y-3", className)} {...props}>
-      <ContextMenu>
-        <ContextMenuTrigger>
-          <div className="items-center flex p-1">
-            {link.cover && (
-              <ImageLazyLoading
-                src={link.cover}
-                alt={link.description}
-                style={{ width, height }}
-                className={cn(
-                  "h-auto w-auto object-cover transition-all hover:scale-105 hover:aspect-video rounded-sm",
-                  aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square",
-                )}
-              ></ImageLazyLoading>
-            )}
+    <ContextMenu>
+      <ContextMenuTrigger>
+        <TooltipHoc>
+          <div className={cn("space-y-3", className)} {...props}>
+            <div className="items-center flex p-1">
+              {link.cover && (
+                <ImageLazyLoading
+                  src={link.cover}
+                  alt={link.description}
+                  style={{ width, height }}
+                  className={cn(
+                    "h-auto w-auto object-cover transition-all hover:scale-105 hover:aspect-video rounded-sm",
+                    aspectRatio === "portrait"
+                      ? "aspect-[3/4]"
+                      : "aspect-square",
+                  )}
+                ></ImageLazyLoading>
+              )}
+            </div>
+
+            <ContextMenuContent className="w-40">
+              <ContextMenuItem onClick={() => window.open(link.url, "_blank")}>
+                Go to Page
+              </ContextMenuItem>
+              <ContextMenuItem
+                onClick={() =>
+                  window.open(
+                    GITHUBLINK + link.url + ".html",
+                    "_blank",
+                    "popup",
+                  )
+                }
+              >
+                Go to Github
+              </ContextMenuItem>
+            </ContextMenuContent>
+
+            <Separator style={{ margin: "unset" }} />
+            <div className="text-sm [&>*]:mb-4">
+              <h3 className="font-medium leading-none text-xl uppercase">
+                {link.routeName}
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                {link.description || "currently no desc"}
+              </p>
+            </div>
           </div>
-        </ContextMenuTrigger>
-        <ContextMenuContent className="w-40">
-          <ContextMenuItem onClick={() => window.open(link.url, "_blank")}>
-            Go to Page
-          </ContextMenuItem>
-          <ContextMenuItem
-            onClick={() =>
-              window.open(GITHUBLINK + link.url + ".html", "_blank", "popup")
-            }
-          >
-            Go to Github
-          </ContextMenuItem>
-        </ContextMenuContent>
-      </ContextMenu>
-      <Separator style={{ margin: "unset" }} />
-      <div className="text-sm [&>*]:mb-4">
-        <h3 className="font-medium leading-none text-xl uppercase">
-          {link.routeName}
-        </h3>
-        <p className="text-xs text-muted-foreground">
-          {link.description || "currently no desc"}
-        </p>
-      </div>
-    </div>
+        </TooltipHoc>
+      </ContextMenuTrigger>
+    </ContextMenu>
   );
 }
