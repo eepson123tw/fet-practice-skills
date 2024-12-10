@@ -23,17 +23,17 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
 
       content = content.replace(
         /<audio src="\.\.\/public\/([^"]+)" controls type="audio\/ogg" id="audio-player"><\/audio>/g,
-        '<audio src="./$1" type="audio/ogg" controls id="audio-player"></audio>'
+        '<audio src="./$1" type="audio/ogg" controls id="audio-player"></audio>',
       );
       // Update <source> paths
       content = content.replace(
         /<source src="\.\.\/public\/([^"]+)" type="audio\/ogg">/g,
-        '<source src="./$1" controls type="audio/ogg">'
+        '<source src="./$1" controls type="audio/ogg">',
       );
       // Update <script> paths
       content = content.replace(
         /<script src="\.\.\/utils\/[^"]+\.(t|j)s"><\/script>/g,
-        '<script type="module" crossorigin src="/assets/index.js"></script>'
+        '<script type="module" crossorigin src="/assets/index.js"></script>',
       );
 
       const title = content.match(/<title>([^<]+)<\/title>/)?.[1];
@@ -41,16 +41,16 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
       if (title) {
         content = content.replace(
           /<title>([^<]+)<\/title>/,
-          `<title>FE Practice - $1</title>\n   <link rel="icon" type="image/svg+xml" href="/favicon.ico" />`
+          `<title>FE Practice - $1</title>\n   <link rel="icon" type="image/svg+xml" href="/favicon.ico" />`,
         );
       }
       // Write the modified file to the target directory
       await fs.promises.writeFile(
         path.join(targetDir, fileName),
         content,
-        "utf-8"
+        "utf-8",
       );
-    })
+    }),
   );
 }
 
@@ -96,11 +96,11 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@components": path.resolve(__dirname, "./components"),
-      "@hooks":path.resolve(__dirname, "./hooks"),
-      "@lib":path.resolve(__dirname, "./lib"),
-      "@src":path.resolve(__dirname, "./src"),
-      "@public":path.resolve(__dirname, "./public"),
-      "@utils":path.resolve(__dirname, "./utils"),
+      "@hooks": path.resolve(__dirname, "./hooks"),
+      "@lib": path.resolve(__dirname, "./lib"),
+      "@src": path.resolve(__dirname, "./src"),
+      "@public": path.resolve(__dirname, "./public"),
+      "@utils": path.resolve(__dirname, "./utils"),
     },
   },
 });

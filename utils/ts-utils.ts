@@ -12,7 +12,7 @@
 type Watcher<T> = {
   on<K extends keyof T>(
     eventName: `${K & string}Changed`,
-    callback: (oldValue: T[K], newValue: T[K]) => void
+    callback: (oldValue: T[K], newValue: T[K]) => void,
   ): void;
 };
 
@@ -101,7 +101,7 @@ type Foo = WrapNaked<string | number | boolean>;
  */
 
 type Union2Intersection<U> = (U extends any ? (x: U) => any : never) extends (
-  x: infer I
+  x: infer I,
 ) => any
   ? I
   : never;

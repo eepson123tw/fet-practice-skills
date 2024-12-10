@@ -15,14 +15,14 @@ const InfoPage = () => {
     <Card className="p-2">
       <CardHeader>
         <CardTitle className="mb-2">About the Project</CardTitle>
-        <div className='mb-4 w-[300px] h-[300px]'>
-            <AspectRatio ratio={16 / 9}>
-              <img
-                src={infoImg}
-                alt="Image"
-                className="rounded-md object-cover"
-              ></img>
-            </AspectRatio>
+        <div className="mb-4 w-[300px] h-[300px]">
+          <AspectRatio ratio={16 / 9}>
+            <img
+              src={infoImg}
+              alt="Image"
+              className="rounded-md object-cover"
+            ></img>
+          </AspectRatio>
         </div>
         <CardDescription>
           This project is a meticulously curated collection of web development

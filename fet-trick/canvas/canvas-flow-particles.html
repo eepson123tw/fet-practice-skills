@@ -1,186 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>CanvasFlowParticles</title> 
-	<style>
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			background: #000;
-		}
-		body {
-			margin: 0;
-			padding: 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			position: relative;
-		}
-		canvas {
-			border: 1px solid #000;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			cursor: pointer;
-		}
-		image{
-			display: none;
-		}
-		p {
-			position: absolute;
-			bottom: 40px;
-			left: 50%;
-			transform: translateX(-50%);
-			color: #fff;
-			font-size: 20px;
-			font-family: Arial, sans-serif;
-		}
-	</style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CanvasFlowParticles</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background: #000;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+      }
+      canvas {
+        border: 1px solid #000;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+      }
+      image {
+        display: none;
+      }
+      p {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #fff;
+        font-size: 20px;
+        font-family: Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <p></p>
+    <script>
+      let tag = 0;
+      const imglist = ["./miko.png", "./suisei.png"];
+      const namelist = ["Sakura Miko", "Hoshimachi Suisei "];
+      let name = namelist[0].split("");
 
-	<canvas id="canvas"></canvas>
-	<p></p>
-	<script>
-		let tag = 0;
-		const imglist = ['./miko.png','./suisei.png'];
-		const namelist = ['Sakura Miko', 'Hoshimachi Suisei '];
-		let name = namelist[0].split('');
+      const image = new Image();
+      image.src = imglist[0];
 
-		const image = new Image();
-		image.src = imglist[0];
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const nameElement = document.querySelector("p");
+      nameElement.innerHTML = name.join("");
 
-		const canvas = document.getElementById('canvas');
-		const ctx = canvas.getContext('2d');
-		const nameElement = document.querySelector('p');
-		nameElement.innerHTML = name.join('');
+      let particlesAry = [];
+      const numberOfParticles = 7000;
+      let mappedImage = [];
 
+      canvas.width = 600;
+      canvas.height = 700;
 
-		let particlesAry = [];
-		const numberOfParticles = 7000;
-		let mappedImage = [];
+      canvas.addEventListener("click", function () {
+        tag++;
+        if (tag >= imglist.length) {
+          tag = 0;
+        }
+        image.src = imglist[tag];
+        name = namelist[tag].split("");
+        nameElement.innerHTML = name.join("");
+      });
 
-		canvas.width = 600;
-		canvas.height = 700;
+      image.addEventListener("load", function () {
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-		canvas.addEventListener('click', function(){
-			tag++;
-			if(tag >= imglist.length){
-				tag = 0;
-			}
-			image.src = imglist[tag];
-			name = namelist[tag].split('');
-			nameElement.innerHTML = name.join('');
-		});
+        mappedImage = [];
 
-		image.addEventListener('load', function() {
-			ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-			const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let y = 0; y < canvas.height; y++) {
+          let row = [];
+          for (let x = 0; x < canvas.width; x++) {
+            const red = pixels.data[y * 4 * pixels.width + x * 4];
+            const green = pixels.data[y * 4 * pixels.width + (x * 4 + 1)];
+            const blue = pixels.data[y * 4 * pixels.width + (x * 4 + 2)];
+            const brightness = calculateBrightness(red, green, blue);
+            const cell = [brightness, `rgb(${red}, ${green}, ${blue})`];
+            row.push(cell);
+          }
+          mappedImage.push(row);
+        }
 
-			mappedImage = [];
+        particlesAry = [];
+        init();
+      });
 
-			for(let y= 0; y < canvas.height; y++){
-				let row = [];
-				for(let x = 0; x < canvas.width; x++){
-					const red = pixels.data[(y * 4 * pixels.width) + (x * 4)];
-					const green = pixels.data[(y * 4 * pixels.width) + (x * 4 + 1)];
-					const blue = pixels.data[(y * 4 * pixels.width) + (x * 4 + 2)];
-					const brightness = calculateBrightness(red, green, blue);
-					const cell = [
-						brightness,
-						`rgb(${red}, ${green}, ${blue})`
-					];
-					row.push(cell);
-				}
-				mappedImage.push(row);
-			}
+      function calculateBrightness(red, green, blue) {
+        return (
+          Math.sqrt(
+            red * red * 0.299 + green * green * 0.587 + blue * blue * 0.114,
+          ) / 100
+        );
+      }
 
-			particlesAry = [];
-			init();
-		});
+      class Particles {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = 0;
+          this.speed = 0;
+          this.velocity = Math.random() * 0.5;
+          this.size = Math.random() * 2 + 0.5;
+          this.position1 = Math.floor(this.y);
+          this.position2 = Math.floor(this.x);
+          this.angle = 0;
+          this.letter = name[Math.floor(Math.random() * name.length)];
+          this.random = Math.random();
+        }
+        update() {
+          this.position1 = Math.floor(this.y);
+          this.position2 = Math.floor(this.x);
+          if (
+            mappedImage[this.position1] &&
+            mappedImage[this.position1][this.position2]
+          ) {
+            this.speed = mappedImage[this.position1][this.position2][0];
+          }
+          let movement = 2.5 - this.speed + this.velocity;
+          this.angle += this.speed / (Math.random() * 20 + 20);
+          this.y += movement + Math.sin(this.angle) * 3;
+          this.x += movement + Math.sin(this.angle) * 3;
 
-		function calculateBrightness(red, green, blue){
-			return Math.sqrt(
-				red * red * 0.299 +
-				green * green * 0.587 +
-				blue * blue * 0.114
-			) / 100;
-		}
+          if (this.y >= canvas.height) {
+            this.y = 0;
+            this.x = Math.random() * canvas.width;
+          }
+          if (this.x >= canvas.width) {
+            this.x = 0;
+            this.y = Math.random() * canvas.height;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          if (
+            mappedImage[this.position1] &&
+            mappedImage[this.position1][this.position2]
+          ) {
+            ctx.fillStyle = mappedImage[this.position1][this.position2][1];
+            ctx.strokeStyle = mappedImage[this.position1][this.position2][1];
+          }
+          ctx.strokeRect(this.x, this.y, this.size * 3, this.size * 3);
+          // ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillText(this.letter, this.x, this.y);
+          ctx.fill();
+        }
+      }
 
-		class Particles{
-			constructor(){
-				this.x = Math.random() * canvas.width;
-				this.y = 0;
-				this.speed = 0;
-				this.velocity = Math.random() * 0.5;
-				this.size = Math.random() * 2 + 0.5;
-				this.position1 = Math.floor(this.y);
-				this.position2 = Math.floor(this.x);
-				this.angle = 0;
-				this.letter = name[Math.floor(Math.random() * name.length)];
-				this.random = Math.random();
-			}
-			update(){
-				this.position1 = Math.floor(this.y);
-				this.position2 = Math.floor(this.x);
-				if(mappedImage[this.position1] && mappedImage[this.position1][this.position2]){
-					this.speed = mappedImage[this.position1][this.position2][0];
-				}
-				let movement = (2.5 - this.speed) + this.velocity;
-				this.angle += this.speed / (Math.random() * 20 + 20);
-				this.y += movement + Math.sin(this.angle) * 3;
-				this.x += movement + Math.sin(this.angle) * 3;
+      function init() {
+        for (let i = 0; i < numberOfParticles; i++) {
+          particlesAry.push(new Particles());
+        }
+      }
 
-				if(this.y >= canvas.height){
-					this.y = 0;
-					this.x = Math.random() * canvas.width;
-				}
-				if(this.x >= canvas.width){
-					this.x = 0;
-					this.y = Math.random() * canvas.height;
-				}
-			}
-			draw(){
-				ctx.beginPath();
-				if(mappedImage[this.position1] && mappedImage[this.position1][this.position2]){
-					ctx.fillStyle = mappedImage[this.position1][this.position2][1];
-					ctx.strokeStyle = mappedImage[this.position1][this.position2][1];
-				}
-				ctx.strokeRect(this.x, this.y, this.size * 3, this.size * 3);
-				// ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-				ctx.fillText(this.letter, this.x, this.y);
-				ctx.fill();
-			}
-		}
+      function animate() {
+        ctx.globalAlpha = 0.05;
+        ctx.fillStyle = "rgb(0, 0, 0)";
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particlesAry.length; i++) {
+          particlesAry[i].update();
+          ctx.globalAlpha = 1;
+          particlesAry[i].draw();
+        }
+        requestAnimationFrame(animate);
+      }
 
-		function init(){
-			for(let i = 0; i < numberOfParticles; i++){
-				particlesAry.push(new Particles());
-			}
-		}
-
-		function animate(){
-			ctx.globalAlpha = 0.05;
-			ctx.fillStyle = 'rgb(0, 0, 0)';
-			ctx.globalAlpha = 0.85;
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-			for(let i = 0; i < particlesAry.length; i++){
-				particlesAry[i].update();
-				ctx.globalAlpha = 1;
-				particlesAry[i].draw();
-			}
-			requestAnimationFrame(animate);
-		}
-
-		animate();
-
-	</script>
-	
-</body>
+      animate();
+    </script>
+  </body>
 </html>

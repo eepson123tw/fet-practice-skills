@@ -10,7 +10,6 @@ export const promiseStyle =
  * to realize the response status
  */
 
-
 function getUser() {
   return fetch("https://jsonplaceholder.typicode.com/todos/1");
 }
@@ -33,10 +32,6 @@ function main() {
   const user = m3();
   return user;
 }
-
-
-
-
 
 function runNewFetch(func: () => void) {
   // renew fetch
@@ -64,17 +59,17 @@ function runNewFetch(func: () => void) {
         cache.status = "rejected";
         cache.value = error;
       });
-  
+
     // throw the cache error to let the function catch it
     throw p;
   }
   window.fetch = newFetch as unknown as typeof fetch;
   // run the function
   try {
-  console.log(
+    console.log(
       "%crunNewFetch",
       consoleStyle,
-      "Suspense first run will be blocked"
+      "Suspense first run will be blocked",
     );
     func();
   } catch (err) {
@@ -85,7 +80,7 @@ function runNewFetch(func: () => void) {
         console.log(
           "%crunNewFetch",
           promiseStyle,
-          "Suspense second run will be ok"
+          "Suspense second run will be ok",
         );
         func();
         console.log("fetch", cache);

@@ -1,72 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TextTrack</title>
-	<style>
-		.text-container {
-			position: relative;
-			width: 100%;
-			height: 100vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.text {
-			font-size: 2rem;
-			font-family: Arial, sans-serif;
-			color: #333;
-		}
-		.cursor {
-			position: absolute;
-			width: 2px;
-			height: 2rem;
-			background-color: #333;
-			animation: cursor 1s infinite;
-		}
-		@keyframes cursor {
-			0% {
-				opacity: 1;
-			}
-			50% {
-				opacity: 0;
-			}
-			100% {
-				opacity: 1;
-			}
-		}
-	</style>
-</head>
-<body>
-	<div class="text-container">
-		<div class="text"></div>
-		<div class="cursor"></div>
-	</div>
-	<script>
-		const text = document.querySelector('.text');
-		const cursor = document.querySelector('.cursor');
-		const textContent = 'Hello World! I am a text track. do you want to see me in action?';
-		let index = 0;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TextTrack</title>
+    <style>
+      .text-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .text {
+        font-size: 2rem;
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .cursor {
+        position: absolute;
+        width: 2px;
+        height: 2rem;
+        background-color: #333;
+        animation: cursor 1s infinite;
+      }
+      @keyframes cursor {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="text-container">
+      <div class="text"></div>
+      <div class="cursor"></div>
+    </div>
+    <script>
+      const text = document.querySelector(".text");
+      const cursor = document.querySelector(".cursor");
+      const textContent =
+        "Hello World! I am a text track. do you want to see me in action?";
+      let index = 0;
 
-		function writeText() {
-			text.textContent += textContent[index];
-			index++;
-			updateCursor();
-			if (index === textContent.length) {
-				clearInterval(timer);
-				cursor.style.display = 'none';
-			}
-		}
+      function writeText() {
+        text.textContent += textContent[index];
+        index++;
+        updateCursor();
+        if (index === textContent.length) {
+          clearInterval(timer);
+          cursor.style.display = "none";
+        }
+      }
 
-		const timer = setInterval(writeText, 100);
+      const timer = setInterval(writeText, 100);
 
-		function updateCursor() {
-			const textRect = text.getBoundingClientRect();
-			cursor.style.top = `calc(${textRect.top} - 10) px`;
-			cursor.style.left = `${textRect.left + text.offsetWidth}px`;
-		}
-
-	</script>
-</body>
+      function updateCursor() {
+        const textRect = text.getBoundingClientRect();
+        cursor.style.top = `calc(${textRect.top} - 10) px`;
+        cursor.style.left = `${textRect.left + text.offsetWidth}px`;
+      }
+    </script>
+  </body>
 </html>

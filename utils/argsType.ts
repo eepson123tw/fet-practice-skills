@@ -28,13 +28,13 @@ applyType("boolean", "boolean", (a, b) => {});
 type Curry<A extends unknown[], R> = A extends []
   ? () => R
   : A extends [infer ARG]
-  ? (p: ARG) => R
-  : A extends [infer ARG, ...infer REST]
-  ? (p: ARG) => Curry<REST, R>
-  : never;
+    ? (p: ARG) => R
+    : A extends [infer ARG, ...infer REST]
+      ? (p: ARG) => Curry<REST, R>
+      : never;
 
 declare function curry<A extends unknown[], R>(
-  func: (...args: A) => R
+  func: (...args: A) => R,
 ): Curry<A, R>;
 
 function sum(a: number, b: number, c: number) {
@@ -62,11 +62,12 @@ type B = FirstArg<(a: number, b: string) => unknown>; // number
 
 // type PromiseType<T> // 獲取Promise的返回值類型
 
-type PromiseType<T> = T extends Promise<infer R>
-  ? R extends Promise<infer S>
-    ? PromiseType<S>
-    : R
-  : never;
+type PromiseType<T> =
+  T extends Promise<infer R>
+    ? R extends Promise<infer S>
+      ? PromiseType<S>
+      : R
+    : never;
 
 type C = PromiseType<Promise<string>>; // string
 

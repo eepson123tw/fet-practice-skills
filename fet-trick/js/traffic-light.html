@@ -1,149 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TrafficLight</title>
-  <style>
-    body,
-html {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrafficLight</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
 
-.traffic-light {
-  width: 300px;
-  height: 300px;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.light-container {
-  display: flex;
-}
-.light {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  background: #fff;
-  margin: 10px;
-}
-.time {
-  color: white;
-  font-style: bold;
-  font-size: 2.5rem;
-}
+      .traffic-light {
+        width: 300px;
+        height: 300px;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .light-container {
+        display: flex;
+      }
+      .light {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        background: #fff;
+        margin: 10px;
+      }
+      .time {
+        color: white;
+        font-style: bold;
+        font-size: 2.5rem;
+      }
 
-.traffic-light.green .light.green {
-  background: green;
-}
-.traffic-light.red .light.red {
-  background: red;
-}
-.traffic-light.yellow .light.yellow {
-  background: yellow;
-}
+      .traffic-light.green .light.green {
+        background: green;
+      }
+      .traffic-light.red .light.red {
+        background: red;
+      }
+      .traffic-light.yellow .light.yellow {
+        background: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="traffic-light">
+      <div class="light-container">
+        <div class="light green"></div>
+        <div class="light yellow"></div>
+        <div class="light red"></div>
+      </div>
+      <div class="time">90</div>
+    </div>
+    <script>
+      // codata traffic light
+      const trafficLightCodata = ({ red, green, yellow, initial }) => {
+        let currentColor = initial;
+        let second;
+        let time;
+        const colorState = {
+          red: {
+            second: red,
+            next: "yellow",
+          },
+          yellow: {
+            second: yellow,
+          },
+          green: {
+            second: green,
+            next: "yellow",
+          },
+        };
 
-  </style>
-</head>
-<body>
-<div class="traffic-light">
-  <div class="light-container">
-    <div class="light green"></div>
-    <div class="light yellow"></div>
-    <div class="light red"></div>
-  </div>
-  <div class="time">
-    90
-  </div>
-</div>
-<script>
-// codata traffic light
-const trafficLightCodata = ({ red, green, yellow, initial }) => {
-  let currentColor = initial;
-  let second;
-  let time;
-  const colorState = {
-    red: {
-      second: red,
-      next: "yellow"
-    },
-    yellow: {
-      second: yellow
-    },
-    green: {
-      second: green,
-      next: "yellow"
-    }
-  };
+        const switchColor = (color) => {
+          currentColor = color;
+          second = colorState[color].second;
+          time = Date.now();
+        };
+        const nextLight = () => {
+          if (currentColor === "red") {
+            colorState.yellow.next = "green";
+          }
+          if (currentColor === "green") {
+            colorState.yellow.next = "red";
+          }
+          switchColor(colorState[currentColor].next);
+        };
+        const getCurrentLight = () => {
+          const remain = Math.ceil(second - (Date.now() - time) / 1000);
+          if (remain <= 0) {
+            nextLight();
+            return getCurrentLight();
+          }
+          return {
+            color: currentColor,
+            remain,
+          };
+        };
 
-  const switchColor = (color) => {
-    currentColor = color;
-    second = colorState[color].second;
-    time = Date.now();
-  };
-  const nextLight = () => {
-    if (currentColor === "red") {
-      colorState.yellow.next = "green";
-    }
-    if (currentColor === "green") {
-      colorState.yellow.next = "red";
-    }
-    switchColor(colorState[currentColor].next);
-  };
-  const getCurrentLight = () => {
-    const remain = Math.ceil(second - (Date.now() - time) / 1000);
-    if (remain <= 0) {
-      nextLight();
-      return getCurrentLight();
-    }
-    return {
-      color: currentColor,
-      remain
-    };
-  };
+        const start = ({ lightDom, time }) => {
+          requestAnimationFrame(() => {
+            const light = trafficLight.getCurrentLight();
+            time.textContent = light.remain;
+            lightDom.className = `traffic-light ${light.color}`;
+            start({ lightDom, time });
+          });
+        };
 
-  const start = ({lightDom,time}) => {
-    requestAnimationFrame(() => {
-      const light = trafficLight.getCurrentLight();
-      time.textContent = light.remain;
-      lightDom.className = `traffic-light ${light.color}`;
-      start({lightDom,time});
-    });
-  }
+        switchColor(initial);
 
-  switchColor(initial);
+        return {
+          nextLight,
+          getCurrentLight,
+          start,
+        };
+      };
 
-  return {
-    nextLight,
-    getCurrentLight,
-    start
-  };
-};
+      const trafficLight = trafficLightCodata({
+        red: 10,
+        yellow: 3,
+        green: 10,
+        initial: "green",
+      });
 
-const trafficLight = trafficLightCodata({
-  red: 10,
-  yellow: 3,
-  green: 10,
-  initial: "green"
-});
-
-
-trafficLight.start({
-  lightDom:document.querySelector(".traffic-light"),
-  time:document.querySelector(".time")
-})
-
-
-</script>
-</body>
+      trafficLight.start({
+        lightDom: document.querySelector(".traffic-light"),
+        time: document.querySelector(".time"),
+      });
+    </script>
+  </body>
 </html>

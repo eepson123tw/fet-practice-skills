@@ -1,100 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>RotateImg</title>
-	<style>
-		html,body{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		body{
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			background-color: #f1f1f1;
-		}
-		.container{
-			width: 300px;
-			height: 300px;
-			margin: 0px auto;
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			grid-template-rows: repeat(3, 1fr);
-			grid-template: 
-				"A A B"
-				"C D B"
-				"C E E ";
-			gap: 10px;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RotateImg</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f1f1f1;
+      }
+      .container {
+        width: 300px;
+        height: 300px;
+        margin: 0px auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-template:
+          "A A B"
+          "C D B"
+          "C E E ";
+        gap: 10px;
+      }
+      .item:nth-child(1) {
+        grid-area: A;
+      }
+      .item:nth-child(2) {
+        grid-area: B;
+      }
+      .item:nth-child(3) {
+        grid-area: C;
+      }
+      .item:nth-child(4) {
+        grid-area: D;
+      }
+      .item:nth-child(5) {
+        grid-area: E;
+      }
+      .item {
+        overflow: hidden;
+        border: 1px solid #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .item img {
+        --d: -360deg;
+        width: 260%;
+        height: 260%;
+        object-fit: cover;
+      }
+      .container {
+        --d: 360deg;
+      }
+      .container,
+      .item img {
+        animation: rotate 10s linear infinite;
+      }
 
-		}
-		.item:nth-child(1){
-			grid-area: A;
-		}
-		.item:nth-child(2){
-			grid-area: B;
-		}
-		.item:nth-child(3){
-			grid-area: C;
-		}
-		.item:nth-child(4){
-			grid-area: D;
-		}
-		.item:nth-child(5){
-			grid-area: E;
-		}
-		.item{
-			overflow: hidden;
-			border: 1px solid #000;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.item img{
-			--d:-360deg;
-			width: 260%;
-			height: 260%;
-			object-fit: cover;
-		}
-		.container{
-			--d:360deg;
-			
-		}
-		.container, .item img{
-			animation: rotate 10s linear infinite;
-		}
-			
-		@keyframes rotate{
-			0%{
-				transform: rotate(0deg);
-			}
-			100%{
-				transform: rotate(var(--d));
-			}
-		}
-
-	</style>
-</head>
-<body>
-	<div class="container">
-		<div class="item">
-			<img src="https://picsum.photos/id/230/200/300" alt="img1">
-		</div>
-		<div class="item">
-			<img src="https://picsum.photos/id/231/200/300" alt="img2">
-		</div>
-		<div class="item">
-			<img src="https://picsum.photos/id/232/200/300" alt="img3">
-		</div>
-		<div class="item">
-			<img src="https://picsum.photos/id/233/200/300" alt="img4">
-		</div>
-		<div class="item">
-			<img src="https://picsum.photos/id/234/200/300" alt="img5">
-		</div>
-	</div>
-</body>
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(var(--d));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item">
+        <img src="https://picsum.photos/id/230/200/300" alt="img1" />
+      </div>
+      <div class="item">
+        <img src="https://picsum.photos/id/231/200/300" alt="img2" />
+      </div>
+      <div class="item">
+        <img src="https://picsum.photos/id/232/200/300" alt="img3" />
+      </div>
+      <div class="item">
+        <img src="https://picsum.photos/id/233/200/300" alt="img4" />
+      </div>
+      <div class="item">
+        <img src="https://picsum.photos/id/234/200/300" alt="img5" />
+      </div>
+    </div>
+  </body>
 </html>

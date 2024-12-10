@@ -1,4 +1,4 @@
-import { Globe, PenTool, Eclipse, Hexagon, Code,Info } from "lucide-react";
+import { Globe, PenTool, Eclipse, Hexagon, Code, Info } from "lucide-react";
 
 import { Theme } from "@src/hook/useTheme";
 

@@ -1,167 +1,163 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>VisibleList</title>
-	<style>
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			list-style: none;
-		}
-		html,
-		body{
-			font-family: Arial, sans-serif;
-			width: 100%;
-			height: 100%;
-		}
-		.container{
-			display: flex;
-			flex-wrap: wrap;
-		
-		}
-		.container div{
-			width: calc(20% - 20px);
-			height: calc(50vh - 20px);
-			background-color: #f1f1f1;
-			margin: 10px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 24px;
-		}
-		.container div img{
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-		.indicator{
-			position: fixed;
-			bottom: 20px;
-			right: calc(50% - 50px);
-			padding: 10px 20px;
-			background-color: #007bff;
-			border: none;
-			outline: none;
-			cursor: pointer;
-			z-index: 1;
-			border-radius: 10px;
-		}
-	</style>
-</head>
-<body>
-	<div class="container"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VisibleList</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+      }
+      html,
+      body {
+        font-family: Arial, sans-serif;
+        width: 100%;
+        height: 100%;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .container div {
+        width: calc(20% - 20px);
+        height: calc(50vh - 20px);
+        background-color: #f1f1f1;
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+      }
+      .container div img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .indicator {
+        position: fixed;
+        bottom: 20px;
+        right: calc(50% - 50px);
+        padding: 10px 20px;
+        background-color: #007bff;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        z-index: 1;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
 
-	<button class="indicator">前往到剛看過的 post</button>
-</body>
+    <button class="indicator">前往到剛看過的 post</button>
+  </body>
 
-<script>
-	const indicator = document.querySelector('.indicator');
-	const container = document.querySelector('.container');
-	const SIZE = 10;
-	let currentIndex = 100;
-	const visibleIndex = new Set();
-	const loadPages = new Set();
+  <script>
+    const indicator = document.querySelector(".indicator");
+    const container = document.querySelector(".container");
+    const SIZE = 10;
+    let currentIndex = 100;
+    const visibleIndex = new Set();
+    const loadPages = new Set();
 
-	// create a list of page and create page of elements
-	const ob = new IntersectionObserver((entries, observer)=>{
-		entries.forEach(entry=>{
-			const index = +entry.target.textContent;
-			if(entry.isIntersecting){
-				visibleIndex.add(index);
-			}else{
-				visibleIndex.delete(index);
-			}
-		});
-		loadPagesFn(visibleIndex);
-		setIndicatorVisible();
-	});
-	function createElements(page){
-		const childrenLen = container.children.length;
-		const fragment = document.createDocumentFragment();
-		const counter = page * SIZE;
-		for(let i = childrenLen; i < counter; i++){
-			const div = document.createElement('div');
-			div.textContent = i ;
-			fragment.appendChild(div);
-			if(i === currentIndex){
-				div.style.backgroundColor = 'red';
-			}
-			ob.observe(div);
-		}
-		container.appendChild(fragment);
-	}
-	function getvideos(page,size,visibleIndex){
+    // create a list of page and create page of elements
+    const ob = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        const index = +entry.target.textContent;
+        if (entry.isIntersecting) {
+          visibleIndex.add(index);
+        } else {
+          visibleIndex.delete(index);
+        }
+      });
+      loadPagesFn(visibleIndex);
+      setIndicatorVisible();
+    });
+    function createElements(page) {
+      const childrenLen = container.children.length;
+      const fragment = document.createDocumentFragment();
+      const counter = page * SIZE;
+      for (let i = childrenLen; i < counter; i++) {
+        const div = document.createElement("div");
+        div.textContent = i;
+        fragment.appendChild(div);
+        if (i === currentIndex) {
+          div.style.backgroundColor = "red";
+        }
+        ob.observe(div);
+      }
+      container.appendChild(fragment);
+    }
+    function getvideos(page, size, visibleIndex) {
+      const ary = visibleIndex
+        ? Array.from(visibleIndex)
+        : new Array(page * size).fill(0).map((_, i) => i);
 
-	const ary = visibleIndex? Array.from(visibleIndex) : new Array(page*size).fill(0).map((_,i)=>i);
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const res = [];
+          for (let i = 0; i < size; i++) {
+            const randomIdx = ary[Math.floor(Math.random() * ary.length)];
+            res.push({
+              cover: `https://picsum.photos/200/300?random=${randomIdx}`,
+            });
+          }
+          resolve(res);
+        }, 1000);
+      });
+    }
 
-		return new Promise((resolve)=>{
-			setTimeout(()=>{
-				const res = [];
-				for(let i = 0; i < size; i++){
-					const randomIdx = ary[Math.floor(Math.random() * ary.length)]
-					res.push({
-						cover: `https://picsum.photos/200/300?random=${randomIdx}`
-					})
-				}
-				resolve(res);
-			}, 1000);
-		})
-	}
+    // get the range of visible elements
+    function getRange() {
+      if (visibleIndex.size === 0) return [0, 0];
+      const min = Math.min(...visibleIndex);
+      const max = Math.max(...visibleIndex);
+      return [min, max];
+    }
+    // load the page of elements
+    function loadPagesFn(visibleIndex) {
+      const [min, max] = getRange();
+      const pages = new Set();
+      for (let i = min; i <= max; i++) {
+        const page = Math.ceil((i + 1) / SIZE);
+        pages.add(page);
+      }
+      for (const page of pages) {
+        if (loadPages.has(page)) continue;
+        loadPages.add(page);
+        getvideos(page, SIZE, visibleIndex).then((res) => {
+          const startIndex = (page - 1) * SIZE;
+          for (let i = 0; i < res.length; i++) {
+            const item = container.children[startIndex + i];
+            item.innerHTML = `<img src="${res[i].cover}">`;
+          }
+        });
+      }
+    }
 
-	// get the range of visible elements
-	function getRange (){
-		if(visibleIndex.size === 0) return [0,0];
-		const min = Math.min(...visibleIndex);
-		const max = Math.max(...visibleIndex);
-		return [min, max];
-	}
-	// load the page of elements
-	function loadPagesFn(visibleIndex){
-		const [min, max] = getRange();
-		const pages = new Set();
-		for(let i = min; i <= max; i++){
-			const page = Math.ceil((i+1) / SIZE);
-			pages.add(page);
-		}
-		for(const page of pages){
-			if(loadPages.has(page)) continue
-			loadPages.add(page);
-			getvideos(page,SIZE,visibleIndex).then((res)=>{
-				const startIndex = (page - 1) * SIZE;
-				for(let i = 0; i < res.length; i++){
-					const item = container.children[startIndex + i];
-					item.innerHTML = `<img src="${res[i].cover}">`;
-				}
-					
-			})
-		}
-	}
+    loadPagesFn(visibleIndex);
 
-	loadPagesFn(visibleIndex);	
+    // set the indicator visible
+    function setIndicatorVisible() {
+      const [min, max] = getRange();
+      indicator.style.display =
+        min <= currentIndex && currentIndex <= max ? "none" : "block";
+    }
 
-	// set the indicator visible
-	function setIndicatorVisible(){
-		const [min, max] = getRange();
-		indicator.style.display = min <= currentIndex && currentIndex <= max ? 'none' : 'block';
-	}
+    createElements(1);
 
-	createElements(1);
-
-	indicator.onclick = ()=>{
-		const page = Math.floor(currentIndex / SIZE) + 1;
-		createElements(page);
-		container.children[currentIndex].scrollIntoView({
-			behavior: 'smooth',
-			block: 'center'
-		});
-		indicator.style.display = 'none';
-	}
-
-
-</script>
-
-
+    indicator.onclick = () => {
+      const page = Math.floor(currentIndex / SIZE) + 1;
+      createElements(page);
+      container.children[currentIndex].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      indicator.style.display = "none";
+    };
+  </script>
 </html>

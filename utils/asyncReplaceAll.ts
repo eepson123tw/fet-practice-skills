@@ -2,7 +2,7 @@
 interface String {
   asyncReplaceAll(
     regexp: RegExp | string,
-    asyncFn: (res: string) => Promise<string>
+    asyncFn: (res: string) => Promise<string>,
   ): Promise<string>;
 }
 
@@ -17,7 +17,7 @@ const getName = (res: string): Promise<string> => {
 String.prototype.asyncReplaceAll = async function (
   this: string, // 明確指定 this 的類型為 string
   regexp: RegExp | string,
-  asyncFn: (res: string) => Promise<string>
+  asyncFn: (res: string) => Promise<string>,
 ): Promise<string> {
   if (typeof asyncFn === "string") {
     return this.replace(regexp, asyncFn);

@@ -1,65 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TextEraser</title>
-	<style>
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		html,body{
-			height: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background-color: #000;
-		}
-		.container{
-			position: relative;
-			padding: 10px;
-		}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TextEraser</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000;
+      }
+      .container {
+        position: relative;
+        padding: 10px;
+      }
 
-		@property --p{
-			syntax:'<percentage>';
-			initial-value: 10%;
-			inherits: false;
-		}
-		.eraser{
-			position: absolute;
-			top: 0;
-			left: 0;
-			inset: 0;	
-			background-image: linear-gradient(to right, #fff var(--p) , transparent calc(var(--p) *3) );
-			animation: erase 5s linear infinite;
-			z-index: 2;
-			padding: 10px;
-		}
+      @property --p {
+        syntax: "<percentage>";
+        initial-value: 10%;
+        inherits: false;
+      }
+      .eraser {
+        position: absolute;
+        top: 0;
+        left: 0;
+        inset: 0;
+        background-image: linear-gradient(
+          to right,
+          #fff var(--p),
+          transparent calc(var(--p) * 3)
+        );
+        animation: erase 5s linear infinite;
+        z-index: 2;
+        padding: 10px;
+      }
 
-		@keyframes erase{
-				to{
-					--p: 100%;
-				}
-			}
-	</style>
-</head>
-<body>
-	<div class="container">
-		<p>
-		我期待的不是雪
-		而是有你的冬天
-		我期待的不是月
-		而是和你的遇見
-		</p>
+      @keyframes erase {
+        to {
+          --p: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>我期待的不是雪 而是有你的冬天 我期待的不是月 而是和你的遇見</p>
 
-		<span class="eraser">
-		我期待的不是雪
-		而是有你的冬天
-		我期待的不是月
-		而是和你的遇見	
-		</span>
-	</div>
-</body>
+      <span class="eraser">
+        我期待的不是雪 而是有你的冬天 我期待的不是月 而是和你的遇見
+      </span>
+    </div>
+  </body>
 </html>

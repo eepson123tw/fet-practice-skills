@@ -31,7 +31,7 @@ let p = Permission.Read | Permission.Write;
 // 0000
 function hasPermission(
   target: PermissionType,
-  permission: PermissionType
+  permission: PermissionType,
 ): boolean {
   // check if the permission has the target permission
   return (permission & target) === permission;
@@ -40,7 +40,7 @@ function hasPermission(
 console.log(
   "%c has ReadPermission",
   consoleStyle,
-  hasPermission(p, Permission.Read)
+  hasPermission(p, Permission.Read),
 );
 
 // how to delete a permission
@@ -53,5 +53,5 @@ p = p ^ Permission.Write;
 console.log(
   "%c has Write Permission",
   consoleStyle,
-  hasPermission(p, Permission.Write)
+  hasPermission(p, Permission.Write),
 );

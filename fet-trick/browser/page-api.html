@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>PageApi</title>
-</head>
-<body>
-	<p>Page Api</p>
-	<script>
-		document.addEventListener('visibilitychange',()=>{
-			document.querySelector('p').textContent = document.visibilityState
-			console.log(document.visibilityState);
-		})
-	</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PageApi</title>
+  </head>
+  <body>
+    <p>Page Api</p>
+    <script>
+      document.addEventListener("visibilitychange", () => {
+        document.querySelector("p").textContent = document.visibilityState;
+        console.log(document.visibilityState);
+      });
+    </script>
+  </body>
 </html>

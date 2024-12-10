@@ -49,7 +49,7 @@ function addTask(time: number, name: string) {
       console.log(
         "%cParallel Promise Task",
         consoleStyle,
-        "第" + name + "任務完成花費" + time + "ms"
+        "第" + name + "任務完成花費" + time + "ms",
       );
     });
 }
@@ -86,7 +86,7 @@ function runMicroTask(func: () => void) {
 }
 
 runMicroTask(() =>
-  console.log("%crunMicroTask", consoleStyle, "insert runMicroTask")
+  console.log("%crunMicroTask", consoleStyle, "insert runMicroTask"),
 );
 
 // add at timeout into fetch
@@ -139,7 +139,7 @@ function runThousandTask(taskNum: number = 100) {
       setTimeout(() => {
         __runTask(
           () => console.log(`%crun-${taskNum}-Task`, promiseStyle, i),
-          resolve
+          resolve,
         );
       }, 0);
     });
@@ -213,7 +213,7 @@ function runNewFetch(func: () => void) {
     console.log(
       "%crunNewFetch",
       consoleStyle,
-      "Suspense first run will be blocked"
+      "Suspense first run will be blocked",
     );
     func();
   } catch (err) {
@@ -224,7 +224,7 @@ function runNewFetch(func: () => void) {
         console.log(
           "%crunNewFetch",
           consoleStyle,
-          "Suspense second run will be ok"
+          "Suspense second run will be ok",
         );
         func();
         window.fetch = oldFetch;
@@ -237,40 +237,37 @@ function runNewFetch(func: () => void) {
 
 runNewFetch(main);
 
-
-
 setTimeout(() => {
+  console.log("%Promise", consoleStyle, "Promise Task Start");
 
-console.log("%Promise", consoleStyle, "Promise Task Start");
+  // This is a promise task that will be executed in the micro task queue
 
-
-// This is a promise task that will be executed in the micro task queue
-
-Promise.resolve().then(() => {  
-  console.log(0)
-  return Promise.resolve(4) // it will be pushed to the micro task queue 
-  // p4.then(res => fullfilled({})) // it will be pushed to the micro task queue
-  // if runtime has any Error, it wil be rejected
-  // otherwise it will be resolved or pending
-  // current it will be pending depends on the runtime
-  }).then(res => {
-    console.log(res)
-  })
-Promise.resolve().then(() => {
-  console.log(1)
-  }).then(() => {
-    console.log(2)
-  }).then(() => {
-    console.log(3)
-  }).then(() => {
-    console.log(5)
-  }).then(() => {
-    console.log(6)
-  })
-
-},10000)
-
-
-
-
-
+  Promise.resolve()
+    .then(() => {
+      console.log(0);
+      return Promise.resolve(4); // it will be pushed to the micro task queue
+      // p4.then(res => fullfilled({})) // it will be pushed to the micro task queue
+      // if runtime has any Error, it wil be rejected
+      // otherwise it will be resolved or pending
+      // current it will be pending depends on the runtime
+    })
+    .then((res) => {
+      console.log(res);
+    });
+  Promise.resolve()
+    .then(() => {
+      console.log(1);
+    })
+    .then(() => {
+      console.log(2);
+    })
+    .then(() => {
+      console.log(3);
+    })
+    .then(() => {
+      console.log(5);
+    })
+    .then(() => {
+      console.log(6);
+    });
+}, 10000);

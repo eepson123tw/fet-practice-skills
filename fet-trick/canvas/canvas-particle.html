@@ -1,158 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>CanvasParticles</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    #canvas {
-      display: block;
-      background-color: #000;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="canvas"></canvas>
-
-  <script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Create gradient for particle fill
-    let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, 'red');
-    gradient.addColorStop(0.5, 'magenta');
-    gradient.addColorStop(1, 'blue');
-    ctx.strokeStyle = 'white';
-    ctx.lineWidth = 1;
-
-    const particle = (effect) => {
-      const radius = Math.random() * 5 + 1;
-      const _particle = {
-        effect,
-        x: Math.random() * (effect.width - radius * 2) + radius,
-        y: Math.random() * (effect.height - radius * 2) + radius,
-        vx: Math.random() * 4 - 2,
-        vy: Math.random() * 4 - 2,
-        radius: radius,
-      };
-
-      const draw = (context) => {
-        context.fillStyle = gradient; // Set fill style here
-        context.beginPath();
-        context.arc(_particle.x, _particle.y, _particle.radius, 0, Math.PI * 2);
-        context.fill();
-        context.strokeStyle = 'white'; // Optional: Add stroke to particles
-        context.lineWidth = 1;
-        context.stroke();
-      };
-
-      const update = () => {
-        _particle.x += _particle.vx;
-        if (_particle.x + _particle.radius > effect.width || _particle.x - _particle.radius < 0) {
-          _particle.vx = -_particle.vx;
-        }
-        _particle.y += _particle.vy;
-        if (_particle.y + _particle.radius > effect.height || _particle.y - _particle.radius < 0) {
-          _particle.vy = -_particle.vy;
-        }
-      };
-
-      return { ..._particle, draw, update };
-    };
-
-    const effect = (canvas) => {
-      const _property = {
-        canvas,
-        width: canvas.width,
-        height: canvas.height,
-        particles: [],
-        numberOfParticles: 80, // Adjust as needed
-      };
-
-      const createParticles = () => {
-        for (let i = 0; i < _property.numberOfParticles; i++) {
-          _property.particles.push(particle(_property));
-        }
-      };
-
-      const connectParticles = (_ctx) => {
-        const maxDistance = 150;
-        let connectionsCount = 0;
-        for (let a = 0; a < _property.particles.length; a++) {
-          for (let b = a + 1; b < _property.particles.length; b++) {
-            const dx = _property.particles[a].x - _property.particles[b].x;
-            const dy = _property.particles[a].y - _property.particles[b].y;
-            const distance = Math.hypot(dx, dy);
-            if (distance < maxDistance) {
-              connectionsCount++;
-              _ctx.save();
-              const opacity = 1 - distance / maxDistance;
-              _ctx.globalAlpha = opacity;
-
-              _ctx.beginPath();
-              _ctx.moveTo(_property.particles[a].x, _property.particles[a].y);
-              _ctx.lineTo(_property.particles[b].x, _property.particles[b].y);
-              _ctx.stroke();
-              _ctx.restore();
-            }
-          }
-        
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <title>CanvasParticles</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
       }
-       
+      #canvas {
+        display: block;
+        background-color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
 
-      const handleParticles = (_ctx) => {
-        // Update particles' positions
-        _property.particles.forEach((particle) => {
-          particle.update();
-        });
-        
-        // Connect particles (draw lines)
-        connectParticles(_ctx);
-        
-        // Draw particles on top of the lines
-        _property.particles.forEach((particle) => {
-          particle.draw(_ctx);
-        });
-      };
-
-      createParticles();
-      return { ..._property, handleParticles };
-    };
-
-    const effect1 = effect(canvas);
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      effect1.handleParticles(ctx);
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      effect1.width = canvas.width;
-      effect1.height = canvas.height;
 
-      // Recreate gradient with new dimensions
-      gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, 'red');
-      gradient.addColorStop(0.5, 'magenta');
-      gradient.addColorStop(1, 'blue');
+      // Create gradient for particle fill
+      let gradient = ctx.createLinearGradient(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+      gradient.addColorStop(0, "red");
+      gradient.addColorStop(0.5, "magenta");
+      gradient.addColorStop(1, "blue");
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 1;
 
-      // Optionally recreate particles
-      // effect1.particles = [];
-      // effect1.createParticles();
-    });
-  </script>
-</body>
+      const particle = (effect) => {
+        const radius = Math.random() * 5 + 1;
+        const _particle = {
+          effect,
+          x: Math.random() * (effect.width - radius * 2) + radius,
+          y: Math.random() * (effect.height - radius * 2) + radius,
+          vx: Math.random() * 4 - 2,
+          vy: Math.random() * 4 - 2,
+          radius: radius,
+        };
+
+        const draw = (context) => {
+          context.fillStyle = gradient; // Set fill style here
+          context.beginPath();
+          context.arc(
+            _particle.x,
+            _particle.y,
+            _particle.radius,
+            0,
+            Math.PI * 2,
+          );
+          context.fill();
+          context.strokeStyle = "white"; // Optional: Add stroke to particles
+          context.lineWidth = 1;
+          context.stroke();
+        };
+
+        const update = () => {
+          _particle.x += _particle.vx;
+          if (
+            _particle.x + _particle.radius > effect.width ||
+            _particle.x - _particle.radius < 0
+          ) {
+            _particle.vx = -_particle.vx;
+          }
+          _particle.y += _particle.vy;
+          if (
+            _particle.y + _particle.radius > effect.height ||
+            _particle.y - _particle.radius < 0
+          ) {
+            _particle.vy = -_particle.vy;
+          }
+        };
+
+        return { ..._particle, draw, update };
+      };
+
+      const effect = (canvas) => {
+        const _property = {
+          canvas,
+          width: canvas.width,
+          height: canvas.height,
+          particles: [],
+          numberOfParticles: 80, // Adjust as needed
+        };
+
+        const createParticles = () => {
+          for (let i = 0; i < _property.numberOfParticles; i++) {
+            _property.particles.push(particle(_property));
+          }
+        };
+
+        const connectParticles = (_ctx) => {
+          const maxDistance = 150;
+          let connectionsCount = 0;
+          for (let a = 0; a < _property.particles.length; a++) {
+            for (let b = a + 1; b < _property.particles.length; b++) {
+              const dx = _property.particles[a].x - _property.particles[b].x;
+              const dy = _property.particles[a].y - _property.particles[b].y;
+              const distance = Math.hypot(dx, dy);
+              if (distance < maxDistance) {
+                connectionsCount++;
+                _ctx.save();
+                const opacity = 1 - distance / maxDistance;
+                _ctx.globalAlpha = opacity;
+
+                _ctx.beginPath();
+                _ctx.moveTo(_property.particles[a].x, _property.particles[a].y);
+                _ctx.lineTo(_property.particles[b].x, _property.particles[b].y);
+                _ctx.stroke();
+                _ctx.restore();
+              }
+            }
+          }
+        };
+
+        const handleParticles = (_ctx) => {
+          // Update particles' positions
+          _property.particles.forEach((particle) => {
+            particle.update();
+          });
+
+          // Connect particles (draw lines)
+          connectParticles(_ctx);
+
+          // Draw particles on top of the lines
+          _property.particles.forEach((particle) => {
+            particle.draw(_ctx);
+          });
+        };
+
+        createParticles();
+        return { ..._property, handleParticles };
+      };
+
+      const effect1 = effect(canvas);
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        effect1.handleParticles(ctx);
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      // Handle window resize
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        effect1.width = canvas.width;
+        effect1.height = canvas.height;
+
+        // Recreate gradient with new dimensions
+        gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, "red");
+        gradient.addColorStop(0.5, "magenta");
+        gradient.addColorStop(1, "blue");
+
+        // Optionally recreate particles
+        // effect1.particles = [];
+        // effect1.createParticles();
+      });
+    </script>
+  </body>
 </html>

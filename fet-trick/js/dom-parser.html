@@ -1,79 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>DOM Parser</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			background-color: #f0f0f0;
-			margin: 0;
-		}
-		div {
-			text-align: center;
-			padding: 20px;
-			border: 2px solid #333;
-			border-radius: 10px;
-			background-color: #fff;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		div > * {
-			margin: 10px;
-		}
-		svg {
-			margin-top: 20px;
-			width: 100px;
-			height: 100px;
-			display: inline-block;
-		}
-	</style>
-</head>
-<body>
-	<div></div>
-	<script>
-		
-		const parser = new DOMParser();
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Parser</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+      }
+      div {
+        text-align: center;
+        padding: 20px;
+        border: 2px solid #333;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      div > * {
+        margin: 10px;
+      }
+      svg {
+        margin-top: 20px;
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <script>
+      const parser = new DOMParser();
 
-		
-		const xmlString = "<warning>Beware of the tiger</warning>";
-		const doc1 = parser.parseFromString(xmlString, "application/xml");
+      const xmlString = "<warning>Beware of the tiger</warning>";
+      const doc1 = parser.parseFromString(xmlString, "application/xml");
 
-		
-		const svgString = `
+      const svgString = `
 			<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
 				<circle cx="50" cy="50" r="50" fill="orange"/>
 			</svg>
 		`;
-		const doc2 = parser.parseFromString(svgString, "image/svg+xml");
+      const doc2 = parser.parseFromString(svgString, "image/svg+xml");
 
+      const htmlString = "<strong>Beware of the leopard</strong>";
+      const doc3 = parser.parseFromString(htmlString, "text/html");
 
-		const htmlString = "<strong>Beware of the leopard</strong>";
-		const doc3 = parser.parseFromString(htmlString, "text/html");
+      console.log(doc1.documentElement.textContent);
+      console.log(doc2.documentElement.tagName);
+      console.log(doc3.body.firstChild.textContent);
 
-		
-		console.log(doc1.documentElement.textContent); 
-		console.log(doc2.documentElement.tagName);     
-		console.log(doc3.body.firstChild.textContent); 
+      const div = document.querySelector("div");
 
-		
-		const div = document.querySelector("div");
+      const fragment = document.createDocumentFragment();
+      fragment.appendChild(doc3.body.firstChild);
+      fragment.appendChild(doc1.documentElement);
+      fragment.appendChild(doc2.documentElement);
 
-		
-		const fragment = document.createDocumentFragment();
-		fragment.appendChild(doc3.body.firstChild); 
-		fragment.appendChild(doc1.documentElement); 
-		fragment.appendChild(doc2.documentElement); 
-
-		
-		div.appendChild(fragment);
-	</script>
-</body>
+      div.appendChild(fragment);
+    </script>
+  </body>
 </html>

@@ -1,95 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AspectRatio</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html, body {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-			color: honeydew;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .container {
-            width: 300px;
-            height: auto;
-        }
-        .aspect-ratio-box {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* (9 / 16) * 100% to get 16:9 aspect ratio */
-            background-color: #f0f0f0; /* Optional: background color for visibility */
-        }
-        .aspect-ratio-box img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures the image covers the container without distortion */
-        }
-        .aspect-ratio-box-two {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #f0f0f0; /* Optional: background color for visibility */
-        }
-        .aspect-ratio-box-two img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures the image covers the container without distortion */
-        }
-        .aspect-ratio-box-four {
-            width: 100%;
-            height: auto;
-            background-color: #f0f0f0; /* Optional: background color for visibility */
-        }
-        .aspect-ratio-box-four svg {
-            width: 100%;
-            height: auto;
-        }
-        .aspect-ratio-box-four img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures the image covers the container without distortion */
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: honeydew;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .container {
+        width: 300px;
+        height: auto;
+      }
+      .aspect-ratio-box {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* (9 / 16) * 100% to get 16:9 aspect ratio */
+        background-color: #f0f0f0; /* Optional: background color for visibility */
+      }
+      .aspect-ratio-box img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the container without distortion */
+      }
+      .aspect-ratio-box-two {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background-color: #f0f0f0; /* Optional: background color for visibility */
+      }
+      .aspect-ratio-box-two img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the container without distortion */
+      }
+      .aspect-ratio-box-four {
+        width: 100%;
+        height: auto;
+        background-color: #f0f0f0; /* Optional: background color for visibility */
+      }
+      .aspect-ratio-box-four svg {
+        width: 100%;
+        height: auto;
+      }
+      .aspect-ratio-box-four img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the container without distortion */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="grid">
-        <div class="container">
-            <div class="aspect-ratio-box">
-                <img src="https://picsum.photos/seed/picsum/500/500" alt="Sample Image">
-            </div>
-			<p>padding-bottom</p>
+      <div class="container">
+        <div class="aspect-ratio-box">
+          <img
+            src="https://picsum.photos/seed/picsum/500/500"
+            alt="Sample Image"
+          />
         </div>
-        <div class="container">
-            <div class="aspect-ratio-box-two">
-                <img src="https://picsum.photos/seed/picsum/500/500" alt="Sample Image 2">
-            </div>
-			<p>aspect-ratio</p>
+        <p>padding-bottom</p>
+      </div>
+      <div class="container">
+        <div class="aspect-ratio-box-two">
+          <img
+            src="https://picsum.photos/seed/picsum/500/500"
+            alt="Sample Image 2"
+          />
         </div>
-        <div class="container">
-            <div class="aspect-ratio-box-four">
-                <svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice">
-                    <image width="16" height="9" href="https://picsum.photos/seed/picsum/500/500" />
-                </svg>
-            </div>
-			<p>svg</p>
+        <p>aspect-ratio</p>
+      </div>
+      <div class="container">
+        <div class="aspect-ratio-box-four">
+          <svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice">
+            <image
+              width="16"
+              height="9"
+              href="https://picsum.photos/seed/picsum/500/500"
+            />
+          </svg>
         </div>
+        <p>svg</p>
+      </div>
     </div>
-</body>
+  </body>
 </html>

@@ -15,7 +15,7 @@ const singletonProxy = (target: typeof Object) => {
         return ins;
       } else {
         console.warn(
-          "This class is a singleton, please use getInstance method to get the instance."
+          "This class is a singleton, please use getInstance method to get the instance.",
         );
       }
       return ins;

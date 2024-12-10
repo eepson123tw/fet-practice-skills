@@ -1,63 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MouseHoverEffect</title>
-	<style>
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		html,body{
-			width: 100%;
-			height: 100%;
-			background-color: black;
-			position: relative;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.card{
-			transition: all 0.3s;
-			transform: perspective(500px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));	
-		}
-		.card:hover{
-			border: 4px solid red;
-			border-radius: 20px;
-		}
-	</style>
-</head>
-<body>
-	<main>
-		<img class="card" draggable="false" src="https://www.deckofcardsapi.com/static/img/KH.png" alt="KH">
-	</main>
-	<script>
-		const card = document.querySelector('.card');
-		const yRange = [-10,10]
-		const getRange = (range,value,length)=>{
-			return (value / length) * (range[1] - range[0]) + range[0];
-		}
-		card.onmousemove = (e)=>{
-			const x = e.offsetX; 
-			const y = e.offsetY;
-			const width = card.offsetWidth;
-			const height = card.offsetHeight;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MouseHoverEffect</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        transition: all 0.3s;
+        transform: perspective(500px) rotateX(var(--rx, 0deg))
+          rotateY(var(--ry, 0deg));
+      }
+      .card:hover {
+        border: 4px solid red;
+        border-radius: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img
+        class="card"
+        draggable="false"
+        src="https://www.deckofcardsapi.com/static/img/KH.png"
+        alt="KH"
+      />
+    </main>
+    <script>
+      const card = document.querySelector(".card");
+      const yRange = [-10, 10];
+      const getRange = (range, value, length) => {
+        return (value / length) * (range[1] - range[0]) + range[0];
+      };
+      card.onmousemove = (e) => {
+        const x = e.offsetX;
+        const y = e.offsetY;
+        const width = card.offsetWidth;
+        const height = card.offsetHeight;
 
-			const ry = -getRange(yRange,x,width);
-			const rx = getRange(yRange,y,height);
+        const ry = -getRange(yRange, x, width);
+        const rx = getRange(yRange, y, height);
 
-
-			card.style.setProperty('--rx',rx + 'deg');
-			card.style.setProperty('--ry',ry + 'deg');
-		}
-		card.onmouseleave = ()=>{
-			card.style.setProperty('--rx','0deg');
-			card.style.setProperty('--ry','0deg');
-		}
-
-	</script>
-</body>
+        card.style.setProperty("--rx", rx + "deg");
+        card.style.setProperty("--ry", ry + "deg");
+      };
+      card.onmouseleave = () => {
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+      };
+    </script>
+  </body>
 </html>
-

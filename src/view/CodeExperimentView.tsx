@@ -9,27 +9,27 @@ import {
   SandpackPreviewRef,
 } from "@codesandbox/sandpack-react";
 
-import {code,asyncReplaceAll,iterator,newFetch} from '../utils/codeLinks'
+import { code, asyncReplaceAll, iterator, newFetch } from "../utils/codeLinks";
 
 const files = {
   "/index.ts": `import "./argsType.ts";`, // Initial import
   "/argsType.ts": code,
   "/asyncReplaceAll.ts": asyncReplaceAll,
   "/iterator.ts": iterator,
-  '/newFetch.ts': newFetch
+  "/newFetch.ts": newFetch,
 };
 
 const Editor = () => {
   const { sandpack } = useSandpack();
   const previewRef = useRef<SandpackPreviewRef>(null);
-  const { activeFile, files ,updateFile} = sandpack;
-    useEffect(() => {
-      const newIndexContent = `import "${activeFile}";`;
-      // Check if the content is different before updating
-      if (files["/index.ts"]?.code !== newIndexContent) {
-        updateFile("/index.ts", newIndexContent);
-      }
-    }, [activeFile,files,updateFile]);
+  const { activeFile, files, updateFile } = sandpack;
+  useEffect(() => {
+    const newIndexContent = `import "${activeFile}";`;
+    // Check if the content is different before updating
+    if (files["/index.ts"]?.code !== newIndexContent) {
+      updateFile("/index.ts", newIndexContent);
+    }
+  }, [activeFile, files, updateFile]);
 
   return (
     <Fragment>
@@ -62,7 +62,7 @@ const CodeExperimentPage = () => {
         visibleFiles: Object.keys(files),
       }}
       customSetup={{
-        entry: "/index.ts", 
+        entry: "/index.ts",
       }}
     >
       <SandpackLayout className="!block !rounded-none sm:!rounded-lg !-mx-4 sm:!mx-0">

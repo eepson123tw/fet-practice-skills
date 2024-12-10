@@ -8,16 +8,16 @@ export default function Timer() {
     // const timer = document.querySelector("#timer");
     // const second = document.querySelector(".second");
     const beforeSecondsTop = document.querySelector(
-      ".card-before-top"
+      ".card-before-top",
     ) as HTMLDivElement;
     const beforeSecondsBottom = document.querySelector(
-      ".card-before-bottom"
+      ".card-before-bottom",
     ) as HTMLDivElement;
     const afterSecondsTop = document.querySelector(
-      ".card-after-top"
+      ".card-after-top",
     ) as HTMLDivElement;
     const afterSecondsBottom = document.querySelector(
-      ".card-after-bottom"
+      ".card-after-bottom",
     ) as HTMLDivElement;
 
     let lastSecond = -1; // 初始化為-1，確保第一次更新時觸發動畫
@@ -33,8 +33,8 @@ export default function Timer() {
           seconds === 59
             ? "00"
             : seconds + 1 < 10
-            ? `0${seconds + 1}`
-            : seconds + 1;
+              ? `0${seconds + 1}`
+              : seconds + 1;
 
         if (
           beforeSecondsTop &&

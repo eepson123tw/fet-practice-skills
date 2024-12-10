@@ -1,72 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>CssSelector</title>
-	<style>
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			list-style: none;
-		}
-		div{
-			width: 300px;
-			margin-bottom: 20px;
-		}
-		body{
-			font-family: Arial, sans-serif;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			background-color: #f4f4f4;
-			flex-direction: column	;
-		}
-		.form{
-			background-color: #fff;
-			padding: 20px;
-			border-radius: 5px;
-			box-shadow: 0 0 10px rgba(0,0,0,0.1);
-		}
-		form > *{
-			margin-bottom: 10px;
-		}
-		.form label:has(+ input[required])::after{
-			content: '*';
-			border: 1px solid red;
-			color: red;
-		}
-		.text p::first-letter{
-			font-size: 2em;
-			color: red;
-			float: left;
-			line-height: normal;
-			margin-right: 10px;
-		}
-		.text p::selection{
-			background-color: red;
-			color: #333;
-			text-decoration: underline;
-		}
-	</style>
-</head>
-<body>
-	<div class='form'>
-		<form action="">
-			<div>
-				<label for="name">Name:</label>
-				<input data-required required type="text" name="name" id="name">
-			</div>
-			<div>
-				<label for="email">Email:</label>
-				<input type="email" name="email" id="email">
-			</div>
-		</form>
-	</div>
-	<div class="text">
-		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni perspiciatis, expedita nemo sunt similique, cum dolorum id libero veritatis, amet illo nam dignissimos dolores eius ad commodi inventore reiciendis nostrum!</p>
-	</div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CssSelector</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+      }
+      div {
+        width: 300px;
+        margin-bottom: 20px;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+        flex-direction: column;
+      }
+      .form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      form > * {
+        margin-bottom: 10px;
+      }
+      .form label:has(+ input[required])::after {
+        content: "*";
+        border: 1px solid red;
+        color: red;
+      }
+      .text p::first-letter {
+        font-size: 2em;
+        color: red;
+        float: left;
+        line-height: normal;
+        margin-right: 10px;
+      }
+      .text p::selection {
+        background-color: red;
+        color: #333;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form">
+      <form action="">
+        <div>
+          <label for="name">Name:</label>
+          <input data-required required type="text" name="name" id="name" />
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" />
+        </div>
+      </form>
+    </div>
+    <div class="text">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
+        perspiciatis, expedita nemo sunt similique, cum dolorum id libero
+        veritatis, amet illo nam dignissimos dolores eius ad commodi inventore
+        reiciendis nostrum!
+      </p>
+    </div>
+  </body>
 </html>

@@ -54,7 +54,7 @@ window.onload = async function () {
 
   // 获取视频元素并进行类型断言
   const videoElement = document.getElementById(
-    "videoElement"
+    "videoElement",
   ) as HTMLVideoElement;
   videoElement.src = videoSrc;
 
@@ -76,7 +76,7 @@ window.onload = async function () {
 
 function captureFrame(
   videoElement: HTMLVideoElement,
-  time: number = 0
+  time: number = 0,
 ): Promise<{ blob: Blob; url: string }> {
   return new Promise((resolve, reject) => {
     videoElement.currentTime = time;
@@ -102,7 +102,7 @@ function captureFrame(
           }
         }, "image/jpeg");
       },
-      { once: true }
+      { once: true },
     );
   });
 }

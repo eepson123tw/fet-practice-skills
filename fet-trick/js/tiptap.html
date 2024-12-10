@@ -5,7 +5,7 @@
     <style>
       body {
         background-color: #282c34;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         color: #fff;
       }
       .editor-container {
@@ -49,21 +49,20 @@
       <div class="menu-bar"></div>
       <div class="element"></div>
     </div>
-<script type="module">
-import { Editor } from 'https://esm.sh/@tiptap/core'
-import StarterKit from 'https://esm.sh/@tiptap/starter-kit'
+    <script type="module">
+      import { Editor } from "https://esm.sh/@tiptap/core";
+      import StarterKit from "https://esm.sh/@tiptap/starter-kit";
 
-const editor = new Editor({
-  element: document.querySelector('.element'),
-  extensions: [
-    StarterKit,
-  ],
-  editorProps: {
-    attributes: {
-      class: 'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
-    },
-  },
-  content: `
+      const editor = new Editor({
+        element: document.querySelector(".element"),
+        extensions: [StarterKit],
+        editorProps: {
+          attributes: {
+            class:
+              "prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none",
+          },
+        },
+        content: `
     <h2>
       Hi there,
     </h2>
@@ -93,7 +92,7 @@ const editor = new Editor({
       — Mom
     </blockquote>
   `,
-})
-</script>
+      });
+    </script>
   </body>
 </html>

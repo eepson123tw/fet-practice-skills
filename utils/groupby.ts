@@ -24,7 +24,7 @@ const friends: Friend[] = [
 
 const groupBy = (
   array: Friend[],
-  cb: (u: Friend) => string
+  cb: (u: Friend) => string,
 ): { [key: string]: number } => {
   const result: { [key: string]: number } = {};
   for (const u of array) {

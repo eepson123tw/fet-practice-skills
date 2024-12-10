@@ -1,94 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>HoverEffect</title>
-	<style>
-		*{
-			margin: 0;
-			padding: 0;
-			list-style: none;
-			box-sizing: border-box;
-		}
-		html{
-			font-size: 62.5%;
-		}
-		body{
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			background-color: #111;
-		}
-		
-		.list{
-			display: flex;
-			transform-style: preserve-3d;
-			width: 100%;
-			transform: perspective(1000px);
-		}
-		.item{
-			width: 75px;
-			height: 100px;
-			margin: 0px 5px;
-			overflow: hidden;
-			transition: .5s;
-			filter: brightness(0);
-		}
-		.item img{
-			object-fit: contain;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HoverEffect</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        box-sizing: border-box;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #111;
+      }
 
-		}
-		.list .item:hover{
-			filter: brightness(1);
-			transform: translateZ(200px);
-			cursor: pointer;
-		}
-		.list .item:hover + *{
-			filter: brightness(.6);
-			transform: translateZ(150px) rotateY(40deg);
-		}
-		.list .item:hover + * + *{
-			filter: brightness(.4);
-			transform: translateZ(70px) rotateY(20deg);
-		}
-		.list .item:hover + * + * + *{
-			filter: brightness(.2);
-			transform: translateZ(30px) rotateY(10deg);
-		}
-		.list .item:hover + *{
-			filter: brightness(.6);
-			transform: translateZ(150px) rotateY(40deg);
-		}
-		.list .item:has(+ *:hover){
-			filter: brightness(.6);
-			transform: translateZ(150px) rotateY(-40deg);
-		}
-		.list .item:has(+ * + *:hover){
-			filter: brightness(.4);
-			transform: translateZ(70px) rotateY(-20deg);
-		}
-		.list .item:has(+ *+ * + *:hover){
-			filter: brightness(.2);
-			transform: translateZ(30px) rotateY(-10deg);
-		}
-	</style>
-</head>
-<body>
-	<main>
-		<div class="list">
-			<div class="item"><img src="https://picsum.photos/id/101/300/300" alt="1"></div>
-			<div class="item"><img src="https://picsum.photos/id/102/300/300" alt="2"></div>
-			<div class="item"><img src="https://picsum.photos/id/103/300/300" alt="3"></div>
-			<div class="item"><img src="https://picsum.photos/id/104/300/300" alt="4"></div>
-			<div class="item"><img src="https://picsum.photos/id/165/300/300" alt="5"></div>
-			<div class="item"><img src="https://picsum.photos/id/106/300/300" alt="6"></div>
-			<div class="item"><img src="https://picsum.photos/id/107/300/300" alt="7"></div>
-			<div class="item"><img src="https://picsum.photos/id/108/300/300" alt="8"></div>
-			<div class="item"><img src="https://picsum.photos/id/109/300/300" alt="9"></div>
-			<div class="item"><img src="https://picsum.photos/id/134/300/300" alt="10"></div>		
-		</div>
-	</main>
-</body>
+      .list {
+        display: flex;
+        transform-style: preserve-3d;
+        width: 100%;
+        transform: perspective(1000px);
+      }
+      .item {
+        width: 75px;
+        height: 100px;
+        margin: 0px 5px;
+        overflow: hidden;
+        transition: 0.5s;
+        filter: brightness(0);
+      }
+      .item img {
+        object-fit: contain;
+      }
+      .list .item:hover {
+        filter: brightness(1);
+        transform: translateZ(200px);
+        cursor: pointer;
+      }
+      .list .item:hover + * {
+        filter: brightness(0.6);
+        transform: translateZ(150px) rotateY(40deg);
+      }
+      .list .item:hover + * + * {
+        filter: brightness(0.4);
+        transform: translateZ(70px) rotateY(20deg);
+      }
+      .list .item:hover + * + * + * {
+        filter: brightness(0.2);
+        transform: translateZ(30px) rotateY(10deg);
+      }
+      .list .item:hover + * {
+        filter: brightness(0.6);
+        transform: translateZ(150px) rotateY(40deg);
+      }
+      .list .item:has(+ *:hover) {
+        filter: brightness(0.6);
+        transform: translateZ(150px) rotateY(-40deg);
+      }
+      .list .item:has(+ * + *:hover) {
+        filter: brightness(0.4);
+        transform: translateZ(70px) rotateY(-20deg);
+      }
+      .list .item:has(+ * + * + *:hover) {
+        filter: brightness(0.2);
+        transform: translateZ(30px) rotateY(-10deg);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="list">
+        <div class="item">
+          <img src="https://picsum.photos/id/101/300/300" alt="1" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/102/300/300" alt="2" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/103/300/300" alt="3" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/104/300/300" alt="4" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/165/300/300" alt="5" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/106/300/300" alt="6" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/107/300/300" alt="7" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/108/300/300" alt="8" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/109/300/300" alt="9" />
+        </div>
+        <div class="item">
+          <img src="https://picsum.photos/id/134/300/300" alt="10" />
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

@@ -3,15 +3,14 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuSub,
-  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@components/ui/context-menu";
 import { Separator } from "@components/ui/separator";
-import { Skeleton } from '@components/ui/skeleton';
+import { Skeleton } from "@components/ui/skeleton";
 
 import { Link } from "@/src/types/link.ts";
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+
 interface MyWorkProps extends React.HTMLAttributes<HTMLDivElement> {
   link: Link;
   aspectRatio?: "portrait" | "square";
@@ -20,23 +19,26 @@ interface MyWorkProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
-  src:string;
-}
+  src: string;
+};
 
-const ImageLazyLoading = (props:ImageProps)=>{
-  const {src} = props;
-  const [image,setImage ] = useState<HTMLImageElement|null>(null);
-  useEffect(()=>{
+const ImageLazyLoading = (props: ImageProps) => {
+  const { src } = props;
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
+  useEffect(() => {
     const img = new Image();
     img.src = src;
-    img.onload = ()=>{
+    img.onload = () => {
       setImage(img);
-    }
-  },[src])
+    };
+  }, [src]);
 
-  return image ?  <img {...props} /> : <Skeleton className="rounded-full" {...props} />
-
-}
+  return image ? (
+    <img {...props} />
+  ) : (
+    <Skeleton className="rounded-full" {...props} />
+  );
+};
 
 export function MyWork({
   link,
@@ -46,31 +48,38 @@ export function MyWork({
   className,
   ...props
 }: MyWorkProps) {
+  const GITHUBLINK =
+    "https://github.com/eepson123tw/fet-practice-skills/tree/master";
+
   return (
-    <div
-      className={cn("space-y-3", className)}
-      {...props}
-      onClick={() => window.open(link.url, "_blank")}
-    >
+    <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
           <div className="items-center flex p-1">
-            {link.cover && <ImageLazyLoading  
-              src={link.cover}
-              alt={link.description}
-              style={{ width, height }}
-              className={cn(
-                "h-auto w-auto object-cover transition-all hover:scale-105 hover:aspect-video rounded-sm",
-                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
-              )}></ImageLazyLoading>}
-          
+            {link.cover && (
+              <ImageLazyLoading
+                src={link.cover}
+                alt={link.description}
+                style={{ width, height }}
+                className={cn(
+                  "h-auto w-auto object-cover transition-all hover:scale-105 hover:aspect-video rounded-sm",
+                  aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square",
+                )}
+              ></ImageLazyLoading>
+            )}
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className="w-40">
-          <ContextMenuItem>Go to Page</ContextMenuItem>
-          <ContextMenuSub>
-            <ContextMenuSubTrigger>Add to List</ContextMenuSubTrigger>
-          </ContextMenuSub>
+          <ContextMenuItem onClick={() => window.open(link.url, "_blank")}>
+            Go to Page
+          </ContextMenuItem>
+          <ContextMenuItem
+            onClick={() =>
+              window.open(GITHUBLINK + link.url + ".html", "_blank", "popup")
+            }
+          >
+            Go to Github
+          </ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
       <Separator style={{ margin: "unset" }} />

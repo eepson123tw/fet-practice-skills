@@ -69,13 +69,13 @@ const pick = (obj: NonNullable<unknown>, ...props: string[]) => {
   return Object.fromEntries(
     Object.entries(obj).filter(([k]) => {
       return props.includes(k);
-    })
+    }),
   );
 };
 console.log(
   "%cpick key in a obj",
   consoleStyle,
-  pick({ a: 123, b: 456, c: 789 }, "a", "b")
+  pick({ a: 123, b: 456, c: 789 }, "a", "b"),
 );
 
 // random color
@@ -109,12 +109,12 @@ input.oninput = async () => {
 
 console.log(
   "%c中斷請求是一個重要的知識點 可以使用 fetch XHR https://axios-http.com/docs/cancellation",
-  consoleStyle
+  consoleStyle,
 );
 
 console.log(
   "%clocaleCompare,比較中文字順序可以使用  https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare",
-  consoleStyle
+  consoleStyle,
 );
 
 type BandType<T, K> = T extends K ? never : T;
@@ -191,7 +191,7 @@ const functionWrapperWithTypeCheck = <T>(obj: T) => {
   return {
     on: <K extends keyof T & string>(
       a: `${K}Changed`,
-      b: (a: T[K], b: T) => void
+      b: (a: T[K], b: T) => void,
     ) => {
       console.log(a, b, obj);
     },
@@ -214,7 +214,7 @@ declare global {
       ThisType,
       BoundArgs extends any[],
       RemainingArgs extends any[],
-      ReturnType
+      ReturnType,
     >(
       this: (
         this: ThisType,
@@ -253,7 +253,7 @@ Function.prototype.myBind = function <
   ThisType,
   BoundArgs extends any[],
   RemainingArgs extends any[],
-  ReturnType
+  ReturnType,
 >(
   this: (
     this: ThisType,
@@ -282,7 +282,7 @@ function countAB(a: number, b: number, c: string, d: number) {
 
 declare function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
   fn: T,
-  timer: number
+  timer: number,
 ): (...args: Parameters<T>) => void;
 
 // const debounceFn = debounce(countAB, 1000);
