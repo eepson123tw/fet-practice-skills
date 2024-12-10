@@ -1,3 +1,10 @@
+## [1.38.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.0...v1.38.1) (2024-12-10)
+
+
+### Bug Fixes
+
+* **mywork:** add tooltip ([869c209](https://github.com/eepson123tw/fet-practice-skills/commit/869c20911e30f000ce7596377001cd5b72a9b9f2))
+
 # [1.38.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.37.0...v1.38.0) (2024-12-08)
 
 ### Features
