@@ -102,7 +102,7 @@ export function MyWork({
               <ContextMenuItem
                 onClick={() =>
                   window.open(
-                    GITHUBLINK + link.url + ".html",
+                    GITHUBLINK + link.url.replace(".", ""),
                     "_blank",
                     "popup",
                   )
