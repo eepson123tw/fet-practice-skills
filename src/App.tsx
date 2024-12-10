@@ -32,6 +32,7 @@ function App() {
       ...link,
       cover: "/screenshots/" + link.routeName + ".png",
       url: (urlHead + urlFilter(link.url)) as Link["url"],
+      folder:(urlHead+ link.url),
     }));
   }, [currentPage, isViewPage]);
 

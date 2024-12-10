@@ -74,6 +74,7 @@ export function MyWork({
   const GITHUBLINK =
     "https://github.com/eepson123tw/fet-practice-skills/tree/master";
 
+
   return (
     <ContextMenu>
       <ContextMenuTrigger>
@@ -102,7 +103,7 @@ export function MyWork({
               <ContextMenuItem
                 onClick={() =>
                   window.open(
-                    GITHUBLINK + link.url.replace(".", ""),
+                    GITHUBLINK +link.folder+ link.url.replace(".", ""),
                     "_blank",
                     "popup",
                   )

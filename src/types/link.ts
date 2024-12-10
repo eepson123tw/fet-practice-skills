@@ -18,6 +18,7 @@ export interface Link {
   group: Group;
   cover?: string;
   description?: string;
+  folder?: string;
 }
 
 export const canvasGroups: Array<Link> = [
