@@ -1,3 +1,10 @@
+## [1.38.2](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.1...v1.38.2) (2024-12-10)
+
+
+### Bug Fixes
+
+* **mywork:** fix link error ([3555943](https://github.com/eepson123tw/fet-practice-skills/commit/35559432740840a570011d132f7b9850abc08932))
+
 ## [1.38.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.0...v1.38.1) (2024-12-10)
 
 
