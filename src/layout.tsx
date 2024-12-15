@@ -3,9 +3,11 @@ import { AppSidebar } from "@components/app-sidebar";
 
 import React, { useEffect } from "react";
 import { useTheme } from "./hook/useTheme.ts";
+import { useAppContext } from "./store/AppContext.tsx";
 
 function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  const { urlHash } = useAppContext();
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,7 +30,7 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
 
     const ctx = cvs.getContext("2d") as CanvasRenderingContext2D;
 
-    const fontSize = 20 * devicePixelRatio;
+    const fontSize = 15 * devicePixelRatio;
 
     const randomColor = () => {
       const fontColors = [
@@ -47,7 +49,7 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
     };
 
     const randomText = () => {
-      const str = "My Code Base Test";
+      const str = "Frontend Practice Skills";
       return str[Math.floor(Math.random() * str.length)];
     };
     // columnWidth
@@ -82,7 +84,7 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
     return () => {
       clearInterval(intervalId);
     };
-  }, [theme, windowWidth]);
+  }, [theme, windowWidth,urlHash]);
 
   return (
     <>
