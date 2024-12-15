@@ -1,3 +1,10 @@
+## [1.38.6](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.5...v1.38.6) (2024-12-15)
+
+
+### Bug Fixes
+
+* **canvas:** add hash change and control canvas ([7921ff4](https://github.com/eepson123tw/fet-practice-skills/commit/7921ff4ab60159d9ff0d0ad9297e47747c7fc8c7))
+
 ## [1.38.5](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.4...v1.38.5) (2024-12-10)
 
 
