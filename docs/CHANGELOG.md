@@ -7,17 +7,15 @@
 
 ## [1.38.5](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.4...v1.38.5) (2024-12-10)
 
-
 ### Bug Fixes
 
-* **mywork:** fix link folder and format ([f04c9c9](https://github.com/eepson123tw/fet-practice-skills/commit/f04c9c939d9db6600d71a27fa24264b5f6675d90))
+- **mywork:** fix link folder and format ([f04c9c9](https://github.com/eepson123tw/fet-practice-skills/commit/f04c9c939d9db6600d71a27fa24264b5f6675d90))
 
 ## [1.38.4](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.3...v1.38.4) (2024-12-10)
 
-
 ### Bug Fixes
 
-* **mywork:** fix link folder and format ([cf3a821](https://github.com/eepson123tw/fet-practice-skills/commit/cf3a82172981c10a720b92d3b8f751536cd5f44e))
+- **mywork:** fix link folder and format ([cf3a821](https://github.com/eepson123tw/fet-practice-skills/commit/cf3a82172981c10a720b92d3b8f751536cd5f44e))
 
 ## [1.38.3](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.2...v1.38.3) (2024-12-10)
 

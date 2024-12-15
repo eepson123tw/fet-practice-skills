@@ -421,4 +421,10 @@ export const cssGroups: Array<Link> = [
     group: Group.Css,
     description: "Create a Mac-style dock with CSS.",
   },
+  {
+    routeName: "css-wrapped",
+    url: "/css/css-wrapped",
+    group: Group.Css,
+    description: "Trying to use 2024 css new features",
+  },
 ];

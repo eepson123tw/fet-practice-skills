@@ -84,7 +84,7 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
     return () => {
       clearInterval(intervalId);
     };
-  }, [theme, windowWidth,urlHash]);
+  }, [theme, windowWidth, urlHash]);
 
   return (
     <>

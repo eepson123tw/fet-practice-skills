@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>CSS</title>
+    <style>
+      @layer reset, custom, components, utilities;
+
+      @layer reset {
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+      }
+
+      @layer custom {
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+        }
+      }
+
+      /* @view-transition {
+		navigation: auto;
+		} */
+
+      :root {
+        interpolate-size: allow-keywords;
+        scrollbar-color: hotpink blue;
+        scrollbar-width: 10%;
+      }
+
+      html {
+        font-size: 62.5%;
+        color-scheme: light dark;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.25);
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      h2 {
+        --_offset: 0.1ex;
+        font-family: "Roboto", sans-serif;
+        text-transform: lowercase;
+        font-weight: 700;
+        line-height: 0.75;
+        text-shadow:
+          0 var(--_offset) 0 #00ff88,
+          0 calc(var(--_offset) * 2) 0 #ff3366;
+        font-size: 15cqi;
+        margin-block: var(--size-8);
+        text-align: center;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+      }
+
+      h2:hover {
+        transform: scale(1.05);
+      }
+
+      .test {
+        padding: 2rem;
+        border-radius: 10px;
+        margin-top: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      input[type="text"]:focus {
+        border-color: #00ff88;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+      }
+
+      select {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        background-color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      select:focus {
+        border-color: #00ff88;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+      }
+
+      select[multiple] {
+        height: 150px;
+      }
+
+      option {
+        padding: 0.5rem;
+      }
+
+      option:hover {
+        background-color: #f0f0f0;
+      }
+      .anchor {
+        anchor-name: --over-easy;
+      }
+
+      .positioned-element {
+        position: fixed;
+        position-anchor: --over-easy;
+        position-area: right center;
+      }
+
+      .anchor {
+        overflow: clip;
+        border-radius: 30px;
+        outline: 1px solid #0002;
+        max-inline-size: min(50vw, 480px);
+
+        > img {
+          display: flex;
+          max-inline-size: 100%;
+        }
+      }
+
+      .positioned-element {
+        font-size: 2rem;
+        font-weight: bold;
+        background: Canvas;
+        color: CanvasText;
+        padding: 1ch 2ch;
+        border-radius: 1e3px;
+        box-shadow: 0 5px 10px #0003;
+      }
+      .float-link {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: #00ff88;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: black;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      }
+      #demo {
+        color: CanvasText;
+        background: canvas;
+      }
+
+      body:has(#color-scheme option[value="light"]:checked) #demo {
+        color-scheme: light;
+      }
+      body:has(#color-scheme option[value="dark"]:checked) #demo {
+        color-scheme: dark;
+      }
+
+      @property --angle {
+        syntax: "<angle>";
+        initial-value: 0deg;
+        inherits: false;
+      }
+
+      @keyframes rotate {
+        to {
+          --angle: 360deg;
+        }
+      }
+
+      .container {
+        --angle: 0deg;
+        border: 1vmin solid; /*  vmin is vw or vh, whichever is smaller */
+        border-image: conic-gradient(
+            from var(--angle),
+            red,
+            yellow,
+            lime,
+            aqua,
+            blue,
+            magenta,
+            red
+          )
+          1;
+        animation: 10s rotate linear infinite;
+      }
+
+      ruby {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        text-shadow: 0 0 0.5rem #000;
+        ruby-align: space-around;
+      }
+
+      .paint {
+        paint-order: stroke fill;
+
+        color: white;
+        -webkit-text-stroke: 5px black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>lorem</h2>
+      <div class="test">
+        <input type="text" placeholder="I grow too" />
+        <select multiple>
+          <option>This shrinks to fit</option>
+          <option>hi</option>
+          <option>short</option>
+          <option>medium</option>
+          <option>annoying long option that needs rewritten</option>
+        </select>
+        <select>
+          <option>This shrinks to fit</option>
+          <option>hi</option>
+          <option>short</option>
+          <option>medium</option>
+          <option>annoying long option that needs rewritten</option>
+        </select>
+      </div>
+      <div class="test">
+        <details name="learn-css">
+          <summary>Welcome to Learn CSS!</summary>
+          <p>…</p>
+        </details>
+        <details name="learn-css">
+          <summary>Box Model</summary>
+          <p>…</p>
+        </details>
+      </div>
+      <div class="test">
+        <div class="anchor">
+          <img
+            src="https://assets.codepen.io/2585/image_fx_.jpg"
+            alt="a smiling sunny side up egg made of clay"
+          />
+        </div>
+        <div class="test">
+          <p>
+            Color-scheme to use:
+            <select name="color-scheme" id="color-scheme">
+              <option value="light">light</option>
+              <option value="dark">dark</option>
+            </select>
+          </p>
+
+          <div id="demo">
+            Use the dropdown to control the <code>color-scheme</code> applied to
+            this element. The system colors adapt themselves to the chosen
+            value.
+          </div>
+        </div>
+        <div class="test">
+          <ruby>
+            明日 <rt>あした</rt> から <rt>から</rt> 始めよう <rt>はじめよう</rt>
+          </ruby>
+        </div>
+        <div class="test">
+          <p class="paint">
+            This text is painted with the <code>color</code> property.
+          </p>
+        </div>
+
+        <div class="positioned-element">position-anchor</div>
+      </div>
+    </div>
+    <a class="float-link" href="https://chrome.dev/css-wrapped-2024/">
+      css-wrapped-2024
+    </a>
+  </body>
+</html>
