@@ -1,7 +1,19 @@
 #!/bin/bash
 
+
+# Run bun build command
+echo "Running bun build..."
+bun run build
+if [ $? -ne 0 ]; then
+    echo "Error: Bun build failed. Push aborted."
+    exit 1
+fi
+
+
 # Switch to the repository root directory
 cd "$(git rev-parse --show-toplevel)"
+
+
 
 echo "Pre-push hook started."
 
