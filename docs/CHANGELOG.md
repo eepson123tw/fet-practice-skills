@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.6...v1.39.0) (2024-12-15)
+
+
+### Features
+
+* **2024-css:** add 2024 css feature ([f1f1f94](https://github.com/eepson123tw/fet-practice-skills/commit/f1f1f94fd6b6dd58b0be71312dae0ab44e7af0e0))
+
 ## [1.38.6](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.5...v1.38.6) (2024-12-15)
 
 
