@@ -1,3 +1,11 @@
+# [1.40.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.39.0...v1.40.0) (2024-12-15)
+
+
+### Features
+
+* **2024-css:** add css img ([1c07ebe](https://github.com/eepson123tw/fet-practice-skills/commit/1c07ebe12e895bd1b6a8e0f50bd009830b7e51a8))
+* **2024-css:** change wording ([4437d52](https://github.com/eepson123tw/fet-practice-skills/commit/4437d520b5cc38cb9033832d82b12e508e111fe8))
+
 # [1.39.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.6...v1.39.0) (2024-12-15)
 
 
