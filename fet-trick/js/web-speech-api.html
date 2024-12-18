@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Your existing CSS remains unchanged */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            transform-style: preserve-3d;
+            transform: rotateX(15deg);
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            transform: rotateX(0deg) scale(1.02);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .control-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: linear-gradient(145deg, #6a11cb, #2575fc);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        #output {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex-grow: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ Voice Companion</h1>
+        <div class="control-group">
+            <button id="startBtn">Start Listening</button>
+            <button id="stopBtn" disabled>Stop Listening</button>
+        </div>
+        <div id="output"></div>
+        <div class="input-group">
+            <input type="text" id="textToSpeak" placeholder="Enter text to speak">
+            <button id="speakBtn">Speak</button>
+        </div>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const output = document.getElementById('output');
+        const textToSpeak = document.getElementById('textToSpeak');
+        const speakBtn = document.getElementById('speakBtn');
+
+        // Check for SpeechRecognition support
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            output.innerHTML = '<p>Speech recognition not supported in this browser.</p>';
+            startBtn.disabled = true;
+            stopBtn.disabled = true;
+        }
+
+        let recognition;
+        let finalTranscript = '';
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.interimResults = false;
+			recognition.maxAlternatives = 1;
+			recognition.continuous = false;
+            recognition.lang = 'en-US';
+            recognition.maxAlternatives = 1;
+
+            // Event handler when recognition starts
+            recognition.onstart = () => {
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                output.innerHTML = '<p>Listening... Speak now.</p>';
+            };
+
+            // Event handler for speech recognition results
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript + ' ';
+                    } else {
+                        interimTranscript += transcript;
+                    }
+                }
+
+                output.innerHTML = `
+                    <p><strong>Final:</strong> ${finalTranscript}</p>
+                    <p><em>Interim:</em> ${interimTranscript}</p>
+                `;
+            };
+
+            // Event handler for errors
+            recognition.onerror = (event) => {
+                output.innerHTML = `<p style="color: red;">Error: ${event.error}</p>`;
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+            };
+
+            // Event handler when recognition ends
+            recognition.onend = () => {
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                if (!finalTranscript) {
+                    output.innerHTML = '<p>No speech detected. Try again.</p>';
+                } else {
+                    output.innerHTML += '<p>Recognition ended.</p>';
+                }
+            };
+        }
+
+        // Start Listening Button
+        startBtn.addEventListener('click', () => {
+            finalTranscript = ''; // Reset transcript
+            recognition.start();
+        });
+
+        // Stop Listening Button
+        stopBtn.addEventListener('click', () => {
+            recognition.stop();
+        });
+
+        // Speech Synthesis Setup
+        const synth = window.speechSynthesis;
+
+        speakBtn.addEventListener('click', () => {
+            const text = textToSpeak.value.trim();
+            if (text) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                synth.speak(utterance);
+            } else {
+                alert('Please enter text to speak.');
+            }
+        });
+    </script>
+</body>
+</html>
