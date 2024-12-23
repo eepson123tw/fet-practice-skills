@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.41.0...v1.42.0) (2024-12-23)
+
+
+### Features
+
+* **compare:** add a compare utils ([d6c9d3a](https://github.com/eepson123tw/fet-practice-skills/commit/d6c9d3af1bfcb37d86ab4456abb240e352134086))
+
 # [1.41.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.40.0...v1.41.0) (2024-12-18)
 
 
