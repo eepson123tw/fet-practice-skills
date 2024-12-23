@@ -287,11 +287,11 @@ export const jsGroups: Array<Link> = [
     description: "try to use tiptap",
   },
   {
-    routeName:"web-speech-api",
-    url:"/js/web-speech-api",
-    group:Group.Js,
-    description:"Use the Web Speech API to convert speech to text.",
-  }
+    routeName: "web-speech-api",
+    url: "/js/web-speech-api",
+    group: Group.Js,
+    description: "Use the Web Speech API to convert speech to text.",
+  },
 ];
 
 export const cssGroups: Array<Link> = [

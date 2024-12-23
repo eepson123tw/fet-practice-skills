@@ -9,7 +9,13 @@ import {
   SandpackPreviewRef,
 } from "@codesandbox/sandpack-react";
 
-import { code, asyncReplaceAll, iterator, newFetch } from "../utils/codeLinks";
+import {
+  code,
+  asyncReplaceAll,
+  iterator,
+  newFetch,
+  compare,
+} from "../utils/codeLinks";
 
 const files = {
   "/index.ts": `import "./argsType.ts";`, // Initial import
@@ -17,6 +23,7 @@ const files = {
   "/asyncReplaceAll.ts": asyncReplaceAll,
   "/iterator.ts": iterator,
   "/newFetch.ts": newFetch,
+  "/compare.ts": compare,
 };
 
 const Editor = () => {

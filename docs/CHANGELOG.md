@@ -7,25 +7,22 @@
 
 # [1.40.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.39.0...v1.40.0) (2024-12-15)
 
-
 ### Features
 
-* **2024-css:** add css img ([1c07ebe](https://github.com/eepson123tw/fet-practice-skills/commit/1c07ebe12e895bd1b6a8e0f50bd009830b7e51a8))
-* **2024-css:** change wording ([4437d52](https://github.com/eepson123tw/fet-practice-skills/commit/4437d520b5cc38cb9033832d82b12e508e111fe8))
+- **2024-css:** add css img ([1c07ebe](https://github.com/eepson123tw/fet-practice-skills/commit/1c07ebe12e895bd1b6a8e0f50bd009830b7e51a8))
+- **2024-css:** change wording ([4437d52](https://github.com/eepson123tw/fet-practice-skills/commit/4437d520b5cc38cb9033832d82b12e508e111fe8))
 
 # [1.39.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.6...v1.39.0) (2024-12-15)
 
-
 ### Features
 
-* **2024-css:** add 2024 css feature ([f1f1f94](https://github.com/eepson123tw/fet-practice-skills/commit/f1f1f94fd6b6dd58b0be71312dae0ab44e7af0e0))
+- **2024-css:** add 2024 css feature ([f1f1f94](https://github.com/eepson123tw/fet-practice-skills/commit/f1f1f94fd6b6dd58b0be71312dae0ab44e7af0e0))
 
 ## [1.38.6](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.5...v1.38.6) (2024-12-15)
 
-
 ### Bug Fixes
 
-* **canvas:** add hash change and control canvas ([7921ff4](https://github.com/eepson123tw/fet-practice-skills/commit/7921ff4ab60159d9ff0d0ad9297e47747c7fc8c7))
+- **canvas:** add hash change and control canvas ([7921ff4](https://github.com/eepson123tw/fet-practice-skills/commit/7921ff4ab60159d9ff0d0ad9297e47747c7fc8c7))
 
 ## [1.38.5](https://github.com/eepson123tw/fet-practice-skills/compare/v1.38.4...v1.38.5) (2024-12-10)
 
