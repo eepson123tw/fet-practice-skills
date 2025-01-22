@@ -1,3 +1,11 @@
+# [1.43.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.42.0...v1.43.0) (2025-01-22)
+
+
+### Features
+
+* **display:** add display property ([2380cd0](https://github.com/eepson123tw/fet-practice-skills/commit/2380cd05ef550c5e43fb2119b5929284e817be5b))
+* **display:** add display property ([1f13568](https://github.com/eepson123tw/fet-practice-skills/commit/1f13568cd6b6632fbcc41d05f00c4a9d4d587b3e))
+
 # [1.42.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.41.0...v1.42.0) (2024-12-23)
 
 
