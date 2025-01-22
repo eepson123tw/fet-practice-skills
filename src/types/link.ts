@@ -433,4 +433,10 @@ export const cssGroups: Array<Link> = [
     group: Group.Css,
     description: "Trying to use 2024 css new features",
   },
+  {
+    routeName: "display-property",
+    url: "/css/display-property",
+    group: Group.Css,
+    description: "Explore the display property in CSS.",
+  }
 ];
