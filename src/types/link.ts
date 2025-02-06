@@ -70,6 +70,12 @@ export const canvasGroups: Array<Link> = [
     group: Group.Canvas,
     description: "Flowing particle animations with interactive controls.",
   },
+  {
+    routeName: "canvas-donut",
+    url: "/canvas/canvas-donut",
+    group: Group.Canvas,
+    description: "Create and animate a donut chart using canvas.",
+  }
 ];
 
 export const browserApiGroups: Array<Link> = [

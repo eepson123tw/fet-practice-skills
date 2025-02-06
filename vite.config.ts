@@ -9,6 +9,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const contentDir = path.join(__dirname, "fet-trick");
 
+const audioRegex = /<audio src="(?:\.\.\/)+public\/([^"]+)" controls type="audio\/ogg" id="audio-player" ><\/audio>/g;
+
+
 async function processHtmlFiles(targetDir: string, contentDir: string) {
   // Read the files from the source directory
   // const files = await fs.promises.readdir(contentDir);
@@ -19,16 +22,14 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
     htmlFiles.map(async (file) => {
       const fileName = path.basename(file); // Get the file name, e.g., 'example.html'
       console.log(`Processing: ${fileName}`);
-      let content = await fs.promises.readFile(file, "utf-8");
-
-      content = content.replace(
-        /<audio src="\.\.\/public\/([^"]+)" controls type="audio\/ogg" id="audio-player"><\/audio>/g,
-        '<audio src="./$1" type="audio/ogg" controls id="audio-player"></audio>',
-      );
+      let content = await fs.promises.readFile(file, "utf-8");  
+      //  <audio src="../public/02.mp3" controls type="audio/ogg" id="audio-player" ></audio>
+      content = content.replace(audioRegex, `<audio src="./$1" controls type="audio/ogg" id="audio-player"></audio>`);
+    
       // Update <source> paths
       content = content.replace(
-        /<source src="\.\.\/public\/([^"]+)" type="audio\/ogg">/g,
-        '<source src="./$1" controls type="audio/ogg">',
+        /<source src="\.\.\/(?:\.\.\/)*public\/([^"]+)" type="audio\/ogg"\s*\/?>/g,
+        '<source src="./$1" type="audio/ogg" />'
       );
       // Update <script> paths
       content = content.replace(
@@ -75,6 +76,7 @@ export default defineConfig({
     },
   ],
   build: {
+    chunkSizeWarningLimit: 2048,
     rollupOptions: {
       output: {
         entryFileNames: `assets/[name].js`,
