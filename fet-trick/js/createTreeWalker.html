@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TreeWalker Explorer</title>
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-light: #818cf8;
+        --secondary: #10b981;
+        --dark: #1f2937;
+        --light: #f9fafb;
+        --border: #d1d5db;
+        --success: #22c55e;
+        --danger: #ef4444;
+        --warning: #f59e0b;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        margin-bottom: 10px;
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .main-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .card h2 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        border-bottom: 2px solid var(--primary-light);
+        padding-bottom: 5px;
+      }
+
+      .full-width-card {
+        grid-column: 1 / -1;
+      }
+
+      textarea,
+      #editor,
+      #html-output {
+        width: 100%;
+        height: 200px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        padding: 10px;
+        font-family: monospace;
+        margin-bottom: 10px;
+        resize: vertical;
+      }
+
+      #editor {
+        background-color: #282c34;
+        color: #abb2bf;
+      }
+
+      #html-output {
+        height: 300px;
+        overflow: auto;
+      }
+
+      .control-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+
+      select,
+      input,
+      button {
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        background-color: white;
+      }
+
+      button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: var(--primary-light);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary);
+      }
+
+      .btn-secondary:hover {
+        background-color: #0ea271;
+      }
+
+      .result-panel {
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        padding: 15px;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+      }
+
+      .node-info {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-left: 3px solid var(--primary);
+        background-color: rgba(99, 102, 241, 0.1);
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .example-card {
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .example-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+      }
+
+      .example-card h3 {
+        color: var(--primary);
+        margin-bottom: 8px;
+      }
+
+      .code-badge {
+        display: inline-block;
+        background-color: #e5e7eb;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 0.9em;
+      }
+
+      .tree-output {
+        font-family: monospace;
+        white-space: pre-wrap;
+      }
+
+      .highlight {
+        background-color: rgba(250, 204, 21, 0.3);
+        border: 1px dashed #f59e0b;
+      }
+
+      .tree-node {
+        margin-left: 20px;
+        border-left: 1px dashed var(--border);
+        padding-left: 10px;
+      }
+
+      .node-properties {
+        margin-left: 20px;
+        margin-top: 5px;
+        font-size: 0.9em;
+        color: #4b5563;
+      }
+
+      .code-block {
+        background-color: #f1f5f9;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        white-space: pre-wrap;
+        font-family: monospace;
+        overflow-x: auto;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 15px;
+      }
+
+      .tab {
+        padding: 8px 16px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-bottom: none;
+        border-radius: 5px 5px 0 0;
+        margin-right: 5px;
+      }
+
+      .tab.active {
+        background-color: white;
+        border-color: var(--border);
+        color: var(--primary);
+        font-weight: bold;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .filter-info {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #e0f2fe;
+        border-radius: 5px;
+        border-left: 3px solid #0ea5e9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>TreeWalker Explorer</h1>
+        <p>An interactive tool to explore DOM traversal using TreeWalker</p>
+      </header>
+
+      <div class="main-grid">
+        <div class="card full-width-card">
+          <h2>HTML Editor</h2>
+          <textarea id="html-editor" placeholder="Enter your HTML here...">
+<div id="root">
+  <header>
+    <h1>Sample Document</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="intro">
+      <h2>Introduction</h2>
+      <p>This is a sample document to demonstrate <strong>TreeWalker</strong>.</p>
+      <p>You can <em>customize</em> this HTML and experiment with different filters.</p>
+    </section>
+    <section class="content">
+      <h2>Content Section</h2>
+      <article>
+        <h3>Article 1</h3>
+        <p>This is the first article with an <a href="#">important link</a>.</p>
+        <div class="metadata">
+          <span>Date: 2025-02-24</span>
+          <span>Author: TreeWalker Explorer</span>
+        </div>
+      </article>
+      <article>
+        <h3>Article 2</h3>
+        <p>This is the second article with a <img src="/api/placeholder/100/100" alt="sample image"> sample image.</p>
+        <div class="metadata">
+          <span>Date: 2025-02-25</span>
+          <span>Author: TreeWalker Explorer</span>
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 TreeWalker Explorer. All rights reserved.</p>
+  </footer>
+</div>
+        </textarea
+          >
+          <div class="control-panel">
+            <button id="update-preview" class="btn-secondary">
+              Update Preview
+            </button>
+            <button id="reset-html">Reset to Default</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Preview</h2>
+          <div id="html-output"></div>
+        </div>
+
+        <div class="card">
+          <h2>TreeWalker Configuration</h2>
+          <div class="form-group">
+            <label for="root-element">Root Element Selector:</label>
+            <input
+              type="text"
+              id="root-element"
+              value="#root"
+              placeholder="Enter a CSS selector"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="walker-type">Filter Type:</label>
+            <select id="walker-type">
+              <option value="show-all">Show All Nodes</option>
+              <option value="element-only">Element Nodes Only</option>
+              <option value="text-only">Text Nodes Only</option>
+              <option value="custom">Custom Filter</option>
+              <option value="by-nodename">By Node Name</option>
+              <option value="by-class">By Class Name</option>
+              <option value="by-attribute">By Attribute</option>
+              <option value="heading-only">Headings Only</option>
+              <option value="depth-limited">Depth Limited</option>
+            </select>
+          </div>
+
+          <div id="custom-filter-options" style="display: none">
+            <div class="form-group">
+              <label for="node-name-filter">Filter by Node Name:</label>
+              <input
+                type="text"
+                id="node-name-filter"
+                placeholder="e.g., DIV, P, SPAN"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="class-name-filter">Filter by Class Name:</label>
+              <input
+                type="text"
+                id="class-name-filter"
+                placeholder="e.g., intro, metadata"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="attribute-name">Filter by Attribute:</label>
+              <input
+                type="text"
+                id="attribute-name"
+                placeholder="Attribute name"
+              />
+              <input
+                type="text"
+                id="attribute-value"
+                placeholder="Attribute value (optional)"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="max-depth">Max Depth:</label>
+              <input
+                type="number"
+                id="max-depth"
+                value="0"
+                min="0"
+                placeholder="0 = unlimited"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="what-to-show">What to Show:</label>
+            <select id="what-to-show">
+              <option value="all">All Nodes</option>
+              <option value="element">Element Nodes</option>
+              <option value="text">Text Nodes</option>
+              <option value="comment">Comment Nodes</option>
+              <option value="element-text">Element & Text Nodes</option>
+            </select>
+          </div>
+
+          <button id="create-walker">Create TreeWalker</button>
+        </div>
+
+        <div class="card">
+          <h2>TreeWalker Results</h2>
+          <div class="tabs">
+            <div class="tab active" data-tab="results">Results</div>
+            <div class="tab" data-tab="code">Generated Code</div>
+          </div>
+
+          <div class="tab-content active" data-tab="results">
+            <div class="result-panel" id="walker-results">
+              <p>Configure and create a TreeWalker to see results here.</p>
+            </div>
+          </div>
+
+          <div class="tab-content" data-tab="code">
+            <div class="code-block" id="generated-code">
+              // Configure and create a TreeWalker to see the code here
+            </div>
+            <button id="copy-code">Copy Code</button>
+          </div>
+        </div>
+
+        <div class="card full-width-card">
+          <h2>Example Filters</h2>
+          <p>Click on any example to apply it:</p>
+
+          <div class="examples-grid">
+            <div class="example-card" data-example="headings">
+              <h3>Find All Headings</h3>
+              <p>Finds all heading elements (h1-h6) in the document.</p>
+              <div class="code-badge">
+                NodeFilter.SHOW_ELEMENT + heading filter
+              </div>
+            </div>
+
+            <div class="example-card" data-example="links">
+              <h3>Extract All Links</h3>
+              <p>Finds all anchor elements with href attributes.</p>
+              <div class="code-badge">
+                NodeFilter.SHOW_ELEMENT + anchor filter
+              </div>
+            </div>
+
+            <div class="example-card" data-example="text-content">
+              <h3>Text Content Only</h3>
+              <p>Shows only the text content nodes of the document.</p>
+              <div class="code-badge">NodeFilter.SHOW_TEXT</div>
+            </div>
+
+            <div class="example-card" data-example="images">
+              <h3>Find All Images</h3>
+              <p>Locates all image elements in the document.</p>
+              <div class="code-badge">NodeFilter.SHOW_ELEMENT + img filter</div>
+            </div>
+
+            <div class="example-card" data-example="metadata">
+              <h3>Metadata Elements</h3>
+              <p>Finds elements with 'metadata' class.</p>
+              <div class="code-badge">
+                NodeFilter.SHOW_ELEMENT + class filter
+              </div>
+            </div>
+
+            <div class="example-card" data-example="depth-3">
+              <h3>Depth Limited (Max: 3)</h3>
+              <p>Only traverses to a maximum depth of 3 levels.</p>
+              <div class="code-badge">Custom depth filter</div>
+            </div>
+
+            <div class="example-card" data-example="section-content">
+              <h3>Section Content</h3>
+              <p>Elements within section elements only.</p>
+              <div class="code-badge">Parent node filtering</div>
+            </div>
+
+            <div class="example-card" data-example="articles">
+              <h3>Article Elements</h3>
+              <p>Finds all article elements and their direct children.</p>
+              <div class="code-badge">Element + child node filter</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Default HTML content
+      const defaultHtml = document.getElementById("html-editor").value;
+
+      // DOM Elements
+      const htmlEditor = document.getElementById("html-editor");
+      const htmlOutput = document.getElementById("html-output");
+      const updatePreviewBtn = document.getElementById("update-preview");
+      const resetHtmlBtn = document.getElementById("reset-html");
+      const rootElementInput = document.getElementById("root-element");
+      const walkerTypeSelect = document.getElementById("walker-type");
+      const customFilterOptions = document.getElementById(
+        "custom-filter-options",
+      );
+      const whatToShowSelect = document.getElementById("what-to-show");
+      const createWalkerBtn = document.getElementById("create-walker");
+      const walkerResults = document.getElementById("walker-results");
+      const generatedCode = document.getElementById("generated-code");
+      const copyCodeBtn = document.getElementById("copy-code");
+      const tabs = document.querySelectorAll(".tab");
+      const tabContents = document.querySelectorAll(".tab-content");
+      const exampleCards = document.querySelectorAll(".example-card");
+
+      // Custom filter inputs
+      const nodeNameFilter = document.getElementById("node-name-filter");
+      const classNameFilter = document.getElementById("class-name-filter");
+      const attributeNameInput = document.getElementById("attribute-name");
+      const attributeValueInput = document.getElementById("attribute-value");
+      const maxDepthInput = document.getElementById("max-depth");
+
+      // Update preview on load
+      updatePreview();
+
+      // Event Listeners
+      updatePreviewBtn.addEventListener("click", updatePreview);
+      resetHtmlBtn.addEventListener("click", resetHtml);
+      createWalkerBtn.addEventListener("click", createTreeWalker);
+      copyCodeBtn.addEventListener("click", copyGeneratedCode);
+
+      walkerTypeSelect.addEventListener("change", function () {
+        if (
+          this.value === "custom" ||
+          this.value === "by-nodename" ||
+          this.value === "by-class" ||
+          this.value === "by-attribute" ||
+          this.value === "depth-limited"
+        ) {
+          customFilterOptions.style.display = "block";
+        } else {
+          customFilterOptions.style.display = "none";
+        }
+      });
+
+              console.log(tabs)
+
+      // Tab switching
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const tabName = tab.getAttribute("data-tab");
+
+          // Update active tab
+          tabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+          // Show corresponding content
+          tabContents.forEach((content) => {
+            if (content.getAttribute("data-tab") === tabName) {
+              content.classList.add("active");
+            } else {
+              content.classList.remove("active");
+            }
+          });
+        });
+      });
+
+      // Example cards
+      exampleCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          applyExample(card.getAttribute("data-example"));
+        });
+      });
+
+      // Functions
+      function updatePreview() {
+        const htmlContent = htmlEditor.value;
+        htmlOutput.innerHTML = htmlContent;
+      }
+
+      function resetHtml() {
+        htmlEditor.value = defaultHtml;
+        updatePreview();
+      }
+
+      function getWhatToShowValue() {
+        const selection = whatToShowSelect.value;
+        let value;
+
+        switch (selection) {
+          case "all":
+            value = NodeFilter.SHOW_ALL;
+            break;
+          case "element":
+            value = NodeFilter.SHOW_ELEMENT;
+            break;
+          case "text":
+            value = NodeFilter.SHOW_TEXT;
+            break;
+          case "comment":
+            value = NodeFilter.SHOW_COMMENT;
+            break;
+          case "element-text":
+            value = NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT;
+            break;
+          default:
+            value = NodeFilter.SHOW_ALL;
+        }
+
+        return value;
+      }
+
+      function createFilter() {
+        const walkerType = walkerTypeSelect.value;
+        let filter = null;
+        let filterCode = "";
+
+        switch (walkerType) {
+          case "show-all":
+            filter = {
+              acceptNode: function () {
+                return NodeFilter.FILTER_ACCEPT;
+              },
+            };
+            filterCode = `{ 
+  acceptNode: function(node) { 
+    return NodeFilter.FILTER_ACCEPT; 
+  } 
+}`;
+            break;
+
+          case "element-only":
+            filter = {
+              acceptNode: function (node) {
+                return node.nodeType === Node.ELEMENT_NODE
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_SKIP;
+              },
+            };
+            filterCode = `{ 
+  acceptNode: function(node) { 
+    return node.nodeType === Node.ELEMENT_NODE ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            break;
+
+          case "text-only":
+            filter = {
+              acceptNode: function (node) {
+                return node.nodeType === Node.TEXT_NODE
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_SKIP;
+              },
+            };
+            filterCode = `{ 
+  acceptNode: function(node) { 
+    return node.nodeType === Node.TEXT_NODE ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            break;
+
+          case "by-nodename":
+            const nodeName = nodeNameFilter.value.toUpperCase();
+            filter = {
+              acceptNode: function (node) {
+                return node.nodeName === nodeName
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_SKIP;
+              },
+            };
+            filterCode = `{ 
+  acceptNode: function(node) { 
+    return node.nodeName === "${nodeName}" ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            break;
+
+          case "by-class":
+            const className = classNameFilter.value;
+            filter = {
+              acceptNode: function (node) {
+                return node.nodeType === Node.ELEMENT_NODE &&
+                  node.classList &&
+                  node.classList.contains(className)
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_SKIP;
+              },
+            };
+            filterCode = `{ 
+  acceptNode: function(node) { 
+    return (node.nodeType === Node.ELEMENT_NODE && 
+           node.classList && 
+           node.classList.contains("${className}")) ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            break;
+
+          case "by-attribute":
+            const attrName = attributeNameInput.value;
+            const attrValue = attributeValueInput.value;
+            filter = {
+              acceptNode: function (node) {
+                if (node.nodeType !== Node.ELEMENT_NODE)
+                  return NodeFilter.FILTER_SKIP;
+
+                if (attrValue) {
+                  return node.hasAttribute(attrName) &&
+                    node.getAttribute(attrName) === attrValue
+                    ? NodeFilter.FILTER_ACCEPT
+                    : NodeFilter.FILTER_SKIP;
+                } else {
+                  return node.hasAttribute(attrName)
+                    ? NodeFilter.FILTER_ACCEPT
+                    : NodeFilter.FILTER_SKIP;
+                }
+              },
+            };
+
+            if (attrValue) {
+              filterCode = `{ 
+  acceptNode: function(node) { 
+    if (node.nodeType !== Node.ELEMENT_NODE) return NodeFilter.FILTER_SKIP;
+    return node.hasAttribute("${attrName}") && node.getAttribute("${attrName}") === "${attrValue}" ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            } else {
+              filterCode = `{ 
+  acceptNode: function(node) { 
+    if (node.nodeType !== Node.ELEMENT_NODE) return NodeFilter.FILTER_SKIP;
+    return node.hasAttribute("${attrName}") ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            }
+            break;
+
+          case "heading-only":
+            filter = {
+              acceptNode: function (node) {
+                return node.nodeType === Node.ELEMENT_NODE &&
+                  /^H[1-6]$/.test(node.nodeName)
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_SKIP;
+              },
+            };
+            filterCode = `{ 
+  acceptNode: function(node) { 
+    return (node.nodeType === Node.ELEMENT_NODE && 
+           /^H[1-6]$/.test(node.nodeName)) ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            break;
+
+          case "depth-limited":
+            const maxDepth = parseInt(maxDepthInput.value) || 0;
+            filter = {
+              maxDepth: maxDepth,
+              currentDepth: 0,
+              acceptNode: function (node) {
+                if (this.maxDepth === 0) return NodeFilter.FILTER_ACCEPT;
+
+                let depth = 0;
+                let parent = node.parentNode;
+
+                while (parent && parent !== document.body) {
+                  depth++;
+                  parent = parent.parentNode;
+                }
+
+                return depth <= this.maxDepth
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_SKIP;
+              },
+            };
+            filterCode = `{ 
+  maxDepth: ${maxDepth},
+  acceptNode: function(node) { 
+    if (this.maxDepth === 0) return NodeFilter.FILTER_ACCEPT;
+    
+    let depth = 0;
+    let parent = node.parentNode;
+    
+    while (parent && parent !== document.body) {
+      depth++;
+      parent = parent.parentNode;
+    }
+    
+    return depth <= this.maxDepth ? 
+      NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; 
+  } 
+}`;
+            break;
+
+          default:
+            filter = null;
+            filterCode = "null";
+        }
+
+        return { filter, filterCode };
+      }
+
+      function createTreeWalker() {
+        try {
+          // Get root element
+          const rootSelector = rootElementInput.value || "body";
+          const rootElement = document.querySelector(rootSelector);
+
+          if (!rootElement) {
+            walkerResults.innerHTML = `<div class="filter-info">Error: Root element "${rootSelector}" not found.</div>`;
+            return;
+          }
+
+          // Get whatToShow value
+          const whatToShow = getWhatToShowValue();
+          let whatToShowStr = "";
+
+          if (whatToShow === NodeFilter.SHOW_ALL) {
+            whatToShowStr = "NodeFilter.SHOW_ALL";
+          } else if (whatToShow === NodeFilter.SHOW_ELEMENT) {
+            whatToShowStr = "NodeFilter.SHOW_ELEMENT";
+          } else if (whatToShow === NodeFilter.SHOW_TEXT) {
+            whatToShowStr = "NodeFilter.SHOW_TEXT";
+          } else if (whatToShow === NodeFilter.SHOW_COMMENT) {
+            whatToShowStr = "NodeFilter.SHOW_COMMENT";
+          } else if (
+            whatToShow ===
+            (NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT)
+          ) {
+            whatToShowStr = "NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT";
+          }
+
+          // Create filter
+          const { filter, filterCode } = createFilter();
+
+          // Create TreeWalker
+          const treeWalker = document.createTreeWalker(
+            rootElement,
+            whatToShow,
+            filter,
+          );
+
+          // Generate and display code
+          const generatedCodeStr = `// Create a TreeWalker
+const rootElement = document.querySelector("${rootSelector}");
+const treeWalker = document.createTreeWalker(
+  rootElement,
+  ${whatToShowStr},
+  ${filterCode}
+);
+
+// Example usage:
+let node;
+while (node = treeWalker.nextNode()) {
+  console.log(node);
+}`;
+
+          generatedCode.textContent = generatedCodeStr;
+
+          // Display results
+          displayTreeWalkerResults(treeWalker, rootElement);
+        } catch (error) {
+          walkerResults.innerHTML = `<div class="filter-info">Error: ${error.message}</div>`;
+        }
+      }
+      function displayTreeWalkerResults(treeWalker, rootElement) {
+        walkerResults.innerHTML = "";
+
+        // Add info about the TreeWalker
+        const filterType = walkerTypeSelect.value;
+        const whatToShow = whatToShowSelect.value;
+
+        const filterInfo = document.createElement("div");
+        filterInfo.className = "filter-info";
+        filterInfo.innerHTML = `
+        <strong>TreeWalker Configuration:</strong><br>
+        Root: ${rootElement.nodeName}${rootElement.id ? ' (id="' + rootElement.id + '")' : ""}<br>
+        Filter Type: ${filterType}<br>
+        What to Show: ${whatToShow}
+      `;
+        walkerResults.appendChild(filterInfo);
+
+        // Process nodes
+        let node;
+        let count = 0;
+        const resultNodes = [];
+
+        while ((node = treeWalker.nextNode()) && count < 100) {
+          resultNodes.push(node);
+          count++;
+        }
+
+        if (resultNodes.length === 0) {
+          const emptyResult = document.createElement("div");
+          emptyResult.textContent =
+            "No nodes matched the current filter criteria.";
+          walkerResults.appendChild(emptyResult);
+          return;
+        }
+
+        // Display nodes
+        resultNodes.forEach((node, index) => {
+          const nodeContainer = document.createElement("div");
+          nodeContainer.className = "node-info";
+
+          let nodeInfo = "";
+
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            nodeInfo = `<strong>${index + 1}. Element:</strong> ${node.nodeName}`;
+            if (node.id) nodeInfo += ` (id="${node.id}")`;
+            if (node.className) nodeInfo += ` (class="${node.className}")`;
+
+            const attributes = Array.from(node.attributes || [])
+              .map((attr) => `${attr.name}="${attr.value}"`)
+              .join(", ");
+
+            if (attributes) {
+              nodeInfo += `
+              <div class="node-properties">
+                <strong>Attributes:</strong> ${attributes}
+              </div>`;
+            }
+
+            // Add a preview of innerHTML if not too large
+            if (node.innerHTML && node.innerHTML.length < 100) {
+              nodeInfo += `
+              <div class="node-properties">
+                <strong>Content:</strong> ${node.innerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
+              </div>`;
+            }
+          } else if (node.nodeType === Node.TEXT_NODE) {
+            const textContent = node.textContent.trim();
+            nodeInfo = `<strong>${index + 1}. Text:</strong> "${textContent.length > 50 ? textContent.substring(0, 50) + "..." : textContent}"`;
+
+            nodeInfo += `
+            <div class="node-properties">
+              <strong>Parent:</strong> ${node.parentNode ? node.parentNode.nodeName : "None"}
+            </div>`;
+          } else if (node.nodeType === Node.COMMENT_NODE) {
+            nodeInfo = `<strong>${index + 1}. Comment:</strong> "${node.textContent.substring(0, 50)}${node.textContent.length > 50 ? "..." : ""}"`;
+          } else {
+            nodeInfo = `<strong>${index + 1}. Node:</strong> Type ${node.nodeType}`;
+          }
+
+          nodeContainer.innerHTML = nodeInfo;
+
+          // Highlight corresponding node in preview
+          nodeContainer.addEventListener("mouseover", () => {
+            try {
+              // Save original styling to restore later
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                node._originalOutline = node.style.outline;
+                node._originalBackground = node.style.backgroundColor;
+
+                node.style.outline = "2px solid #f59e0b";
+                node.style.backgroundColor = "rgba(250, 204, 21, 0.3)";
+              } else if (node.nodeType === Node.TEXT_NODE && node.parentNode) {
+                node.parentNode._originalOutline =
+                  node.parentNode.style.outline;
+                node.parentNode._originalBackground =
+                  node.parentNode.style.backgroundColor;
+
+                node.parentNode.style.outline = "2px solid #f59e0b";
+                node.parentNode.style.backgroundColor =
+                  "rgba(250, 204, 21, 0.3)";
+              }
+            } catch (e) {
+              // Ignore errors from cross-origin restrictions
+            }
+          });
+
+          nodeContainer.addEventListener("mouseout", () => {
+            try {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                node.style.outline = node._originalOutline || "";
+                node.style.backgroundColor = node._originalBackground || "";
+              } else if (node.nodeType === Node.TEXT_NODE && node.parentNode) {
+                node.parentNode.style.outline =
+                  node.parentNode._originalOutline || "";
+                node.parentNode.style.backgroundColor =
+                  node.parentNode._originalBackground || "";
+              }
+            } catch (e) {
+              // Ignore errors from cross-origin restrictions
+            }
+          });
+
+          walkerResults.appendChild(nodeContainer);
+        });
+
+        if (count === 100) {
+          const limitMessage = document.createElement("div");
+          limitMessage.innerHTML = "<em>Showing first 100 results only.</em>";
+          walkerResults.appendChild(limitMessage);
+        }
+      }
+
+      function copyGeneratedCode(){
+        console.log(generatedCode.textContent)
+      }
+    </script>
+  </body>
+</html>

@@ -7,25 +7,22 @@
 
 # [1.43.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.42.0...v1.43.0) (2025-01-22)
 
-
 ### Features
 
-* **display:** add display property ([2380cd0](https://github.com/eepson123tw/fet-practice-skills/commit/2380cd05ef550c5e43fb2119b5929284e817be5b))
-* **display:** add display property ([1f13568](https://github.com/eepson123tw/fet-practice-skills/commit/1f13568cd6b6632fbcc41d05f00c4a9d4d587b3e))
+- **display:** add display property ([2380cd0](https://github.com/eepson123tw/fet-practice-skills/commit/2380cd05ef550c5e43fb2119b5929284e817be5b))
+- **display:** add display property ([1f13568](https://github.com/eepson123tw/fet-practice-skills/commit/1f13568cd6b6632fbcc41d05f00c4a9d4d587b3e))
 
 # [1.42.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.41.0...v1.42.0) (2024-12-23)
 
-
 ### Features
 
-* **compare:** add a compare utils ([d6c9d3a](https://github.com/eepson123tw/fet-practice-skills/commit/d6c9d3af1bfcb37d86ab4456abb240e352134086))
+- **compare:** add a compare utils ([d6c9d3a](https://github.com/eepson123tw/fet-practice-skills/commit/d6c9d3af1bfcb37d86ab4456abb240e352134086))
 
 # [1.41.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.40.0...v1.41.0) (2024-12-18)
 
-
 ### Features
 
-* **speech-web-api:** add speech web api page ([93b4494](https://github.com/eepson123tw/fet-practice-skills/commit/93b449495c46efeed5a493c44867022711a653fe))
+- **speech-web-api:** add speech web api page ([93b4494](https://github.com/eepson123tw/fet-practice-skills/commit/93b449495c46efeed5a493c44867022711a653fe))
 
 # [1.40.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.39.0...v1.40.0) (2024-12-15)
 

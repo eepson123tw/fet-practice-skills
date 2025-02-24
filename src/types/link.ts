@@ -75,7 +75,7 @@ export const canvasGroups: Array<Link> = [
     url: "/canvas/canvas-donut",
     group: Group.Canvas,
     description: "Create and animate a donut chart using canvas.",
-  }
+  },
 ];
 
 export const browserApiGroups: Array<Link> = [
@@ -275,6 +275,12 @@ export const jsGroups: Array<Link> = [
     description: "Generate and manage citations dynamically.",
   },
   {
+    routeName: "createTreeWalker",
+    url: "/js/createTreeWalker",
+    group: Group.Js,
+    description: "try to use createTreeWalker to highlight text",
+  },
+  {
     routeName: "password-strength",
     url: "/js/password-strength",
     group: Group.Js,
@@ -444,5 +450,5 @@ export const cssGroups: Array<Link> = [
     url: "/css/display-property",
     group: Group.Css,
     description: "Explore the display property in CSS.",
-  }
+  },
 ];
