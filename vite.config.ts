@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 const contentDir = path.join(__dirname, "fet-trick");
 
 const audioRegex =
-  /<audio src="(?:\.\.\/)+public\/([^"]+)" controls type="audio\/ogg" id="audio-player" ><\/audio>/g;
+  /<audio src="(?:\.\.\/)+public\/([^"]+)" controls type="audio\/ogg" id="audio-player"><\/audio>/g;
 
 async function processHtmlFiles(targetDir: string, contentDir: string) {
   // Read the files from the source directory
