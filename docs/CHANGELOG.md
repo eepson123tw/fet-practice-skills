@@ -1,3 +1,10 @@
+## [1.45.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.45.0...v1.45.1) (2025-02-24)
+
+
+### Bug Fixes
+
+* **canvas:** fix canvas player ([a2959bf](https://github.com/eepson123tw/fet-practice-skills/commit/a2959bf5910b3b3e60599939ba5cea242c0b4e07))
+
 # [1.45.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.44.0...v1.45.0) (2025-02-24)
 
 
