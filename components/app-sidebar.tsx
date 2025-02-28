@@ -1,4 +1,12 @@
-import { Globe, PenTool, Eclipse, Hexagon, Code, Info, Sparkles } from "lucide-react";
+import {
+  Globe,
+  PenTool,
+  Eclipse,
+  Hexagon,
+  Code,
+  Info,
+  Sparkles,
+} from "lucide-react";
 import { Theme } from "@src/hook/useTheme";
 import {
   Sidebar,
@@ -89,39 +97,36 @@ export function AppSidebar({
 
   const cur = new Date(Date.now());
   const fullYear = cur.getFullYear();
-  
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setAnimateItems(true);
     }, 300);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <Sidebar 
-      className="border-r border-zinc-200 dark:border-zinc-800"
-    >
+    <Sidebar className="border-r border-zinc-200 dark:border-zinc-800">
       <SidebarHeader className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className={cn(
-            "flex h-8 w-8 items-center justify-center rounded-lg",
-            "bg-gradient-to-br from-indigo-500 to-purple-600",
-            "text-white font-semibold"
-          )}>
+          <div
+            className={cn(
+              "flex h-8 w-8 items-center justify-center rounded-lg",
+              "bg-gradient-to-br from-indigo-500 to-purple-600",
+              "text-white font-semibold",
+            )}
+          >
             F2E
           </div>
           <div className="flex flex-col">
-            <h2 className="text-sm font-semibold">
-              Frontend Practice
-            </h2>
+            <h2 className="text-sm font-semibold">Frontend Practice</h2>
             <p className="text-xs opacity-70">Development Lab</p>
           </div>
         </div>
-       {false &&  <ThemeSwitcher theme={theme} setTheme={setTheme} />}
+        {false && <ThemeSwitcher theme={theme} setTheme={setTheme} />}
       </SidebarHeader>
-      
+
       <SidebarSeparator />
 
       <SidebarContent>
@@ -130,18 +135,18 @@ export function AppSidebar({
             <Sparkles className="h-3.5 w-3.5" />
             <span>Practice Components</span>
           </SidebarGroupLabel>
-          
+
           <SidebarGroupContent>
             <SidebarMenu accessKey="">
               {items.map((item, index) => (
-                <SidebarMenuItem 
+                <SidebarMenuItem
                   key={item.title}
                   className={cn(
                     "transition-all duration-500 transform",
-                    animateItems 
-                      ? "translate-x-0 opacity-100" 
+                    animateItems
+                      ? "translate-x-0 opacity-100"
                       : "translate-x-8 opacity-0",
-                    
+
                     { "transition-delay-100": index === 0 },
                     { "transition-delay-200": index === 1 },
                     { "transition-delay-300": index === 2 },
@@ -155,36 +160,42 @@ export function AppSidebar({
                     isActive={item.url.includes(currentPage)}
                     tooltip={item.description}
                   >
-                    <a 
+                    <a
                       href={item.url}
                       className={cn(
                         "group relative overflow-hidden",
                         "before:absolute before:inset-0 before:w-full before:h-full before:opacity-0",
                         "before:transition-opacity before:duration-300",
                         `before:${item.bgColor}`,
-                        "hover:before:opacity-100"
+                        "hover:before:opacity-100",
                       )}
                     >
-                      <span className={cn(
-                        "flex items-center justify-center rounded-md p-1 mr-2 transition-all duration-300",
-                        item.color,
-                        item.hoverColor
-                      )}>
+                      <span
+                        className={cn(
+                          "flex items-center justify-center rounded-md p-1 mr-2 transition-all duration-300",
+                          item.color,
+                          item.hoverColor,
+                        )}
+                      >
                         <item.icon className="h-4 w-4" />
                       </span>
                       <span className="font-medium">{item.title}</span>
-                      
+
                       {item.url.includes(currentPage) && (
                         <span className="absolute right-3 flex items-center">
                           <span className="relative flex h-2 w-2">
-                            <span className={cn(
-                              "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
-                              item.color.replace("text-", "bg-")
-                            )}></span>
-                            <span className={cn(
-                              "relative inline-flex rounded-full h-2 w-2",
-                              item.color.replace("text-", "bg-")
-                            )}></span>
+                            <span
+                              className={cn(
+                                "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
+                                item.color.replace("text-", "bg-"),
+                              )}
+                            ></span>
+                            <span
+                              className={cn(
+                                "relative inline-flex rounded-full h-2 w-2",
+                                item.color.replace("text-", "bg-"),
+                              )}
+                            ></span>
                           </span>
                         </span>
                       )}
@@ -196,17 +207,19 @@ export function AppSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      
+
       <SidebarFooter>
-        <div className={cn(
-          "flex items-center justify-between px-3 py-2 rounded-lg text-xs",
-          "bg-indigo-500/10 dark:bg-indigo-500/20"
-        )}>
+        <div
+          className={cn(
+            "flex items-center justify-between px-3 py-2 rounded-lg text-xs",
+            "bg-indigo-500/10 dark:bg-indigo-500/20",
+          )}
+        >
           <div className="flex flex-col">
             <span className="font-medium">Frontend Skills</span>
-            <span className="opacity-70">{ fullYear} Edition</span>
+            <span className="opacity-70">{fullYear} Edition</span>
           </div>
-          <SidebarTrigger  className="h-7 w-7" />
+          <SidebarTrigger className="h-7 w-7" />
         </div>
       </SidebarFooter>
     </Sidebar>

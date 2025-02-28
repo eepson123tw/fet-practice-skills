@@ -6,7 +6,6 @@ import { Separator } from "@components/ui/separator";
 import { Alert, AlertDescription } from "@components/ui/alert";
 import { Skeleton } from "@components/ui/skeleton";
 
-
 const InfoView = lazy(() => import("./view/InfoView"));
 const CodeExperimentView = lazy(() => import("./view/CodeExperimentView"));
 import { MyWork } from "./component/MyWork.tsx";
@@ -32,7 +31,6 @@ const ErrorBoundary = ({ children }: { children: React.ReactNode }) => {
 
   return children;
 };
-
 
 const LoadingGrid = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 p-1">
@@ -94,7 +92,6 @@ function App() {
   useLayoutEffect(() => {
     setUrlHash(window.location.hash ? window.location.hash : "#js-trick");
 
-    
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, [setUrlHash]);
