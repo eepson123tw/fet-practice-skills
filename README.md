@@ -2,6 +2,9 @@
 
 A repository to practice Front-End (FE) skills and explore fun projects.
 
+![image](https://github.com/user-attachments/assets/5c96a124-e468-4818-a64f-1ec3169e3a86)
+
+
 ## 📋 Included
 
 - **TypeScript Practice**
