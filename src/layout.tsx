@@ -1,10 +1,11 @@
-import { SidebarProvider, SidebarTrigger } from "@components/ui/sidebar";
+import {  SidebarTrigger } from "@components/ui/sidebar";
 import { AppSidebar } from "@components/app-sidebar";
 
 import React, { useEffect } from "react";
 import { useTheme } from "./hook/useTheme.ts";
 import { useAppContext } from "./store/AppContext.tsx";
 
+import { useSidebar } from "@components/ui/sidebar"
 function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
   const { urlHash } = useAppContext();
@@ -93,20 +94,25 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
   );
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children}: { children: React.ReactNode}) {
   const { theme, setTheme } = useTheme();
+  const {  open } = useSidebar();
+  console.log(open)
 
   return (
-    <SidebarProvider>
+    <React.Fragment>
       <AppSidebar theme={theme} setTheme={setTheme} />
       <main className="w-full relative overflow-hidden">
-        <SidebarTrigger
+        {
+          !open &&
+          <SidebarTrigger
           type="button"
           className="fixed z-20 top-1/2 translate-x-2 bg-white outline outline-gray-400 rounded-full p-2"
         />
+        }
         {children}
         <Canvas theme={theme}></Canvas>
       </main>
-    </SidebarProvider>
+    </React.Fragment>
   );
 }

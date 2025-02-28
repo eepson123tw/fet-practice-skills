@@ -7,18 +7,16 @@
 
 # [1.45.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.44.0...v1.45.0) (2025-02-24)
 
-
 ### Features
 
-* **treewalker:** add treewalker ([27e0283](https://github.com/eepson123tw/fet-practice-skills/commit/27e02831f55fdcbaac96b463f548b96de446ef63))
-* **treewalker:** add treewalker png ([91f0e1e](https://github.com/eepson123tw/fet-practice-skills/commit/91f0e1e2ce2b0afa51cdc21bc0fba9cbf724e7fa))
+- **treewalker:** add treewalker ([27e0283](https://github.com/eepson123tw/fet-practice-skills/commit/27e02831f55fdcbaac96b463f548b96de446ef63))
+- **treewalker:** add treewalker png ([91f0e1e](https://github.com/eepson123tw/fet-practice-skills/commit/91f0e1e2ce2b0afa51cdc21bc0fba9cbf724e7fa))
 
 # [1.44.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.43.0...v1.44.0) (2025-02-06)
 
-
 ### Features
 
-* **donut:** add a donut ([cc15dcc](https://github.com/eepson123tw/fet-practice-skills/commit/cc15dccc7fa442e3e38dd4281abd18d956c30b02))
+- **donut:** add a donut ([cc15dcc](https://github.com/eepson123tw/fet-practice-skills/commit/cc15dccc7fa442e3e38dd4281abd18d956c30b02))
 
 # [1.43.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.42.0...v1.43.0) (2025-01-22)
 
