@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.45.1...v1.46.0) (2025-02-28)
+
+
+### Features
+
+* **UI:** make ui fancy ([e9caeaa](https://github.com/eepson123tw/fet-practice-skills/commit/e9caeaa0a14a8732970fdebc2fef248da4768bec))
+
 ## [1.45.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.45.0...v1.45.1) (2025-02-24)
 
 
