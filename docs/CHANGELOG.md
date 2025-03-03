@@ -1,3 +1,10 @@
+## [1.46.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.46.0...v1.46.1) (2025-03-03)
+
+
+### Bug Fixes
+
+* **sidebar:** fix sidebar error ([510b105](https://github.com/eepson123tw/fet-practice-skills/commit/510b105826c4a6570e12d3347de2a76cf68933ad))
+
 # [1.46.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.45.1...v1.46.0) (2025-02-28)
 
 
