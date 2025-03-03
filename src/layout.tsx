@@ -96,14 +96,19 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme, setTheme } = useTheme();
-  const { open } = useSidebar();
-  console.log(open);
+  const { open,isMobile } = useSidebar();
+  const showSideBarIcon = ()=>{
+    if (isMobile || !open) return true
+    if (!isMobile) return false
+    return true
+  }
+  console.log(open)
 
   return (
     <React.Fragment>
       <AppSidebar theme={theme} setTheme={setTheme} />
       <main className="w-full relative overflow-hidden">
-        {!open && (
+        {showSideBarIcon() && (
           <SidebarTrigger
             type="button"
             className="fixed z-20 top-1/2 translate-x-2 bg-white outline outline-gray-400 rounded-full p-2"

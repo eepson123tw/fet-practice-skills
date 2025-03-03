@@ -108,12 +108,12 @@ function App() {
       >
         <div className="space-y-1">
           <h2
-            className={`text-3xl font-bold tracking-tight ${theme === "dark" ? "text-red-400" : "text-blue-600"}`}
+            className={`text-3xl font-bold tracking-tight ${theme === "dark" ? "text-yellow-600" : "text-blue-600"}`}
           >
             Frontend Practice Skills
           </h2>
           <p
-            className={`text-sm ${theme === "dark" ? "text-red-200" : "text-blue-400"}`}
+            className={`text-sm ${theme === "dark" ? "text-yellow-200" : "text-blue-400"}`}
           >
             A collection of frontend demos and experiments
           </p>
