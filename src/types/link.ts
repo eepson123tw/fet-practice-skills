@@ -91,6 +91,7 @@ export const canvasGroups: Array<Link> = [
     url: "/canvas/bouncing-ball",
     group: Group.Canvas,
     description: "Create a bouncing ball animation with JavaScript.",
+    tags: ["animation", "physics", "interactive"],
   },
 ];
 
