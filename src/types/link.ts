@@ -86,6 +86,12 @@ export const canvasGroups: Array<Link> = [
     description: "Create and animate a donut chart using canvas.",
     tags: ["chart", "animation", "data-visualization"],
   },
+  {
+    routeName: "bouncing-ball",
+    url: "/canvas/bouncing-ball",
+    group: Group.Canvas,
+    description: "Create a bouncing ball animation with JavaScript.",
+  },
 ];
 
 export const browserApiGroups: Array<Link> = [

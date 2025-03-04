@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Bouncing Ball with RGB Colors and Sound</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #000000;
+      }
+      #canvas {
+        display: block;
+        background: black;
+      }
+      .container {
+        text-align: center;
+      }
+      .instructions {
+        color: white;
+        font-family: Arial, sans-serif;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="canvas" width="400" height="400"></canvas>
+      <div class="instructions">Click to make sound</div>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = canvas.width / 2 - 10;
+
+      let ball = {
+        x: centerX,
+        y: centerY - radius / 2,
+        radius: 15,
+        dx: 3,
+        dy: 0,
+        color: "#0040FF",
+      };
+
+      let audioContext = null;
+
+      function initAudio() {
+        if (!audioContext) {
+          try {
+            audioContext = new (window.AudioContext ||
+              window.webkitAudioContext)();
+          } catch (e) {
+            console.log("Audio not supported:", e);
+          }
+        }
+      }
+
+      function playBounceSound(intensity) {
+        if (!audioContext) return;
+
+        try {
+          const oscillator = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+
+          intensity = Math.min(intensity, 10);
+          const frequency = 300 + intensity * 50;
+
+          oscillator.type = "sine";
+          oscillator.frequency.value = frequency;
+          gainNode.gain.value = 0.2;
+
+          oscillator.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+
+          oscillator.start();
+          gainNode.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + 0.3,
+          );
+
+          setTimeout(() => {
+            oscillator.stop();
+          }, 300);
+        } catch (e) {
+          console.log("Audio error:", e);
+        }
+      }
+
+      let colorAngle = 0;
+
+      function getRGBColor(angle) {
+        const r = Math.sin(angle) * 127 + 128;
+        const g = Math.sin(angle + (2 * Math.PI) / 3) * 127 + 128;
+        const b = Math.sin(angle + (4 * Math.PI) / 3) * 127 + 128;
+        return `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
+      }
+
+      let radialLines = [];
+      const initialLines = 8;
+      for (let i = 0; i < initialLines; i++) {
+        radialLines.push({
+          x: ball.x,
+          y: ball.y,
+          color: getRGBColor(colorAngle + i * 0.2),
+        });
+      }
+
+      let lastBounceTime = 0;
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        colorAngle += 0.02;
+        ball.color = getRGBColor(colorAngle);
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = ball.color;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        const dx = ball.x - centerX;
+        const dy = ball.y - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance + ball.radius > radius) {
+          const nx = dx / distance;
+          const ny = dy / distance;
+
+          const correctionDistance = distance + ball.radius - radius;
+          ball.x -= nx * correctionDistance;
+          ball.y -= ny * correctionDistance;
+
+          const dot = ball.dx * nx + ball.dy * ny;
+          ball.dx = ball.dx - 2 * dot * nx;
+          ball.dy = ball.dy - 2 * dot * ny;
+
+          const impactVelocity = Math.sqrt(
+            ball.dx * ball.dx + ball.dy * ball.dy,
+          );
+
+          playBounceSound(impactVelocity);
+
+          ball.dx *= 0.98;
+          ball.dy *= 0.98;
+        }
+
+        radialLines.push({
+          x: ball.x,
+          y: ball.y,
+          color: getRGBColor(colorAngle + radialLines.length * 0.2),
+        });
+        lastBounceTime++;
+
+        if (radialLines.length > 200) {
+          radialLines.shift();
+        }
+
+        for (let i = 0; i < radialLines.length; i++) {
+          const line = radialLines[i];
+
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.lineTo(line.x, line.y);
+          ctx.strokeStyle = line.color;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(ball.x, ball.y);
+        ctx.strokeStyle = "#0040FF";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        ctx.fillStyle = ball.color;
+        ctx.fill();
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        ball.dy += 0.05;
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+
+      canvas.addEventListener("click", function () {
+        initAudio();
+
+        ball.x = centerX;
+        ball.y = centerY - radius / 2;
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 3;
+        ball.dx = Math.cos(angle) * speed;
+        ball.dy = Math.sin(angle) * speed;
+
+        radialLines = [];
+      });
+
+      const startAngle = Math.random() * Math.PI * 2;
+      ball.dx = Math.cos(startAngle) * 4;
+      ball.dy = Math.sin(startAngle) * 4;
+
+      document.addEventListener("click", initAudio, { once: true });
+    </script>
+  </body>
+</html>

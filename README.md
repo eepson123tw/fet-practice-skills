@@ -5,7 +5,6 @@
   <a href="README.zh.md" style="padding: 5px 15px; text-decoration: none; background-color: #28A745; color: white; border-radius: 5px; font-weight: bold;">繁體中文</a>
 </div>
 
-
 A comprehensive repository for practicing and showcasing modern front-end development skills and interactive demos.
 
 ![Frontend Practice Skills Preview](https://github.com/user-attachments/assets/5c96a124-e468-4818-a64f-1ec3169e3a86)
@@ -36,6 +35,7 @@ For more details about updates and improvements, refer to the [changelog](docs/C
 ## 🌐 Browser Compatibility
 
 Fully compatible with all modern browsers including:
+
 - Chrome
 - Firefox
 - Safari
@@ -46,7 +46,9 @@ Fully compatible with all modern browsers including:
 ### 1. Module Import Strategies: Local vs. Global
 
 #### Impact on Bundle Size and Performance
+
 - **Local Import**: `import { feature } from 'package'`
+
   - Only includes specific features
   - Results in smaller bundle size
   - Better for tree-shaking
@@ -60,20 +62,20 @@ The choice between local and global imports significantly affects your final bun
 
 ### 2. XHR vs Fetch API Comparison
 
-| Feature                  | XMLHttpRequest |    Fetch    |
-|--------------------------|:--------------:|:-----------:|
-| Basic request capability |       ✓        |      ✓      |
-| Response handling        |       ✓        |      ✓      |
-| Request speed monitoring |       ✓        |      ✗      |
-| Response speed monitoring|       ✓        |      ✓      |
-| Service Worker support   |       ✗        |      ✓      |
-| Cookie control           |       ✗        |      ✓      |
-| Redirect control         |       ✗        |      ✓      |
-| Request cancellation     |       ✓        |      ✓      |
-| Custom Referrer          |       ✗        |      ✓      |
-| Stream support           |       ✗        |      ✓      |
-| API style                |     Event      |   Promise   |
-| Future support           | Being phased out | Long-term |
+| Feature                   |  XMLHttpRequest  |   Fetch   |
+| ------------------------- | :--------------: | :-------: |
+| Basic request capability  |        ✓         |     ✓     |
+| Response handling         |        ✓         |     ✓     |
+| Request speed monitoring  |        ✓         |     ✗     |
+| Response speed monitoring |        ✓         |     ✓     |
+| Service Worker support    |        ✗         |     ✓     |
+| Cookie control            |        ✗         |     ✓     |
+| Redirect control          |        ✗         |     ✓     |
+| Request cancellation      |        ✓         |     ✓     |
+| Custom Referrer           |        ✗         |     ✓     |
+| Stream support            |        ✗         |     ✓     |
+| API style                 |      Event       |  Promise  |
+| Future support            | Being phased out | Long-term |
 
 ## 🖥️ Getting Started
 
@@ -105,5 +107,3 @@ npm run dev
 ├── docs/                  # Documentation
 └── vite.config.ts         # Vite configuration
 ```
-
-

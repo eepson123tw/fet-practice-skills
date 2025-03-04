@@ -96,13 +96,13 @@ function Canvas({ theme }: { theme: "light" | "dark" | "os" }) {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme, setTheme } = useTheme();
-  const { open,isMobile } = useSidebar();
-  const showSideBarIcon = ()=>{
-    if (isMobile || !open) return true
-    if (!isMobile) return false
-    return true
-  }
-  console.log(open)
+  const { open, isMobile } = useSidebar();
+  const showSideBarIcon = () => {
+    if (isMobile || !open) return true;
+    if (!isMobile) return false;
+    return true;
+  };
+  console.log(open);
 
   return (
     <React.Fragment>

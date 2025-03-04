@@ -7,17 +7,15 @@
 
 # [1.46.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.45.1...v1.46.0) (2025-02-28)
 
-
 ### Features
 
-* **UI:** make ui fancy ([e9caeaa](https://github.com/eepson123tw/fet-practice-skills/commit/e9caeaa0a14a8732970fdebc2fef248da4768bec))
+- **UI:** make ui fancy ([e9caeaa](https://github.com/eepson123tw/fet-practice-skills/commit/e9caeaa0a14a8732970fdebc2fef248da4768bec))
 
 ## [1.45.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.45.0...v1.45.1) (2025-02-24)
 
-
 ### Bug Fixes
 
-* **canvas:** fix canvas player ([a2959bf](https://github.com/eepson123tw/fet-practice-skills/commit/a2959bf5910b3b3e60599939ba5cea242c0b4e07))
+- **canvas:** fix canvas player ([a2959bf](https://github.com/eepson123tw/fet-practice-skills/commit/a2959bf5910b3b3e60599939ba5cea242c0b4e07))
 
 # [1.45.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.44.0...v1.45.0) (2025-02-24)
 
