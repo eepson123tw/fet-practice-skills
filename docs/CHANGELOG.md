@@ -1,3 +1,10 @@
+# [1.48.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.47.0...v1.48.0) (2025-03-13)
+
+
+### Features
+
+* **worker:** add web worker implementation and monitoring integration ([8a9261b](https://github.com/eepson123tw/fet-practice-skills/commit/8a9261b0ede069ad7021c79e4e0f2a9eacb97c3c))
+
 # [1.47.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.46.1...v1.47.0) (2025-03-04)
 
 ### Features
