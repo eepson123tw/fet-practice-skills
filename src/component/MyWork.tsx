@@ -186,7 +186,12 @@ export function MyWork({
 
               <Separator
                 style={{ margin: " auto" }}
-                className={cn("m-0",'shrink-0','h-1', isDark ? "bg-yellow-300" : "bg-blue-300")}
+                className={cn(
+                  "m-0",
+                  "shrink-0",
+                  "h-1",
+                  isDark ? "bg-yellow-300" : "bg-blue-300",
+                )}
               />
 
               <div className="px-4 pb-4 pt-2">

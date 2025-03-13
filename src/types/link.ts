@@ -358,6 +358,13 @@ export const jsGroups: Array<Link> = [
     description: "Use the Web Speech API to convert speech to text.",
     tags: ["speech", "recognition", "api", "accessibility"],
   },
+  {
+    routeName: "worker",
+    url: "/js/worker",
+    group: Group.Js,
+    description: "Use the web worker to create a connection",
+    tags: ["worker", "background", "thread", "postMessage"],
+  },
 ];
 
 export const cssGroups: Array<Link> = [

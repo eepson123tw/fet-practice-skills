@@ -1,17 +1,15 @@
 # [1.47.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.46.1...v1.47.0) (2025-03-04)
 
-
 ### Features
 
-* **ball:** add canvas ball ([bfc0fb0](https://github.com/eepson123tw/fet-practice-skills/commit/bfc0fb02d2d4c92adadfc932280e6fb9456548dd))
-* **ui:** add ui line ([b45becf](https://github.com/eepson123tw/fet-practice-skills/commit/b45becfe3c39eb578fffad93baf3280446bbcf46))
+- **ball:** add canvas ball ([bfc0fb0](https://github.com/eepson123tw/fet-practice-skills/commit/bfc0fb02d2d4c92adadfc932280e6fb9456548dd))
+- **ui:** add ui line ([b45becf](https://github.com/eepson123tw/fet-practice-skills/commit/b45becfe3c39eb578fffad93baf3280446bbcf46))
 
 ## [1.46.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.46.0...v1.46.1) (2025-03-03)
 
-
 ### Bug Fixes
 
-* **sidebar:** fix sidebar error ([510b105](https://github.com/eepson123tw/fet-practice-skills/commit/510b105826c4a6570e12d3347de2a76cf68933ad))
+- **sidebar:** fix sidebar error ([510b105](https://github.com/eepson123tw/fet-practice-skills/commit/510b105826c4a6570e12d3347de2a76cf68933ad))
 
 # [1.46.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.45.1...v1.46.0) (2025-02-28)
 

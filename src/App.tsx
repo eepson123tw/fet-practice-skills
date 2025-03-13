@@ -1,4 +1,5 @@
 import "@/assets/globals.css";
+import { Monitoring } from "react-scan/monitoring";
 import { useLayoutEffect, useMemo, useState, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
@@ -196,6 +197,10 @@ function App() {
           developers
         </p>
       </footer>
+      <Monitoring
+        apiKey="3qjt-pMRrk70BIc2wMlHX2sLi4hoYdUW" // Safe to expose publically
+        url="https://monitoring.react-scan.com/api/v1/ingest"
+      />
     </div>
   );
 }

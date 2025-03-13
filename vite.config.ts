@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 import * as glob from "glob";
+import ReactComponentName from "react-scan/react-component-name/vite";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,6 +41,11 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
         '<script type="module" crossorigin src="/assets/index.js"></script>',
       );
 
+      content = content.replace(
+        /"\.\.\/\.\.\/lib\/work\.js"/g,
+        '"/assets/vendor.js"',
+      );
+
       const title = content.match(/<title>([^<]+)<\/title>/)?.[1];
       // Update <script> add icon
       if (title) {
@@ -62,6 +68,7 @@ async function processHtmlFiles(targetDir: string, contentDir: string) {
 export default defineConfig({
   plugins: [
     react(),
+    ReactComponentName({}),
     {
       name: "build-only",
       apply: "build", // or 'serve'
