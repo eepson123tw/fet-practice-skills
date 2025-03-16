@@ -79,9 +79,11 @@
         padding: 20px;
         border-radius: 10px;
         background-color: white;
-		margin-bottom: 10px;
+        margin-bottom: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
       }
 
       .panel:hover {
@@ -187,7 +189,9 @@
         border: 1px solid #ddd;
         border-radius: 6px;
         font-size: 1rem;
-        transition: border-color 0.3s, box-shadow 0.3s;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
       }
 
       input:focus {
@@ -287,7 +291,11 @@
       .demo-box {
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, var(--primary-light), var(--primary));
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--primary)
+        );
         border-radius: 12px;
         animation: pulse 1.5s infinite;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -414,8 +422,8 @@
 
       .input-group {
         display: flex;
-       justify-items: center;
-	   align-items: flex-start;
+        justify-items: center;
+        align-items: flex-start;
       }
 
       .input-group input {
@@ -507,22 +515,39 @@
       <header>
         <h1>Web Worker Demo</h1>
         <p>
-          This interactive demo showcases the power of Web Workers for running JavaScript in
-          background threads without blocking the UI.
+          This interactive demo showcases the power of Web Workers for running
+          JavaScript in background threads without blocking the UI.
         </p>
       </header>
 
       <div class="tab-container">
         <div class="tab-buttons">
-          <button class="tab-button active" onclick="openTab(event, 'demo-tab')">
-            <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 5h16v2H4zM4 11h16v2H4zM4 17h16v2H4z" fill="currentColor"></path>
+          <button
+            class="tab-button active"
+            onclick="openTab(event, 'demo-tab')"
+          >
+            <svg
+              class="svg-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 5h16v2H4zM4 11h16v2H4zM4 17h16v2H4z"
+                fill="currentColor"
+              ></path>
             </svg>
             Interactive Demo
           </button>
           <button class="tab-button" onclick="openTab(event, 'code-tab')">
-            <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" fill="currentColor"></path>
+            <svg
+              class="svg-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"
+                fill="currentColor"
+              ></path>
             </svg>
             Code Explanation
           </button>
@@ -534,24 +559,39 @@
               <h2>Worker Status</h2>
               <div>
                 <span class="status-indicator" id="worker-status"></span>
-                <span class="status-text" id="worker-status-text">Inactive</span>
+                <span class="status-text" id="worker-status-text"
+                  >Inactive</span
+                >
               </div>
             </div>
-            
+
             <div class="controls">
               <button id="start-worker" class="tooltip">
-                <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  class="svg-icon"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M8 5v14l11-7z" fill="currentColor"></path>
                 </svg>
                 Start Worker
                 <span class="tooltiptext">Create a new Web Worker thread</span>
               </button>
               <button id="terminate-worker" class="danger tooltip" disabled>
-                <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"></path>
+                <svg
+                  class="svg-icon"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    fill="currentColor"
+                  ></path>
                 </svg>
                 Terminate Worker
-                <span class="tooltiptext">Stop the worker and free up resources</span>
+                <span class="tooltiptext"
+                  >Stop the worker and free up resources</span
+                >
               </button>
             </div>
           </div>
@@ -559,7 +599,7 @@
           <div class="container">
             <div class="panel">
               <h2>Tasks & Communication</h2>
-              
+
               <div class="task-section">
                 <h3>Send Message to Worker</h3>
                 <div class="input-group">
@@ -569,8 +609,15 @@
                     placeholder="Enter a message to process"
                   />
                   <button id="send-message" disabled>
-                    <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"></path>
+                    <svg
+                      class="svg-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
+                        fill="currentColor"
+                      ></path>
                     </svg>
                     Send
                   </button>
@@ -591,8 +638,15 @@
                       title="Number of primes to calculate"
                     />
                     <button id="calculate-primes" disabled>
-                      <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-2V9h-2V7h4v10z" fill="currentColor"></path>
+                      <svg
+                        class="svg-icon"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-2V9h-2V7h4v10z"
+                          fill="currentColor"
+                        ></path>
                       </svg>
                       Calculate
                     </button>
@@ -610,18 +664,42 @@
                 </div>
                 <div class="controls">
                   <button id="block-ui" class="warning tooltip">
-                    <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="currentColor"></path>
+                    <svg
+                      class="svg-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                        fill="currentColor"
+                      ></path>
                     </svg>
                     Block UI for 3s
-                    <span class="tooltiptext">Run an intensive task in the main thread that will freeze the UI</span>
+                    <span class="tooltiptext"
+                      >Run an intensive task in the main thread that will freeze
+                      the UI</span
+                    >
                   </button>
-                  <button id="worker-intensive" class="success tooltip" disabled>
-                    <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="currentColor"></path>
+                  <button
+                    id="worker-intensive"
+                    class="success tooltip"
+                    disabled
+                  >
+                    <svg
+                      class="svg-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
+                        fill="currentColor"
+                      ></path>
                     </svg>
                     Worker Task (10s)
-                    <span class="tooltiptext">Run an intensive task in the worker thread that won't freeze the UI</span>
+                    <span class="tooltiptext"
+                      >Run an intensive task in the worker thread that won't
+                      freeze the UI</span
+                    >
                   </button>
                 </div>
               </div>
@@ -651,7 +729,8 @@
 
           <h3>Main Thread Code Overview</h3>
           <p>
-            The main thread creates the worker, sends messages to it, and handles responses:
+            The main thread creates the worker, sends messages to it, and
+            handles responses:
           </p>
           <pre><code>// Create a new worker
 const myWorker = new Worker("worker.js");
@@ -674,7 +753,8 @@ myWorker.onerror = function(error) {
 
           <h3>Worker Thread Code</h3>
           <p>
-            In the worker file (worker.js), we listen for messages and send back results:
+            In the worker file (worker.js), we listen for messages and send back
+            results:
           </p>
           <pre><code>// Listen for messages from the main thread
 self.onmessage = function(e) {
@@ -689,20 +769,44 @@ self.onmessage = function(e) {
 
           <h3>Key Benefits:</h3>
           <ul>
-            <li><strong>UI Responsiveness</strong> - Prevents freezing during heavy computations</li>
-            <li><strong>Parallel Processing</strong> - Better utilization of multi-core processors</li>
-            <li><strong>Clean Separation</strong> - Isolates complex logic from UI code</li>
-            <li><strong>Better Performance</strong> - Improves overall application performance</li>
+            <li>
+              <strong>UI Responsiveness</strong> - Prevents freezing during
+              heavy computations
+            </li>
+            <li>
+              <strong>Parallel Processing</strong> - Better utilization of
+              multi-core processors
+            </li>
+            <li>
+              <strong>Clean Separation</strong> - Isolates complex logic from UI
+              code
+            </li>
+            <li>
+              <strong>Better Performance</strong> - Improves overall application
+              performance
+            </li>
           </ul>
 
           <h3>Limitations:</h3>
           <ul>
-            <li><strong>No DOM Access</strong> - Workers cannot directly access or modify the DOM</li>
-            <li><strong>Data Transfer Cost</strong> - Data is cloned when passed between threads</li>
-            <li><strong>Creation Overhead</strong> - Each worker adds memory and initialization cost</li>
-            <li><strong>Debugging Difficulty</strong> - Worker code can be harder to debug than main thread code</li>
+            <li>
+              <strong>No DOM Access</strong> - Workers cannot directly access or
+              modify the DOM
+            </li>
+            <li>
+              <strong>Data Transfer Cost</strong> - Data is cloned when passed
+              between threads
+            </li>
+            <li>
+              <strong>Creation Overhead</strong> - Each worker adds memory and
+              initialization cost
+            </li>
+            <li>
+              <strong>Debugging Difficulty</strong> - Worker code can be harder
+              to debug than main thread code
+            </li>
           </ul>
-          
+
           <h3>When to Use Web Workers</h3>
           <p>Web Workers are ideal for:</p>
           <ul>
@@ -714,7 +818,6 @@ self.onmessage = function(e) {
           </ul>
         </div>
       </div>
-      
     </div>
 
     <script>

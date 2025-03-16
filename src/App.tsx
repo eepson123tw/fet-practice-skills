@@ -1,6 +1,14 @@
 import "@/assets/globals.css";
 import { Monitoring } from "react-scan/monitoring";
-import { useLayoutEffect, useMemo, useState, lazy, Suspense } from "react";
+import {
+  useLayoutEffect,
+  useMemo,
+  useState,
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
 import { Separator } from "@components/ui/separator";
@@ -49,9 +57,10 @@ const LoadingGrid = () => (
 
 function App() {
   const { currentPage, isViewPage } = useRoute();
-  const { setUrlHash } = useAppContext();
+  const { setUrlHash, urlHash } = useAppContext();
   const { theme, toggleTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const isDark = theme === "dark";
 
@@ -97,6 +106,15 @@ function App() {
     return () => clearTimeout(timer);
   }, [setUrlHash]);
 
+  useEffect(() => {
+    const scrollArea = scrollAreaRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]",
+    );
+    if (scrollArea) {
+      scrollArea.scrollTop = 0;
+    }
+  }, [urlHash]);
+
   return (
     <div
       className={`relative min-h-screen transition-colors duration-300 ${theme === "dark" ? "bg-gray-900/80 text-white" : "bg-white/10 text-gray-900"}`}
@@ -135,8 +153,11 @@ function App() {
         className={`mb-4 ${theme === "dark" ? "bg-red-400/20" : "bg-blue-600/20"}`}
       />
 
-      <div className="relative p-4 h-full">
-        <ScrollArea className="h-[calc(100vh-180px)]">
+      <div className="relative p-3 h-full">
+        <ScrollArea
+          className="h-[calc(100vh-180px)] overflow-auto"
+          ref={scrollAreaRef}
+        >
           <ErrorBoundary>
             <AnimatePresence mode="wait">
               {isLoading ? (

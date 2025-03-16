@@ -102,7 +102,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (!isMobile) return false;
     return true;
   };
-  console.log(open);
 
   return (
     <React.Fragment>
