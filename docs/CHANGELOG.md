@@ -1,3 +1,10 @@
+# [1.49.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.48.1...v1.49.0) (2025-03-18)
+
+
+### Features
+
+* **ui:** try to use mcp ([e33562f](https://github.com/eepson123tw/fet-practice-skills/commit/e33562f521a9ea32a7cd9e30ec3c43c0cec7794b))
+
 ## [1.48.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.48.0...v1.48.1) (2025-03-16)
 
 
