@@ -117,7 +117,7 @@ function App() {
 
   return (
     <div
-      className={`relative min-h-screen transition-colors duration-300 ${theme === "dark" ? "bg-gray-900/80 text-white" : "bg-white/10 text-gray-900"}`}
+      className={`relative min-h-screen transition-colors duration-300 ${theme === "dark" ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-90/20 text-white" : "bg-gradient-to-br from-white/20 via-gray-50 to-white text-gray-900"}`}
     >
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -141,7 +141,11 @@ function App() {
         <div className="flex items-center space-x-4">
           <button
             onClick={toggleTheme}
-            className={`p-2 rounded-full ${theme === "dark" ? "bg-yellow-300 text-gray-900" : "bg-gray-800 text-yellow-300"}`}
+            className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
+              theme === "dark"
+                ? "bg-yellow-300 text-gray-900 hover:bg-yellow-400"
+                : "bg-gray-800 text-yellow-300 hover:bg-gray-700"
+            }`}
             aria-label="Toggle theme"
           >
             {theme === "dark" ? "☀️" : "🌙"}
@@ -179,10 +183,10 @@ function App() {
                     >
                       <MyWork
                         link={link}
-                        className={`w-full text-center items-center flex flex-col justify-start cursor-pointer rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-95 ${
+                        className={`w-full text-center items-center flex flex-col justify-start cursor-pointer rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-95 backdrop-blur-lg ${
                           theme === "dark"
-                            ? "bg-gray-800 ring-2 ring-yellow-300 hover:ring-red-400 shadow-lg shadow-yellow-300/10"
-                            : "bg-white ring-2 ring-gray-200 hover:ring-blue-400 shadow-lg"
+                            ? "bg-gray-800/70 ring-2 ring-yellow-300/50 hover:ring-red-400/80 shadow-lg shadow-yellow-300/10 hover:shadow-red-400/20"
+                            : "bg-white/80 ring-2 ring-gray-200/50 hover:ring-blue-400/80 shadow-lg hover:shadow-blue-400/20"
                         }`}
                         aspectRatio="portrait"
                         width={500}
@@ -209,7 +213,11 @@ function App() {
         </ScrollArea>
       </div>
       <footer
-        className={`px-6 text-center text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}
+        className={`px-6 py-4 text-center text-sm backdrop-blur-lg ${
+          isDark
+            ? "bg-gray-900/50 text-gray-300"
+            : "bg-white/50 text-gray-600"
+        }`}
       >
         <p>
           © {new Date().getFullYear()} Frontend Practice Skills
