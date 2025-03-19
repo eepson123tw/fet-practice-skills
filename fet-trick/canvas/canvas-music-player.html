@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Music Player with Visualization</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #121212;
+        color: white;
+        font-family: "Arial", sans-serif;
+        overflow: hidden;
+      }
+
+      .player-container {
+        width: 80%;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #visualizer {
+        width: 100%;
+        height: 400px;
+        background-color: #000;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      #lyrics-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 10;
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        width: 80%;
+        pointer-events: none;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .play-btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #1db954;
+        border: none;
+        color: white;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .play-btn:hover {
+        transform: scale(1.05);
+      }
+
+      #progress-container {
+        width: 100%;
+        height: 8px;
+        background-color: #535353;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      #progress-bar {
+        height: 100%;
+        background-color: #1db954;
+        border-radius: 4px;
+        width: 0;
+      }
+
+      #time-display {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #b3b3b3;
+      }
+
+      #volume-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      #volume-slider {
+        width: 100px;
+      }
+
+      #song-info {
+        margin: 20px 0;
+        text-align: center;
+      }
+
+      #song-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      #artist {
+        font-size: 18px;
+        color: #b3b3b3;
+      }
+
+      .song-selector {
+        margin-bottom: 20px;
+      }
+
+      #file-input {
+        display: none;
+      }
+
+      .upload-btn {
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .upload-btn:hover {
+        background-color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="player-container">
+      <div id="visualizer">
+        <div id="lyrics-container"></div>
+        <canvas id="canvas"></canvas>
+      </div>
+
+      <div id="song-info">
+        <div id="song-title">Upload your music</div>
+        <div id="artist">-</div>
+      </div>
+
+      <div class="song-selector">
+        <label for="file-input" class="upload-btn">Choose Music File</label>
+        <input type="file" id="file-input" accept="audio/*" />
+      </div>
+
+      <div id="progress-container">
+        <div id="progress-bar"></div>
+      </div>
+
+      <div id="time-display">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+
+      <div class="controls">
+        <button class="play-btn" id="play-btn">▶</button>
+        <div id="volume-container">
+          <span>🔊</span>
+          <input
+            type="range"
+            id="volume-slider"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.7"
+          />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // DOM Elements
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const visualizer = document.getElementById("visualizer");
+      const playBtn = document.getElementById("play-btn");
+      const progressContainer = document.getElementById("progress-container");
+      const progressBar = document.getElementById("progress-bar");
+      const currentTimeEl = document.getElementById("current-time");
+      const durationEl = document.getElementById("duration");
+      const volumeSlider = document.getElementById("volume-slider");
+      const fileInput = document.getElementById("file-input");
+      const songTitleEl = document.getElementById("song-title");
+      const artistEl = document.getElementById("artist");
+      const lyricsContainer = document.getElementById("lyrics-container");
+
+      // Audio setup
+      let audioContext;
+      let analyser;
+      let source;
+      let dataArray;
+      let bufferLength;
+      let audio = new Audio();
+      let isPlaying = false;
+      let animationId;
+      let lastCalledTime;
+      let fps;
+
+      // Kaleidoscope setup
+      let kaleidoscopeSegments = 12;
+      let particles = [];
+      const particleCount = 200; // More particles for more complex patterns
+      let hues = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]; // More color options
+      let currentHue = 0;
+      let patternMode = 0; // Different pattern modes
+
+      // Visualization state
+      let visualMode = "kaleidoscope"; // 'kaleidoscope', 'waveform', 'bars'
+      let bassValue = 0;
+      let midValue = 0;
+      let trebleValue = 0;
+      let colorOffset = 0;
+
+      // Sample lyrics (replace with your own or implement LRC parser)
+      const sampleLyrics = [
+        { time: 5, text: "Welcome to the music visualizer" },
+        { time: 10, text: "Upload your favorite song" },
+        { time: 15, text: "And watch the visuals react to the beat" },
+        { time: 20, text: "The kaleidoscope moves with the music" },
+        { time: 25, text: "Colors change with the frequencies" },
+        { time: 30, text: "" },
+      ];
+      let currentLyricIndex = 0;
+
+      // Initialize canvas dimensions
+      function resizeCanvas() {
+        canvas.width = visualizer.clientWidth;
+        canvas.height = visualizer.clientHeight;
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      // Initialize visualization
+      function initAudio() {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext ||
+            window.webkitAudioContext)();
+          analyser = audioContext.createAnalyser();
+          analyser.fftSize = 2048;
+          bufferLength = analyser.frequencyBinCount;
+          dataArray = new Uint8Array(bufferLength);
+
+          createParticles();
+        }
+
+        // Connect the audio source
+        if (source) {
+          source.disconnect();
+        }
+
+        source = audioContext.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+      }
+
+      // Create particles for kaleidoscope
+      function createParticles() {
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            size: Math.random() * 8 + 1, // More varied sizes
+            speed: Math.random() * 3 + 0.2,
+            angle: Math.random() * Math.PI * 2,
+            hue: hues[Math.floor(Math.random() * hues.length)],
+            alpha: Math.random() * 0.7 + 0.3,
+            // Add shape variation
+            shape: Math.floor(Math.random() * 5), // 0: circle, 1: square, 2: triangle, 3: line, 4: star
+            // Add rotation
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: (Math.random() - 0.5) * 0.05,
+            // Add pulse effect
+            pulse: Math.random() * 0.5 + 0.5,
+            pulseSpeed: Math.random() * 0.1 + 0.02,
+          });
+        }
+      }
+
+      // Update frequency bands (bass, mid, treble)
+      function updateFrequencyBands() {
+        analyser.getByteFrequencyData(dataArray);
+
+        // Bass: 20-250Hz (~0-10 in our array with 44100Hz sample rate)
+        let bassSum = 0;
+        for (let i = 1; i < 10; i++) {
+          bassSum += dataArray[i];
+        }
+        bassValue = bassSum / 10 / 255;
+
+        // Mid-range: 250-2000Hz (~10-40)
+        let midSum = 0;
+        for (let i = 10; i < 40; i++) {
+          midSum += dataArray[i];
+        }
+        midValue = midSum / 30 / 255;
+
+        // Treble: 2000-20000Hz (~40-100)
+        let trebleSum = 0;
+        for (let i = 40; i < 100; i++) {
+          trebleSum += dataArray[i];
+        }
+        trebleValue = trebleSum / 60 / 255;
+
+        // Use bass for kaleidoscope effects
+        if (bassValue > 0.6) {
+          currentHue = (currentHue + 5) % 360;
+          // Randomly change pattern mode on strong bass hits
+          if (Math.random() < 0.2) {
+            patternMode = Math.floor(Math.random() * 5);
+          }
+        }
+
+        // Change number of kaleidoscope segments based on mid frequencies
+        kaleidoscopeSegments = 4 + Math.floor(midValue * 12);
+
+        // Increase color offset based on treble
+        colorOffset += trebleValue * 0.8;
+
+        // Randomly shift colors for some particles based on audio
+        if (Math.random() < bassValue * 0.3) {
+          for (let i = 0; i < particles.length; i++) {
+            if (Math.random() < 0.1) {
+              particles[i].hue =
+                (particles[i].hue + Math.floor(Math.random() * 60)) % 360;
+            }
+          }
+        }
+      }
+
+      // Draw kaleidoscope
+      function drawKaleidoscope() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Apply background glow based on bass
+        const bgAlpha = bassValue * 0.15;
+        ctx.fillStyle = `rgba(0, 0, 0, ${1 - bgAlpha})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Save the center point
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        // Update particles
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+
+          // Update pulse
+          p.pulse += p.pulseSpeed * (bassValue > 0.5 ? 2 : 1);
+          const pulseFactor = 0.5 + Math.sin(p.pulse) * 0.5;
+
+          // Update rotation
+          p.rotation += p.rotationSpeed * (midValue > 0.5 ? 1.5 : 1);
+
+          // Update position based on audio and pattern mode
+          p.speed = 0.2 + bassValue * 3;
+
+          // Different movement patterns based on mode
+          switch (patternMode) {
+            case 0: // Radial
+              p.x += Math.cos(p.angle) * p.speed;
+              p.y += Math.sin(p.angle) * p.speed;
+              break;
+            case 1: // Spiral
+              p.angle += 0.02 * midValue;
+              p.x += Math.cos(p.angle) * p.speed;
+              p.y += Math.sin(p.angle) * p.speed;
+              break;
+            case 2: // Wave
+              p.x += Math.cos(p.angle) * p.speed;
+              p.y += Math.sin(p.angle + performance.now() * 0.001) * p.speed;
+              break;
+            case 3: // Chaotic
+              p.angle += (Math.random() - 0.5) * 0.2 * trebleValue;
+              p.x += Math.cos(p.angle) * p.speed;
+              p.y += Math.sin(p.angle) * p.speed;
+              break;
+            case 4: // Grid
+              p.x += (p.x % 20 < 10 ? 1 : -1) * p.speed * 0.5;
+              p.y += (p.y % 20 < 10 ? 1 : -1) * p.speed * 0.5;
+              break;
+          }
+
+          // Out of bounds - reset
+          const dist = Math.sqrt((p.x - centerX) ** 2 + (p.y - centerY) ** 2);
+          if (dist > Math.min(canvas.width, canvas.height) / 1.5) {
+            p.x = centerX;
+            p.y = centerY;
+            p.angle = Math.random() * Math.PI * 2;
+            p.hue = (currentHue + Math.random() * 120) % 360;
+            p.shape = Math.floor(Math.random() * 5); // Randomly change shape when resetting
+          }
+
+          // Draw the original particle
+          ctx.save();
+          ctx.translate(centerX, centerY);
+
+          // Draw multiple copies for kaleidoscope effect
+          for (let j = 0; j < kaleidoscopeSegments; j++) {
+            ctx.rotate((Math.PI * 2) / kaleidoscopeSegments);
+
+            // Mirror effect
+            const relX = p.x - centerX;
+            const relY = p.y - centerY;
+
+            // Set color based on frequency bands and position
+            const hue = (p.hue + colorOffset) % 360;
+            const saturation = 70 + midValue * 30;
+            const lightness = 40 + trebleValue * 60;
+            const dynamicAlpha = p.alpha * (0.7 + pulseFactor * 0.3);
+
+            // Apply size variations based on audio
+            const dynamicSize =
+              p.size * (0.8 + pulseFactor * 0.4) * (1 + bassValue);
+
+            ctx.save();
+            ctx.translate(relX, relY);
+            ctx.rotate(p.rotation);
+
+            // Draw different shapes based on shape property
+            ctx.fillStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, ${dynamicAlpha})`;
+            ctx.strokeStyle = `hsla(${(hue + 60) % 360}, ${saturation}%, ${lightness}%, ${dynamicAlpha * 0.8})`;
+            ctx.lineWidth = 1 + trebleValue;
+
+            switch (p.shape) {
+              case 0: // Circle
+                ctx.beginPath();
+                ctx.arc(0, 0, dynamicSize, 0, Math.PI * 2);
+                ctx.fill();
+                break;
+              case 1: // Square
+                ctx.fillRect(
+                  -dynamicSize,
+                  -dynamicSize,
+                  dynamicSize * 2,
+                  dynamicSize * 2,
+                );
+                break;
+              case 2: // Triangle
+                ctx.beginPath();
+                ctx.moveTo(0, -dynamicSize);
+                ctx.lineTo(dynamicSize, dynamicSize);
+                ctx.lineTo(-dynamicSize, dynamicSize);
+                ctx.closePath();
+                ctx.fill();
+                break;
+              case 3: // Line
+                ctx.beginPath();
+                ctx.moveTo(-dynamicSize, 0);
+                ctx.lineTo(dynamicSize, 0);
+                ctx.lineWidth = dynamicSize / 2;
+                ctx.stroke();
+                break;
+              case 4: // Star
+                drawStar(0, 0, 5, dynamicSize, dynamicSize / 2);
+                ctx.fill();
+                break;
+            }
+
+            ctx.restore();
+
+            // Mirror
+            ctx.save();
+            ctx.translate(-relX, relY);
+            ctx.rotate(-p.rotation);
+
+            // Complementary color for the mirror
+            ctx.fillStyle = `hsla(${(hue + 180) % 360}, ${saturation}%, ${lightness}%, ${dynamicAlpha})`;
+            ctx.strokeStyle = `hsla(${(hue + 240) % 360}, ${saturation}%, ${lightness}%, ${dynamicAlpha * 0.8})`;
+
+            switch (p.shape) {
+              case 0: // Circle
+                ctx.beginPath();
+                ctx.arc(0, 0, dynamicSize, 0, Math.PI * 2);
+                ctx.fill();
+                break;
+              case 1: // Square
+                ctx.fillRect(
+                  -dynamicSize,
+                  -dynamicSize,
+                  dynamicSize * 2,
+                  dynamicSize * 2,
+                );
+                break;
+              case 2: // Triangle
+                ctx.beginPath();
+                ctx.moveTo(0, -dynamicSize);
+                ctx.lineTo(dynamicSize, dynamicSize);
+                ctx.lineTo(-dynamicSize, dynamicSize);
+                ctx.closePath();
+                ctx.fill();
+                break;
+              case 3: // Line
+                ctx.beginPath();
+                ctx.moveTo(-dynamicSize, 0);
+                ctx.lineTo(dynamicSize, 0);
+                ctx.lineWidth = dynamicSize / 2;
+                ctx.stroke();
+                break;
+              case 4: // Star
+                drawStar(0, 0, 5, dynamicSize, dynamicSize / 2);
+                ctx.fill();
+                break;
+            }
+
+            ctx.restore();
+          }
+
+          ctx.restore();
+        }
+      }
+
+      // Helper function to draw a star
+      function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+        let rot = (Math.PI / 2) * 3;
+        let x = cx;
+        let y = cy;
+        let step = Math.PI / spikes;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - outerRadius);
+
+        for (let i = 0; i < spikes; i++) {
+          x = cx + Math.cos(rot) * outerRadius;
+          y = cy + Math.sin(rot) * outerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+
+          x = cx + Math.cos(rot) * innerRadius;
+          y = cy + Math.sin(rot) * innerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+        }
+
+        ctx.lineTo(cx, cy - outerRadius);
+        ctx.closePath();
+      }
+
+      // Main animation function
+      function animate() {
+        animationId = requestAnimationFrame(animate);
+
+        if (!isPlaying) return;
+
+        // Update FPS calculation
+        if (!lastCalledTime) {
+          lastCalledTime = performance.now();
+          fps = 0;
+          return;
+        }
+
+        const delta = (performance.now() - lastCalledTime) / 1000;
+        lastCalledTime = performance.now();
+        fps = 1 / delta;
+
+        // Get frequency data
+        analyser.getByteFrequencyData(dataArray);
+        updateFrequencyBands();
+
+        // Draw visualization
+        drawKaleidoscope();
+
+        // Update lyrics display
+        updateLyrics();
+      }
+
+      // Update lyrics based on current time
+      function updateLyrics() {
+        const currentTime = audio.currentTime;
+
+        // Find the current lyric
+        if (
+          currentLyricIndex < sampleLyrics.length - 1 &&
+          currentTime >= sampleLyrics[currentLyricIndex + 1].time
+        ) {
+          currentLyricIndex++;
+        } else if (
+          currentLyricIndex > 0 &&
+          currentTime < sampleLyrics[currentLyricIndex].time
+        ) {
+          currentLyricIndex--;
+        }
+
+        // Display current lyric
+        lyricsContainer.textContent = sampleLyrics[currentLyricIndex].text;
+
+        // Animate lyrics based on bass
+        const scale = 1 + bassValue * 0.2;
+        lyricsContainer.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+        // Change color based on frequencies
+        const hue = (currentHue + colorOffset) % 360;
+        lyricsContainer.style.color = `hsl(${hue}, 100%, 80%)`;
+        lyricsContainer.style.textShadow = `0 0 10px hsl(${hue}, 100%, 50%), 
+                                               0 0 20px hsl(${hue}, 100%, 50%),
+                                               2px 2px 4px rgba(0, 0, 0, 0.8)`;
+      }
+
+      // Play/pause toggle
+      function togglePlay() {
+        if (audioContext && audioContext.state === "suspended") {
+          audioContext.resume();
+        }
+
+        if (isPlaying) {
+          audio.pause();
+          playBtn.textContent = "▶";
+        } else {
+          audio.play();
+          playBtn.textContent = "❚❚";
+          if (!animationId) {
+            animate();
+          }
+        }
+
+        isPlaying = !isPlaying;
+      }
+
+      // Format time in MM:SS
+      function formatTime(seconds) {
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? "0" + sec : sec}`;
+      }
+
+      // Update progress bar
+      function updateProgress() {
+        const { currentTime, duration } = audio;
+        const progressPercent = (currentTime / duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+        currentTimeEl.textContent = formatTime(currentTime);
+        durationEl.textContent = formatTime(duration);
+      }
+
+      // Set progress bar on click
+      function setProgress(e) {
+        const width = this.clientWidth;
+        const clickX = e.offsetX;
+        const duration = audio.duration;
+        audio.currentTime = (clickX / width) * duration;
+      }
+
+      // Handle file upload
+      function handleFileUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Create object URL for the file
+        const fileURL = URL.createObjectURL(file);
+        audio.src = fileURL;
+
+        // Display file info
+        songTitleEl.textContent = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
+        artistEl.textContent = "Local File";
+
+        // Initialize audio if needed
+        if (!audioContext) {
+          initAudio();
+        }
+
+        // Auto-play
+        audio.load();
+        audio.onloadedmetadata = () => {
+          durationEl.textContent = formatTime(audio.duration);
+          audio.play();
+          isPlaying = true;
+          playBtn.textContent = "❚❚";
+
+          if (!animationId) {
+            animate();
+          }
+        };
+      }
+
+      // Event listeners
+      playBtn.addEventListener("click", togglePlay);
+      audio.addEventListener("timeupdate", updateProgress);
+      audio.addEventListener("ended", () => {
+        playBtn.textContent = "▶";
+        isPlaying = false;
+        progressBar.style.width = "0%";
+      });
+      progressContainer.addEventListener("click", setProgress);
+      volumeSlider.addEventListener("input", () => {
+        audio.volume = volumeSlider.value;
+      });
+      fileInput.addEventListener("change", handleFileUpload);
+
+      // Initialize with default volume
+      audio.volume = volumeSlider.value;
+
+      // Add keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        if (e.code === "Space") {
+          e.preventDefault();
+          togglePlay();
+        }
+      });
+
+      // Initial visuals without audio
+      resizeCanvas();
+      createParticles();
+
+      function initialAnimation() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw a simplified kaleidoscope pattern
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        // Draw welcome message
+        ctx.fillStyle = "white";
+        ctx.font = "20px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Upload a music file to begin", centerX, centerY - 50);
+        ctx.fillText(
+          "The visualization will react to the audio",
+          centerX,
+          centerY - 20,
+        );
+
+        // Draw some placeholder patterns
+        ctx.save();
+        ctx.translate(centerX, centerY);
+
+        for (let i = 0; i < 8; i++) {
+          ctx.rotate((Math.PI * 2) / 8);
+
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(100, 0);
+          ctx.lineTo(120, 30);
+          ctx.lineTo(0, 0);
+          ctx.fillStyle = `hsla(${(i * 45) % 360}, 70%, 50%, 0.5)`;
+          ctx.fill();
+        }
+
+        ctx.restore();
+
+        requestAnimationFrame(initialAnimation);
+      }
+
+      initialAnimation();
+    </script>
+  </body>
+</html>

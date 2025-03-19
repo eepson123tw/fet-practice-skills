@@ -16,7 +16,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background: black;
+        background: radial-gradient(circle, #1a1a1a, #000);
       }
     </style>
   </head>
@@ -49,10 +49,13 @@
           this.r = 10;
           this.x = getRandom(0, ctx.width - this.r / 2);
           this.y = getRandom(0, ctx.height - this.r / 2);
-          this.color = "rgb(200, 200, 200)";
+          this.baseColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+          this.color = this.baseColor;
           this.xSpeed = getRandom(-50, 50);
           this.ySpeed = getRandom(-50, 50);
           this.lastMoveTime = null;
+          this.trail = [];
+          this.maxTrailLength = 20;
         }
         draw() {
           if (this.lastMoveTime) {
@@ -60,18 +63,50 @@
             const deltaTime = (now - this.lastMoveTime) / 1000;
             const x = this.x + this.xSpeed * deltaTime;
             const y = this.y + this.ySpeed * deltaTime;
+
+            // Add current position to trail
+            this.trail.push({ x: this.x, y: this.y });
+            if (this.trail.length > this.maxTrailLength) {
+              this.trail.shift();
+            }
+
+            // Bounce with damping
             if (x < 0 || x > ctx.width - this.r) {
-              this.xSpeed = -this.xSpeed;
+              this.xSpeed = -this.xSpeed * 0.9;
             }
             if (y < 0 || y > ctx.height - this.r) {
-              this.ySpeed = -this.ySpeed;
+              this.ySpeed = -this.ySpeed * 0.9;
             }
             this.x = x;
             this.y = y;
           }
+
+          // Draw trail
+          if (this.trail.length > 0) {
+            ctx.beginPath();
+            ctx.moveTo(this.trail[0].x, this.trail[0].y);
+            for (let i = 1; i < this.trail.length; i++) {
+              ctx.lineTo(this.trail[i].x, this.trail[i].y);
+            }
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+
+          // Draw particle
           ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-          ctx.fillStyle = this.color;
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+          const gradient = ctx.createRadialGradient(
+            this.x,
+            this.y,
+            this.r * 0.3,
+            this.x,
+            this.y,
+            this.r,
+          );
+          gradient.addColorStop(0, this.color);
+          gradient.addColorStop(1, "rgba(255,255,255,0.1)");
+          ctx.fillStyle = gradient;
           ctx.fill();
           this.lastMoveTime = Date.now();
         }
@@ -81,30 +116,65 @@
         constructor(x, y, radius, color) {
           this.x = x;
           this.y = y;
+          this.targetX = x;
+          this.targetY = y;
           this.radius = radius;
           this.color = color;
+          this.glow = 0;
+          this.smoothing = 0.1;
         }
         draw() {
-          // touch the point will became bigger and other color
-          this.radius = 10;
-          this.color = "white";
+          // Smoothly follow mouse
+          this.x += (this.targetX - this.x) * this.smoothing;
+          this.y += (this.targetY - this.y) * this.smoothing;
+
+          // Interactive effects
           for (let i = 0; i < graph.points.length; i++) {
             const p = graph.points[i];
             const dis = Math.sqrt((this.x - p.x) ** 2 + (this.y - p.y) ** 2);
-            if (dis < 100) {
-              p.radius = 5;
-              p.color = "red";
-              this.radius = 20;
-              this.color = "gray";
+            if (dis < 150) {
+              const intensity = 1 - dis / 150;
+              const baseHue =
+                parseInt(p.baseColor.split("(")[1].split(",")[0]) || 0;
+              p.color = `hsl(${(baseHue + intensity * 50) % 360}, 100%, 70%)`;
+              p.r = 10 + intensity * 5;
+              this.glow = Math.max(this.glow, intensity);
             } else {
-              p.radius = 5;
-              p.color = "white";
+              p.color = p.baseColor;
+              p.r = 10;
             }
           }
+
+          // Draw glow effect
+          ctx.beginPath();
+          ctx.arc(
+            this.x,
+            this.y,
+            this.radius + this.glow * 20,
+            0,
+            Math.PI * 2,
+            false,
+          );
+          const gradient = ctx.createRadialGradient(
+            this.x,
+            this.y,
+            0,
+            this.x,
+            this.y,
+            this.radius + this.glow * 20,
+          );
+          gradient.addColorStop(0, `rgba(255,255,255,${this.glow * 0.5})`);
+          gradient.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.fillStyle = gradient;
+          ctx.fill();
+
+          // Draw main dot
           ctx.beginPath();
           ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-          ctx.fillStyle = this.color;
+          ctx.fillStyle = "white";
           ctx.fill();
+
+          this.glow *= 0.9;
         }
       }
 
@@ -118,8 +188,6 @@
         draw() {
           requestAnimationFrame(() => {
             this.draw();
-            dot.x = mouse.x;
-            dot.y = mouse.y;
             dot.draw();
           });
           ctx.clearRect(0, 0, ctx.width, ctx.height);
@@ -146,8 +214,14 @@
       graph.draw();
 
       window.addEventListener("mousemove", (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
+        dot.targetX = e.x;
+        dot.targetY = e.y;
+      });
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
       });
     </script>
   </body>

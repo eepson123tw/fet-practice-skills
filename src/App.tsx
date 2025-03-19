@@ -214,9 +214,7 @@ function App() {
       </div>
       <footer
         className={`px-6 py-4 text-center text-sm backdrop-blur-lg ${
-          isDark
-            ? "bg-gray-900/50 text-gray-300"
-            : "bg-white/50 text-gray-600"
+          isDark ? "bg-gray-900/50 text-gray-300" : "bg-white/50 text-gray-600"
         }`}
       >
         <p>

@@ -66,6 +66,13 @@ export const canvasGroups: Array<Link> = [
     tags: ["particles", "animation", "effects"],
   },
   {
+    routeName: "canvas-music-player",
+    url: "/canvas/canvas-music-player",
+    group: Group.Canvas,
+    description: "A lyrics player with visual kaleidoscope on canvas.",
+    tags: ["audio", "lyrics", "player", "visualization", "kaleidoscope"],
+  },
+  {
     routeName: "canvas-lyrics-player",
     url: "/canvas/canvas-lyrics-player",
     group: Group.Canvas,
