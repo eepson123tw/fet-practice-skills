@@ -19,24 +19,24 @@
         --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         --glow: 0 0 15px rgba(34, 197, 94, 0.4);
       }
-      
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-      
+
       body {
         background-color: var(--darker-bg);
         color: var(--text);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         overflow: hidden;
         margin: 0;
         padding: 0;
         height: 100vh;
         width: 100vw;
       }
-      
+
       .player-container {
         position: fixed;
         top: 0;
@@ -48,7 +48,7 @@
         align-items: center;
         justify-content: center;
       }
-      
+
       #visualizer {
         position: absolute;
         top: 0;
@@ -58,7 +58,7 @@
         background-color: rgba(0, 0, 0, 0.5);
         overflow: hidden;
       }
-      
+
       canvas {
         width: 100%;
         height: 100%;
@@ -66,7 +66,7 @@
         top: 0;
         left: 0;
       }
-      
+
       #lyrics-container {
         position: absolute;
         top: 50%;
@@ -82,21 +82,21 @@
         pointer-events: none;
         transition: all 0.3s ease;
       }
-      
+
       .lyrics-line {
         opacity: 0.3;
         transition: all 0.3s ease;
         margin: 8px 0;
         filter: blur(1px);
       }
-      
+
       .lyrics-active {
         opacity: 1;
         font-size: 1.2em;
         filter: blur(0);
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
       }
-      
+
       #song-info {
         position: absolute;
         top: 20px;
@@ -111,18 +111,18 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         z-index: 20;
       }
-      
+
       #song-title {
         font-size: 26px;
         font-weight: bold;
         margin-bottom: 6px;
       }
-      
+
       #artist {
         font-size: 18px;
         color: var(--text-dim);
       }
-      
+
       .vis-controls {
         position: absolute;
         top: 100px;
@@ -135,7 +135,7 @@
         justify-content: center;
         z-index: 20;
       }
-      
+
       .vis-btn {
         background-color: var(--light-bg);
         color: var(--text);
@@ -149,17 +149,17 @@
         max-width: 160px;
         text-align: center;
       }
-      
+
       .vis-btn:hover:not(.active) {
         background-color: #3a3a3a;
         transform: translateY(-2px);
       }
-      
+
       .vis-btn.active {
         background-color: var(--primary);
         box-shadow: var(--glow);
       }
-      
+
       /* Progress bar styling */
       #progress-container {
         position: absolute;
@@ -175,17 +175,21 @@
         overflow: hidden;
         z-index: 20;
       }
-      
+
       #progress-bar {
         height: 100%;
-        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--primary-light)
+        );
         border-radius: 4px;
         width: 0;
         transition: width 0.1s linear;
       }
-      
+
       #progress-bar::after {
-        content: '';
+        content: "";
         position: absolute;
         height: 14px;
         width: 14px;
@@ -197,11 +201,11 @@
         transition: transform 0.2s ease;
         box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
       }
-      
+
       #progress-container:hover #progress-bar::after {
         transform: translate(50%, -50%) scale(1);
       }
-      
+
       #time-display {
         position: absolute;
         bottom: 80px;
@@ -215,7 +219,7 @@
         color: var(--text-dim);
         z-index: 20;
       }
-      
+
       .controls {
         position: absolute;
         bottom: 20px;
@@ -227,7 +231,7 @@
         justify-content: center;
         z-index: 20;
       }
-      
+
       .play-btn {
         width: 64px;
         height: 64px;
@@ -243,17 +247,17 @@
         transition: all 0.2s ease;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       }
-      
+
       .play-btn:hover {
         background-color: var(--primary-dark);
         transform: scale(1.05);
         box-shadow: var(--glow);
       }
-      
+
       .play-btn:active {
         transform: scale(0.98);
       }
-      
+
       #volume-container {
         display: flex;
         align-items: center;
@@ -262,7 +266,7 @@
         padding: 6px 16px;
         border-radius: 8px;
       }
-      
+
       #volume-slider {
         -webkit-appearance: none;
         width: 100px;
@@ -271,7 +275,7 @@
         background: #535353;
         outline: none;
       }
-      
+
       #volume-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         width: 16px;
@@ -281,17 +285,17 @@
         cursor: pointer;
         transition: all 0.2s ease;
       }
-      
+
       #volume-slider::-webkit-slider-thumb:hover {
         background: var(--primary-light);
         transform: scale(1.1);
         box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
       }
-      
+
       .volume-icon {
         color: var(--text-dim);
       }
-      
+
       .keyboard-shortcuts {
         position: absolute;
         bottom: 150px;
@@ -307,11 +311,11 @@
         transition: opacity 0.2s ease;
         z-index: 20;
       }
-      
+
       .keyboard-shortcuts:hover {
         opacity: 1;
       }
-      
+
       .key {
         display: inline-block;
         background-color: var(--light-bg);
@@ -321,18 +325,18 @@
         font-family: monospace;
         box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
       }
-      
+
       /* Responsive adjustments */
       @media (max-width: 768px) {
         .vis-controls {
           flex-wrap: wrap;
         }
-        
+
         .vis-btn {
           flex-basis: 100%;
           max-width: none;
         }
-        
+
         .controls {
           flex-direction: column;
           gap: 16px;
@@ -351,7 +355,7 @@
         <div id="song-title">Find Your Problems</div>
         <div id="artist">Visualizer Demo</div>
       </div>
-      
+
       <div class="vis-controls">
         <button class="vis-btn active" id="circle-btn">Circles</button>
         <button class="vis-btn" id="square-btn">Squares</button>
@@ -383,13 +387,11 @@
           />
         </div>
       </div>
-      
+
       <div class="keyboard-shortcuts">
-        Keyboard shortcuts: <span class="key">Space</span> Play/Pause 
-        <span class="key">C</span> Circles 
-        <span class="key">S</span> Squares 
-        <span class="key">T</span> Triangles
-        <span class="key">L</span> Lines
+        Keyboard shortcuts: <span class="key">Space</span> Play/Pause
+        <span class="key">C</span> Circles <span class="key">S</span> Squares
+        <span class="key">T</span> Triangles <span class="key">L</span> Lines
         <span class="key">*</span> Stars
       </div>
     </div>
@@ -415,8 +417,8 @@
       const starBtn = document.getElementById("star-btn");
 
       // Use an online sample audio file to ensure it works without local files
-      const defaultSongPath = './Find_Your_Problems.mp3';
-      const defaultLyricsPath = './lyrics.srt';
+      const defaultSongPath = "./Find_Your_Problems.mp3";
+      const defaultLyricsPath = "./lyrics.srt";
 
       // Audio setup
       let audioContext;
@@ -440,7 +442,7 @@
 
       // Shape selection (0: circle, 1: square, 2: triangle, 3: line, 4: star)
       let selectedShape = 0;
-      
+
       // Visualization state
       let bassValue = 0;
       let midValue = 0;
@@ -451,63 +453,63 @@
       let lyrics = [];
       let currentLyricIndex = -1;
       let showingLyrics = false;
-      
+
       /**
        * Parse WebVTT/SRT content into an array of cue objects
        */
       function parseVTT(vttContent) {
         const cues = [];
-        
+
         // Split the content by line breaks
-        const lines = vttContent.trim().split('\n');
-        
+        const lines = vttContent.trim().split("\n");
+
         // Check if the first line is the WebVTT header
         let startIndex = 0;
-        if (lines[0].indexOf('WEBVTT') === 0) {
+        if (lines[0].indexOf("WEBVTT") === 0) {
           startIndex = 1;
         }
-        
+
         let currentCue = null;
-        
+
         // Process each line
         for (let i = startIndex; i < lines.length; i++) {
           const line = lines[i].trim();
-          
+
           // Skip empty lines
           if (!line) continue;
-          
+
           // Skip index numbers (optional in WebVTT)
           if (/^\d+$/.test(line)) continue;
-          
+
           // Check if line contains a timestamp
-          if (line.indexOf('-->') !== -1) {
+          if (line.indexOf("-->") !== -1) {
             // Parse timestamps
-            const timestamps = line.split('-->').map(t => t.trim());
-            
+            const timestamps = line.split("-->").map((t) => t.trim());
+
             // Convert timestamp to seconds
             const startTime = parseTimestamp(timestamps[0]);
             const endTime = parseTimestamp(timestamps[1]);
-            
+
             // Create new cue
             currentCue = {
               start: startTime,
               end: endTime,
-              text: ''
+              text: "",
             };
-            
+
             cues.push(currentCue);
-          } 
+          }
           // If not a timestamp and we have a current cue, it's the text content
           else if (currentCue) {
             // If the cue already has text, add a line break before adding more
             if (currentCue.text) {
-              currentCue.text += '\n' + line;
+              currentCue.text += "\n" + line;
             } else {
               currentCue.text = line;
             }
           }
         }
-        
+
         return cues;
       }
 
@@ -516,27 +518,27 @@
        */
       function parseTimestamp(timestamp) {
         // Handle both formats: "MM:SS.mmm" and "HH:MM:SS.mmm"
-        let parts = timestamp.split(':');
+        let parts = timestamp.split(":");
         let seconds = 0;
-        
+
         if (parts.length === 3) {
           // HH:MM:SS.mmm format
           seconds += parseFloat(parts[0]) * 3600; // Hours
-          seconds += parseFloat(parts[1]) * 60;   // Minutes
-          seconds += parseFloat(parts[2]);        // Seconds
+          seconds += parseFloat(parts[1]) * 60; // Minutes
+          seconds += parseFloat(parts[2]); // Seconds
         } else if (parts.length === 2) {
           // MM:SS.mmm format
-          seconds += parseFloat(parts[0]) * 60;   // Minutes
-          seconds += parseFloat(parts[1]);        // Seconds
+          seconds += parseFloat(parts[0]) * 60; // Minutes
+          seconds += parseFloat(parts[1]); // Seconds
         }
-        
+
         return seconds;
       }
-      
+
       // Function to detect if a file is a subtitle file
       function isSubtitleFile(filename) {
-        const ext = filename.split('.').pop().toLowerCase();
-        return ['vtt', 'srt', 'lrc'].includes(ext);
+        const ext = filename.split(".").pop().toLowerCase();
+        return ["vtt", "srt", "lrc"].includes(ext);
       }
 
       // Initialize canvas dimensions
@@ -854,13 +856,13 @@
         ctx.lineTo(cx, cy - outerRadius);
         ctx.closePath();
       }
-      
+
       // Update lyrics based on current time
       function updateLyrics() {
         if (!showingLyrics || lyrics.length === 0) return;
-        
+
         const currentTime = audio.currentTime;
-        
+
         // Find the current lyric by looking for the cue that contains the current time
         let newLyricIndex = -1;
         for (let i = 0; i < lyrics.length; i++) {
@@ -869,7 +871,7 @@
             break;
           }
         }
-        
+
         // If we couldn't find an exact match, look for the nearest upcoming lyric
         if (newLyricIndex === -1) {
           for (let i = 0; i < lyrics.length; i++) {
@@ -883,62 +885,63 @@
             newLyricIndex = lyrics.length - 1;
           }
         }
-        
+
         // Only update the display if the lyric has changed
         if (newLyricIndex !== currentLyricIndex) {
           currentLyricIndex = newLyricIndex;
           updateLyricsDisplay();
         }
-        
+
         // Apply animation effects
         if (currentLyricIndex >= 0) {
           // Animate lyrics based on bass
           const scale = 1 + bassValue * 0.2;
           lyricsContainer.style.transform = `translate(-50%, -50%) scale(${scale})`;
-          
+
           // Change color based on frequencies
           const hue = (currentHue + colorOffset) % 360;
-          
+
           // Apply color to active lyrics
-          const activeElements = lyricsContainer.getElementsByClassName('lyrics-active');
+          const activeElements =
+            lyricsContainer.getElementsByClassName("lyrics-active");
           for (let el of activeElements) {
             el.style.color = `hsl(${hue}, 100%, 80%)`;
             el.style.textShadow = `0 0 10px hsl(${hue}, 100%, 50%), 
                                     0 0 20px hsl(${hue}, 100%, 50%),
                                     2px 2px 4px rgba(0, 0, 0, 0.8)`;
-            
+
             // Pulse size with bass
             el.style.transform = `scale(${1 + bassValue * 0.15})`;
           }
         }
       }
-      
+
       // Update the lyrics display with the current and neighboring lyrics
       function updateLyricsDisplay() {
-        lyricsContainer.innerHTML = '';
-        
+        lyricsContainer.innerHTML = "";
+
         if (currentLyricIndex === -1 || lyrics.length === 0) {
           return;
         }
-        
+
         // Display previous, current, and next lyrics (if available)
         // This creates a karaoke-like effect with multiple lines
         const startIdx = Math.max(0, currentLyricIndex - 1);
         const endIdx = Math.min(lyrics.length - 1, currentLyricIndex + 1);
-        
+
         for (let i = startIdx; i <= endIdx; i++) {
-          const lyricEl = document.createElement('div');
+          const lyricEl = document.createElement("div");
           lyricEl.textContent = lyrics[i].text;
-          lyricEl.className = 'lyrics-line';
-          
+          lyricEl.className = "lyrics-line";
+
           if (i === currentLyricIndex) {
-            lyricEl.classList.add('lyrics-active');
+            lyricEl.classList.add("lyrics-active");
           }
-          
+
           lyricsContainer.appendChild(lyricEl);
         }
       }
-      
+
       // Main animation function
       function animate() {
         animationId = requestAnimationFrame(animate);
@@ -962,7 +965,7 @@
 
         // Always use kaleidoscope mode
         drawKaleidoscope();
-        
+
         // Update lyrics display
         updateLyrics();
       }
@@ -1010,54 +1013,62 @@
         const duration = audio.duration;
         audio.currentTime = (clickX / width) * duration;
       }
-      
+
       // Basic LRC format parser
       function parseLRC(lrcContent) {
-        const lines = lrcContent.split('\n');
+        const lines = lrcContent.split("\n");
         const cues = [];
-        
+
         // Regular expression to match time tags like [mm:ss.xx]
         const timeTagRegex = /\[(\d{2}):(\d{2})\.(\d{2})\]/g;
-        
-        lines.forEach(line => {
+
+        lines.forEach((line) => {
           // Skip empty lines or metadata lines
-          if (!line.trim() || line.startsWith('[ar:') || line.startsWith('[ti:') || 
-              line.startsWith('[al:') || line.startsWith('[by:') || line.startsWith('[offset:')) {
+          if (
+            !line.trim() ||
+            line.startsWith("[ar:") ||
+            line.startsWith("[ti:") ||
+            line.startsWith("[al:") ||
+            line.startsWith("[by:") ||
+            line.startsWith("[offset:")
+          ) {
             return;
           }
-          
+
           // Extract all time tags from the line
           const timeMatches = [...line.matchAll(timeTagRegex)];
           if (timeMatches.length === 0) return;
-          
+
           // Extract the lyric text (everything after the last time tag)
-          const lastTagIndex = timeMatches[timeMatches.length - 1].index + timeMatches[timeMatches.length - 1][0].length;
+          const lastTagIndex =
+            timeMatches[timeMatches.length - 1].index +
+            timeMatches[timeMatches.length - 1][0].length;
           const text = line.substring(lastTagIndex).trim();
-          
+
           // Create a cue for each time tag with the same text
-          timeMatches.forEach(match => {
+          timeMatches.forEach((match) => {
             const minutes = parseInt(match[1]);
             const seconds = parseInt(match[2]);
             const hundredths = parseInt(match[3]);
-            
-            const startTime = minutes * 60 + seconds + (hundredths / 100);
-            
+
+            const startTime = minutes * 60 + seconds + hundredths / 100;
+
             cues.push({
               start: startTime,
               end: startTime + 5, // Default duration of 5 seconds - will be adjusted later
-              text: text
+              text: text,
             });
           });
         });
-        
+
         // Sort cues by start time
         cues.sort((a, b) => a.start - b.start);
-        
+
         // Adjust end times based on the next cue's start time
         for (let i = 0; i < cues.length - 1; i++) {
           cues[i].end = cues[i + 1].start;
         }
-        
+
         return cues;
       }
 
@@ -1070,58 +1081,62 @@
       // Function to draw the waveform visualization - not used but required as a placeholder
       function drawWaveform() {
         // This function is no longer used, but kept for reference
-        console.log("Waveform visualization is not implemented in this version");
+        console.log(
+          "Waveform visualization is not implemented in this version",
+        );
       }
-      
+
       // Function to load the default audio and lyrics files
       async function loadDefaultFiles() {
         try {
           // Load the default audio file
           const audioResponse = await fetch(defaultSongPath);
           if (!audioResponse.ok) {
-            throw new Error(`Failed to load audio file: ${audioResponse.status} ${audioResponse.statusText}`);
+            throw new Error(
+              `Failed to load audio file: ${audioResponse.status} ${audioResponse.statusText}`,
+            );
           }
-          
+
           const audioBlob = await audioResponse.blob();
           const audioURL = URL.createObjectURL(audioBlob);
           audio.src = audioURL;
-          
+
           // Display file info
           songTitleEl.textContent = "Find the problem";
           artistEl.textContent = "Music Visualizer";
-          
+
           // Initialize audio if needed
           if (!audioContext) {
             initAudio();
           }
-          
+
           // Try to load the default lyrics file
           try {
             const lyricsResponse = await fetch(defaultLyricsPath);
             if (lyricsResponse.ok) {
               const lyricsText = await lyricsResponse.text();
               // Attempt to determine format and parse
-              if (lyricsText.includes('-->')) {
+              if (lyricsText.includes("-->")) {
                 lyrics = parseVTT(lyricsText);
-              } else if (lyricsText.includes('[')) {
+              } else if (lyricsText.includes("[")) {
                 lyrics = parseLRC(lyricsText);
               }
-              
+
               // Set up lyrics display
               currentLyricIndex = -1;
               showingLyrics = lyrics.length > 0;
               console.log(`Loaded ${lyrics.length} lyrics`);
             } else {
-              console.log('No lyrics file found or unable to load lyrics');
+              console.log("No lyrics file found or unable to load lyrics");
               showingLyrics = false;
               lyrics = [];
             }
           } catch (error) {
-            console.log('Error loading lyrics, continuing without lyrics');
+            console.log("Error loading lyrics, continuing without lyrics");
             showingLyrics = false;
             lyrics = [];
           }
-          
+
           // Setup audio playback
           audio.load();
           audio.onloadedmetadata = () => {
@@ -1129,25 +1144,28 @@
             audio.play();
             isPlaying = true;
             playBtn.textContent = "❚❚";
-            
+
             if (!animationId) {
               animate();
             }
           };
-          
+
           return true;
         } catch (error) {
-          console.error('Error loading default files:', error);
-          alert(`Error loading default files: ${error.message}\nTrying to continue with demo mode.`);
-          
+          console.error("Error loading default files:", error);
+          alert(
+            `Error loading default files: ${error.message}\nTrying to continue with demo mode.`,
+          );
+
           // Create a fallback audio context for demo mode without audio
           if (!audioContext) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            audioContext = new (window.AudioContext ||
+              window.webkitAudioContext)();
             analyser = audioContext.createAnalyser();
             analyser.fftSize = 2048;
             bufferLength = analyser.frequencyBinCount;
             dataArray = new Uint8Array(bufferLength);
-            
+
             // Fill with random data for a demo effect
             setInterval(() => {
               for (let i = 0; i < dataArray.length; i++) {
@@ -1157,16 +1175,16 @@
               midValue = Math.random() * 0.8;
               trebleValue = Math.random() * 0.8;
             }, 100);
-            
+
             createParticles();
             isPlaying = true;
             animate();
           }
-          
+
           return false;
         }
       }
-      
+
       // Shape selection event listeners
       circleBtn.addEventListener("click", () => {
         selectedShape = 0;
@@ -1206,7 +1224,7 @@
         lineBtn.classList.toggle("active", selectedShape === 3);
         starBtn.classList.toggle("active", selectedShape === 4);
       }
-      
+
       // Add keyboard shortcuts
       document.addEventListener("keydown", (e) => {
         if (e.code === "Space") {
@@ -1229,7 +1247,7 @@
           updateShapeButtons();
           createParticles();
         } else if (e.code === "Digit8" && e.shiftKey) {
-          selectedShape = 4; // Star (*) 
+          selectedShape = 4; // Star (*)
           updateShapeButtons();
           createParticles();
         }
@@ -1250,7 +1268,7 @@
 
       // Initialize with default volume
       audio.volume = volumeSlider.value;
-      
+
       // Initial welcome animation function
       function initialAnimation() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1263,14 +1281,22 @@
         ctx.fillStyle = "white";
         ctx.font = "30px Arial";
         ctx.textAlign = "center";
-        ctx.fillText("Fullscreen Kaleidoscope Music Visualizer", centerX, centerY - 80);
+        ctx.fillText(
+          "Fullscreen Kaleidoscope Music Visualizer",
+          centerX,
+          centerY - 80,
+        );
         ctx.font = "24px Arial";
         ctx.fillText("Select your preferred shape:", centerX, centerY - 30);
-        ctx.fillText("Circles, Squares, Triangles, Lines, or Stars", centerX, centerY + 10);
+        ctx.fillText(
+          "Circles, Squares, Triangles, Lines, or Stars",
+          centerX,
+          centerY + 10,
+        );
         ctx.fillText(
           "Press Space or click Play to begin",
           centerX,
-          centerY + 60
+          centerY + 60,
         );
 
         // Draw some placeholder patterns
@@ -1283,44 +1309,44 @@
           // Draw different shapes based on time to create animation
           const time = performance.now() / 1000;
           const shape = Math.floor(time % 5);
-          
+
           // Use different colors for each segment
           ctx.fillStyle = `hsla(${(i * 30) % 360}, 70%, 50%, 0.5)`;
-          ctx.strokeStyle = `hsla(${((i * 30) + 180) % 360}, 70%, 50%, 0.5)`;
+          ctx.strokeStyle = `hsla(${(i * 30 + 180) % 360}, 70%, 50%, 0.5)`;
           ctx.lineWidth = 2;
-          
+
           // Size that pulses
           const size = 50 + Math.sin(time * 2) * 20;
-          
+
           // Draw different shapes for demo
-          switch(shape) {
+          switch (shape) {
             case 0: // Circle
               ctx.beginPath();
-              ctx.arc(100, 0, size/2, 0, Math.PI * 2);
+              ctx.arc(100, 0, size / 2, 0, Math.PI * 2);
               ctx.fill();
               break;
             case 1: // Square
-              ctx.fillRect(100 - size/2, -size/2, size, size);
+              ctx.fillRect(100 - size / 2, -size / 2, size, size);
               break;
             case 2: // Triangle
               ctx.beginPath();
-              ctx.moveTo(100, -size/2);
-              ctx.lineTo(100 + size/2, size/2);
-              ctx.lineTo(100 - size/2, size/2);
+              ctx.moveTo(100, -size / 2);
+              ctx.lineTo(100 + size / 2, size / 2);
+              ctx.lineTo(100 - size / 2, size / 2);
               ctx.closePath();
               ctx.fill();
               break;
             case 3: // Line
               ctx.beginPath();
-              ctx.moveTo(100 - size/2, 0);
-              ctx.lineTo(100 + size/2, 0);
-              ctx.lineWidth = size/4;
+              ctx.moveTo(100 - size / 2, 0);
+              ctx.lineTo(100 + size / 2, 0);
+              ctx.lineWidth = size / 4;
               ctx.stroke();
               break;
             case 4: // Star
               ctx.save();
               ctx.translate(100, 0);
-              drawStar(0, 0, 5, size/2, size/4);
+              drawStar(0, 0, 5, size / 2, size / 4);
               ctx.fill();
               ctx.restore();
               break;
@@ -1339,7 +1365,7 @@
       initialAnimation();
 
       // Load the default files automatically when the page loads
-      window.addEventListener('load', () => {
+      window.addEventListener("load", () => {
         loadDefaultFiles();
       });
     </script>

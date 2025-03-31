@@ -177,6 +177,13 @@ export const jsGroups: Array<Link> = [
     tags: ["color", "image", "extraction", "tool"],
   },
   {
+    routeName: "openai-img-mask",
+    url: "/js/open-ai-mask",
+    group: Group.Js,
+    description: "try to implement a img mask with 100%",
+    tags: ["openai", "mask", "image"],
+  },
+  {
     routeName: "2048",
     url: "/js/2048",
     group: Group.Js,

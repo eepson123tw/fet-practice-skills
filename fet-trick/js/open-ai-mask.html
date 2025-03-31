@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenAI Image Mask</title>
+    <style>
+      :root {
+        --primary-color: #6a11cb;
+        --secondary-color: #2575fc;
+        --mask-percentage: 50%;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+      }
+
+      .image-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .image-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      }
+
+      .masked-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black var(--mask-percentage),
+          transparent 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black var(--mask-percentage),
+          transparent 100%
+        );
+        transition: all 0.3s ease;
+      }
+
+      .controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .slider-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        position: relative;
+      }
+
+      .slider-label {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 500;
+        color: #555;
+      }
+
+      .percentage-display {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        outline: none;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: white;
+        border: 3px solid var(--primary-color);
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease;
+      }
+
+      .slider::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+      }
+
+      .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: white;
+        border: 3px solid var(--primary-color);
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease;
+      }
+
+      .slider::-moz-range-thumb:hover {
+        transform: scale(1.1);
+      }
+
+      .button-container {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+        transition: all 0.3s ease;
+        outline: none;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 20px rgba(106, 17, 203, 0.4);
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 3px 10px rgba(106, 17, 203, 0.3);
+      }
+
+      .animate-btn {
+        background: linear-gradient(135deg, #fc5c7d, #6a82fb);
+      }
+
+      .animate-btn.active {
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+        background-color: #e0e0e0;
+        border-radius: 3px;
+        margin-top: 10px;
+        position: relative;
+        overflow: hidden;
+        display: none;
+      }
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        width: 0%;
+        border-radius: 3px;
+        transition: width 0.2s ease;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1.5rem;
+          margin: 1rem;
+        }
+      }
+
+      /* Animation effect */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Fancy Image Mask Control</h1>
+
+      <div class="image-container">
+        <div class="image-wrapper">
+          <img
+            src="https://cdn.pixabay.com/photo/2015/04/23/22/00/new-year-background-736885_960_720.jpg"
+            alt="Beautiful landscape"
+            class="masked-image"
+          />
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Mask Level</span>
+            <span class="percentage-display">100%</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="100"
+            class="slider"
+            id="maskSlider"
+          />
+          <div class="progress-bar" id="progressBar">
+            <div class="progress" id="progress"></div>
+          </div>
+        </div>
+
+        <div class="button-container">
+          <button class="btn reset-btn" id="resetBtn">Reset Mask</button>
+          <button class="btn animate-btn" id="animateBtn">
+            Animate 0-100%
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const slider = document.getElementById("maskSlider");
+      const percentageDisplay = document.querySelector(".percentage-display");
+      const resetBtn = document.getElementById("resetBtn");
+      const animateBtn = document.getElementById("animateBtn");
+      const maskedImage = document.querySelector(".masked-image");
+      const progressBar = document.getElementById("progressBar");
+      const progress = document.getElementById("progress");
+      const DEFAULT_PERCENTAGE = 50;
+
+      let animationInterval = null;
+      let isAnimating = false;
+
+      slider.addEventListener("input", updateMask);
+
+      resetBtn.addEventListener("click", resetMask);
+
+      animateBtn.addEventListener("click", toggleAnimation);
+
+      function updateMask() {
+        const percentage = slider.value;
+        percentageDisplay.textContent = `${percentage}%`;
+        document.documentElement.style.setProperty(
+          "--mask-percentage",
+          `${percentage}%`,
+        );
+        if (isAnimating) {
+          progress.style.width = `${percentage}%`;
+        }
+        if (percentage < 30) {
+          slider.style.background =
+            "linear-gradient(to right, #ff5e62, #ff9966)";
+        } else if (percentage > 70) {
+          slider.style.background =
+            "linear-gradient(to right, #11998e, #38ef7d)";
+        } else {
+          slider.style.background =
+            "linear-gradient(to right, var(--primary-color), var(--secondary-color))";
+        }
+      }
+
+      function resetMask() {
+        stopAnimation();
+        slider.value = DEFAULT_PERCENTAGE;
+        maskedImage.style.opacity = "0.7";
+        setTimeout(() => {
+          maskedImage.style.opacity = "1";
+          updateMask();
+        }, 300);
+      }
+
+      function toggleAnimation() {
+        if (isAnimating) {
+          stopAnimation();
+        } else {
+          startAnimation();
+        }
+      }
+
+      let lastAnimationProgress = 0;
+
+      function startAnimation() {
+        if (isAnimating) return;
+
+        isAnimating = true;
+        animateBtn.classList.add("active");
+        animateBtn.textContent = "Stop Animation";
+        progressBar.style.display = "block";
+
+        if (lastAnimationProgress >= 100) {
+          lastAnimationProgress = 0;
+        }
+
+        slider.value = lastAnimationProgress;
+        updateMask();
+
+        maskedImage.classList.add("pulse");
+
+        let startTime = null;
+        const duration = 3000;
+
+        function animate(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const elapsed = timestamp - startTime;
+
+          const remainingPercentage = 100 - lastAnimationProgress;
+          const progressRatio = Math.min(elapsed / duration, 1);
+
+          const currentValue = Math.floor(
+            lastAnimationProgress + progressRatio * remainingPercentage,
+          );
+
+          slider.value = currentValue;
+          updateMask();
+
+          if (currentValue < 100 && isAnimating) {
+            animationInterval = requestAnimationFrame(animate);
+          } else {
+            if (isAnimating) {
+              lastAnimationProgress = 100;
+
+              isAnimating = false;
+              animateBtn.classList.remove("active");
+              animateBtn.textContent = "Animate 0-100%";
+              progressBar.style.display = "none";
+              maskedImage.classList.remove("pulse");
+            }
+          }
+        }
+
+        animationInterval = requestAnimationFrame(animate);
+      }
+
+      function stopAnimation() {
+        if (!isAnimating) return;
+
+        lastAnimationProgress = parseInt(slider.value);
+
+        if (animationInterval) {
+          cancelAnimationFrame(animationInterval);
+          animationInterval = null;
+        }
+
+        isAnimating = false;
+        animateBtn.classList.remove("active");
+        animateBtn.textContent = "Continue Animation";
+        progressBar.style.display = "none";
+        maskedImage.classList.remove("pulse");
+      }
+      updateMask();
+    </script>
+  </body>
+</html>

@@ -7,17 +7,15 @@
 
 # [1.50.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.49.0...v1.50.0) (2025-03-19)
 
-
 ### Features
 
-* **kaleidoscope:** add the kaleidoscope canvas music player ([3f52f83](https://github.com/eepson123tw/fet-practice-skills/commit/3f52f83a042a70fbf4cf33709e37c5375c552b91))
+- **kaleidoscope:** add the kaleidoscope canvas music player ([3f52f83](https://github.com/eepson123tw/fet-practice-skills/commit/3f52f83a042a70fbf4cf33709e37c5375c552b91))
 
 # [1.49.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.48.1...v1.49.0) (2025-03-18)
 
-
 ### Features
 
-* **ui:** try to use mcp ([e33562f](https://github.com/eepson123tw/fet-practice-skills/commit/e33562f521a9ea32a7cd9e30ec3c43c0cec7794b))
+- **ui:** try to use mcp ([e33562f](https://github.com/eepson123tw/fet-practice-skills/commit/e33562f521a9ea32a7cd9e30ec3c43c0cec7794b))
 
 ## [1.48.1](https://github.com/eepson123tw/fet-practice-skills/compare/v1.48.0...v1.48.1) (2025-03-16)
 
