@@ -1,3 +1,10 @@
+# [1.52.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.51.0...v1.52.0) (2025-03-31)
+
+
+### Features
+
+* **openAI:** image mask ([16a1346](https://github.com/eepson123tw/fet-practice-skills/commit/16a1346840a80bc907068b5e6fafe1acd2d6ceb0))
+
 # [1.51.0](https://github.com/eepson123tw/fet-practice-skills/compare/v1.50.0...v1.51.0) (2025-03-20)
 
 
